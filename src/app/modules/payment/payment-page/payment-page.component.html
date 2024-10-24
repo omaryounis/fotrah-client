@@ -1,0 +1,38 @@
+<app-payment></app-payment>
+<div class="text-center">
+
+  <div class="  w-full  mt-[100px] mb-8">
+    <p class="text-primary font-neo sm:text-2xl text-sm font-semibold">
+      {{ 'choose-pay-method' | translate }}
+    </p>
+  </div>
+  <div class="flex items-center flex-wrap justify-center gap-16">
+    @for (item of paymentMethods; track $index; let last = $last) {
+      <a [class]="'link-card'"
+        (click)="$index == 0 ? preparePayRequest() : navigateSadad(item.routerLink)">
+        <img width="60" height="45" [src]="item.image" alt="copy icon" />
+        <span class="link-card__text">{{item.title | translate}}</span>
+        <p class="link-card__info" >
+           {{item.details | translate}}
+        </p>
+      </a>
+    }
+  </div>
+  <p-button styleClass="submit-btn mt-[40px]" (onClick)="backtoPrvious()"  type="submit" >{{'back' | translate}}</p-button>
+</div>
+
+<!-- <div class="flex justify-center">
+  <p-button styleClass="search__submit-btn" (onClick)="preparePayRequest()" >{{'pay' | translate}}</p-button>
+</div> -->
+<!-- {{billNumber}} -->
+<form name="form1"  #payForm
+[action]="requestData!.action"
+method="POST"> 
+<input type="hidden" name="tranportalId" [(ngModel)]="requestData!.tranportalId"/> 
+<input type="hidden" name="responseURL" 
+[(ngModel)]="requestData!.responseURL"/> 
+<input type="hidden" name="errorURL" 
+[(ngModel)]="requestData!.errorURL"/> 
+<input type="hidden" name="trandata" 
+[(ngModel)]="requestData!.trandata"/> 
+</form> 

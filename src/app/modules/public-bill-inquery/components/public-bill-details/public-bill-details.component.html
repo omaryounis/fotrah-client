@@ -1,0 +1,115 @@
+<section class="bill-content hidden" #billPrintContent>
+  <header class="header">
+    <img style="display: block" src="assets/images/RIPC_color_logo 1.png" alt="print logo" />
+    <div>
+      <div style="margin-bottom: 10px">
+        <label>التاريخ : </label>
+        <span>{{ rowData?.billDate | date:'dd/MM/yyyy' }}</span>
+      </div>
+      <div>
+        <label>رقم الفاتورة : </label>
+        <span>{{ rowData?.billNumber }}</span>
+      </div>
+    </div>
+  </header>
+  <div class="content">
+    <h1 style="text-align: center; color: #874e9f; font-weight: 500">فاتورة</h1>
+
+    <section class="table-section">
+      <h3 style="color: #874e9f; font-weight: 500">بيانات المخالف:</h3>
+      <div style="display: flex">
+        <div style="display: flex; align-items: center; flex: 1">
+          <label style="font-weight: 600; margin-left: 10px">اسم المنشأة:</label>
+          <p style="margin: 0">{{ rowData?.municipal }}</p>
+        </div>
+        <div style="display: flex; align-items: center; flex: 1">
+          <label style="font-weight: 600; margin-left: 10px">رقم الهوية:</label>
+          <p style="margin: 0">1100110011</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="table-section">
+      <h3 style="color: #874e9f; font-weight: 500">بيانات المخالفة:</h3>
+      <table class="first-table">
+        <thead>
+          <tr>
+            <th>نوع الخدمة</th>
+            <th>تصنيفها</th>
+            <th>البند</th>
+            <th>التكرار</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ rowData?.billCategory }}</td>
+            <td>{{ rowData?.gfs }}</td>
+            <td>{{ rowData?.financialCategory }}</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="table-section">
+      <h3 style="color: #874e9f; font-weight: 500">بيانات موقع الرصد:</h3>
+      <table class="second-table">
+        <thead>
+          <tr>
+            <th>موقع المخالفة</th>
+            <th>تصنيف الموقع</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ rowData?.municipal }}</td>
+            <td>الأول</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="table-section">
+      <h3 style="color: #874e9f; font-weight: 500">بيانات السداد:</h3>
+      <table class="third-table">
+        <tr>
+          <td>المبلغ</td>
+          <td>{{ rowData?.totalAmount }} ريال سعودي</td>
+        </tr>
+        <tr>
+          <td>التكرار</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>إجمالي المبلغ</td>
+          <td class="green">{{ rowData?.totalAmount }} ريال سعودي</td>
+        </tr>
+        <tr>
+          <td>التاريخ</td>
+          <td>{{ rowData?.billDate | date:'dd/MM/yyyy' }}</td>
+        </tr>
+        <tr>
+          <td>الرقم المرجعي للسجل</td>
+          <td>400</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="qr-code">
+      <p style="margin: 0 0 15px; font-weight: 500; text-align: center">
+        للتحقق من صحة المستند، يرجي مسح رمز الإستجابة السريعة أدناه
+      </p>
+      <img style="display: block; margin: 0 auto" src="assets/images/qr-code.png" alt="bill qr code" />
+    </section>
+
+    <footer style="
+        padding: 10px 0;
+        background-color: #874e9f;
+        color: white;
+        margin-top: 15px;
+        text-align: center;
+      ">
+      للإعتراض علي المخالفة نأمل زيارة موقع المركز علي الرابط WWW.RIPC.GOV.SA
+    </footer>
+  </div>
+</section>

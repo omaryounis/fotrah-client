@@ -1,0 +1,54 @@
+<form #form="ngForm"  (mouseover)="getFormValidation(form.invalid!)" (input)="getFormValidation(form.invalid!)">
+
+  <div class="form-row">
+    <div class="form-group">
+      <label class="required-element" for="rolename"> {{'role' | translate}}</label>
+      <input pInputText id="nameAr" name="nameAr" aria-label="nameAr" #nameAr="ngModel" [(ngModel)]="roleData.nameAr"
+        required pattern="^[\u0621-\u0628\u062A-\u063A\u0641-\u064A\u0629\u0640\u064B-\u0652\s\d]+$"
+        placeholder="مدير نظام  " [disabled]="mode === 'show'" />
+        @if (nameAr.invalid && (nameAr.dirty || nameAr.touched)) {
+        <div class="text-red-600">
+          @if (nameAr.errors?.['required']) { <span> {{'this-field-required' | translate}}</span> }
+          @if (nameAr.errors?.['pattern']) { <span> {{'accept-only-arabic' | translate}}</span>}
+        </div>
+        }
+      </div>
+    <div class="form-group">
+      <label class="required-element" for="rolename"> {{'role-en' | translate}}</label>
+      <input pInputText id="nameEn" name="nameEn" aria-label="nameEn" #nameEn="ngModel" [(ngModel)]="roleData.nameEn"
+        pattern="^[a-zA-Z\s\d]+$" required placeholder="Admin" [disabled]="mode === 'show'" />
+        @if (nameEn.invalid && (nameEn.dirty || nameEn.touched)) {
+        <div class="text-red-600">
+          @if (nameEn.errors?.['required']) { <span> {{'this-field-required' | translate}}</span> }
+          @if (nameEn.errors?.['pattern']) { <span> {{'accept-only-english' | translate}}</span>}
+        </div>
+        }
+    </div>
+  </div>
+
+  <div class="form-row !grid-cols-1 mb-4">
+    <div class="form-group">
+      <label class="required-element" for="nationalId">{{"permissions" | translate}} </label>
+      <p-multiSelect name="permissions" [options]="permissions" [ngClass]="{'isDisableOption' :  mode === 'show' }"  class="d-grid w-100" [(ngModel)]="roleData.permissions"
+        optionLabel="name"  [selectedItemsLabel]=" roleData.permissions?.length + ('items-selected' | translate)"
+        optionValue="value"></p-multiSelect>
+    </div>
+  </div>
+
+
+
+  <!-- <div [class]="['form-row', mode === 'edit' ? '!grid-cols-1' : '']">
+    @if(mode !== 'edit') {
+    <div class="form-group">
+      <label class="required-element" for="roleEmail">البريد الإلكتروني</label>
+      <input pInputText id="roleEmail" name="roleEmail" aria-label="roleEmail" [(ngModel)]="roleData.email"
+        placeholder="Abdulrahman@master-works.sa" [disabled]="mode === 'show'" />
+    </div>
+    }
+    <div class="form-group">
+      <label for="phoneNumber">رقم التواصل</label>
+      <input pInputText id="phoneNumber" name="phoneNumber" aria-label="phoneNumber" placeholder="(966)5 00 00 00 00"
+        [(ngModel)]="roleData.phoneNumber" [disabled]="mode === 'show'" />
+    </div>
+  </div> -->
+</form>

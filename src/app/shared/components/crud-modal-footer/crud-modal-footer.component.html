@@ -1,0 +1,8 @@
+<div class="flex justify-end">
+  @if (showSubmit) {
+  <p-button pAutoFocus [label]="submitLabel | translate" type="submit" [disabled]="dynamicDialogConfig.data!.footer.formValidation" [autofocus]="true"
+    (click)="handleSubmitClick()"></p-button>
+  }
+  <p-button pAutoFocus [label]="cancelLabel | translate" [outlined]="true" severity="secondary"
+    (click)="handelCancelClick()"></p-button>
+</div>

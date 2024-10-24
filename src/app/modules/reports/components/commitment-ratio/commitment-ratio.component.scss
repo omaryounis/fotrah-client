@@ -1,0 +1,10 @@
+:host ::ng-deep {
+  .p-multiselect-panel {
+    .p-multiselect-header {
+      @apply flex-row-reverse justify-end;
+      .p-multiselect-close {
+        display: none;
+      }
+    }
+  }
+}

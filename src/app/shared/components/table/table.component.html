@@ -1,0 +1,165 @@
+<div class="container max-w-full mx-auto overflow-x-auto">
+  <p-table class="table" [value]="dataSource" [scrollable]="true" scrollHeight="flex" dataKey="id">
+    <ng-template pTemplate="header">
+      <tr>
+        @for (column of columns; track $index) { @if (!column.hidden) {
+        @if(column.text) {
+        <th>{{ column.text | translate }}</th>
+        } @else if (column.thTemplate) {
+        <ng-container *ngTemplateOutlet="
+            getTemplateRef({ actionTemplate: actionTemplate }, column.thTemplate)
+          "></ng-container>
+        } @else {
+        <th></th>
+        } } }
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item let-expanded="expanded">
+      <tr>
+        @for (column of columns; track $index) { @if (!column.hidden) {
+        @if(column.dataIndex) {
+        
+        <td class="{{ (column.tdClassList || []).join(' ') }}">
+          @if (column.dataIndex.includes('createdAt')) {
+
+            {{ item[column.dataIndex] | date : 'yyyy/MM/dd' }}
+          }@else {
+            {{ item[column.dataIndex] | translate }}
+
+          }
+        </td>
+        } @else if (column.tdTemplate) {
+        <ng-container *ngTemplateOutlet="
+                  getTemplateRef({ expandArrow, actionListTemplate }, column.tdTemplate);context: {data: {item, expanded}}
+                "></ng-container>
+        } } }
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="rowexpansion" let-item>
+      <tr>
+        <td class="pb-0" colspan="100">
+          <div class="flex justify-between items-center flex-wrap w-full">
+            @for (column of columns; track $index) { @if ((column.hidden ||
+            column.showOnExpandedRow) && column.text && column.dataIndex) {
+            <div class="w-1/2 mb-5">
+              <p class="text-primary text-sm font-semibold mb-1">
+                {{ column.text }}
+              </p>
+              <p class="text-xs text-[#464748]">{{ item[column.dataIndex] }}</p>
+            </div>
+            } }
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #actionTemplate>
+      <th>
+        <img class="mx-auto" src="assets/images/icons/three_dots_outline.svg" alt="table action icon" width="20" />
+      </th>
+    </ng-template>
+
+    <ng-template #expandArrow let-data="data">
+      @if(data.item) {
+      <td>
+        <p-button type="button" [text]="true" [pRowToggler]="data.item" styleClass="text-[#9C754E]"
+          [icon]="data.expanded ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"></p-button>
+      </td>
+      }
+    </ng-template>
+
+    <ng-template #actionListTemplate let-data="data">
+      <td class=" lg:w-[300px]">
+        <div class="flex justify-center">
+          @if (showTableCollapseMode) {
+          <p-button class="navbar__profile-dropdown" type="button" icon="pi pi-ellipsis-h"
+            (click)="toggleActionsMenu($event)">
+          </p-button>
+          <p-menu styleClass="rtl" #menu [popup]="true" appendTo="body" [model]="actions">
+            <ng-template pTemplate="item" let-action>
+              @if(action.permission){
+                <app-can action="Edit" [resource]="action.permission">
+                @if (action.component) {
+                  <div class="px-3">
+                    <ng-template *ngComponentOutlet="
+                      action.component;
+                      inputs: {
+                        rowData: data.item,
+                        btnIcon: action.icon,
+                        btnLabel: action.label,
+                      }
+                    ">
+                    </ng-template>
+                  </div>
+                  } @else {
+                  <p-button styleClass="text-[#4B4F54] w-full justify-end gap-2" size="small" [icon]="action.icon"
+                    [text]="true" (onClick)="handleOnSelectRow(data.item)">{{ action.label }}</p-button>
+                  }
+                  </app-can>
+              }@else {
+                @if (action.component) {
+                  <div class="px-3">
+                    <ng-template *ngComponentOutlet="
+                      action.component;
+                      inputs: {
+                        rowData: data.item,
+                        btnIcon: action.icon,
+                        btnLabel: action.label,
+                      }
+                    ">
+                    </ng-template>
+                  </div>
+                  } @else {
+                  <p-button styleClass="text-[#4B4F54] w-full justify-end gap-2" size="small" [icon]="action.icon"
+                    [text]="true" (onClick)="handleOnSelectRow(data.item)">{{ action.label }}</p-button>
+                  }
+              }
+            
+            </ng-template>
+          </p-menu>
+          } @else {
+          <p-menubar styleClass="bg-transparent border-transparent" [model]="actions">
+            <ng-template pTemplate="item" let-action>
+              @if (action.component) {
+              <div class="pr-2">
+                @if(action.permission){
+                  <app-can action="Edit" [resource]="action.permission">
+                <ng-template *ngComponentOutlet="
+                    action.component;
+                    inputs: {
+                      rowData: fillItem(data.item),
+                      btnIcon: action.icon,
+                      btnLabel: ''
+                    }
+                  ">
+                </ng-template>
+                </app-can>
+              }@else { 
+                <ng-template *ngComponentOutlet="
+                action.component;
+                inputs: {
+                  rowData: fillItem(data.item),
+                  btnIcon: action.icon,
+                  btnLabel: ''
+                }
+              ">
+            </ng-template>
+              }
+              </div>
+              } @else {
+              <p-button styleClass="text-[#4B4F54]" size="small" [icon]="action.icon" [text]="true"
+                (onClick)="handleOnSelectRow(data.item)"></p-button>
+              }
+            </ng-template>
+          </p-menubar>
+          }
+        </div>
+      </td>
+    </ng-template>
+  </p-table>
+  
+</div>
+
+<ng-content></ng-content>

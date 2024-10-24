@@ -1,0 +1,13 @@
+@import "./theme.scss";
+
+.rtl {
+  .p-multiselect {
+    .p-multiselect-panel .p-multiselect-header .p-checkbox,
+    .p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox {
+      @apply me-2 mr-0;
+    }
+    .p-multiselect-panel .p-multiselect-header .p-multiselect-close {
+      @apply ms-2 ml-0;
+    }
+  }
+}

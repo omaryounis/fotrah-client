@@ -1,0 +1,102 @@
+<p class="text-primary font-neo text-2xl font-semibold">
+  {{ "home" | translate }}
+</p>
+<div class="container max-w-full mx-auto mt-5 mb-8">
+  <div class="grid  sm:grid-cols-1 lg:grid-cols-4 md:grid-cols-2 gap-4">
+    <!-- Second column -->
+     @if ( authService.checkPermissions('View_Requests' ,false)) {
+
+       <app-can action="View" resource="Requests">
+       <app-statistics-card
+         [title]="'requests' | translate"
+         [bodyText]="kpis.requests.toString()"
+         detailsUrl="transactions/requests"
+         iconAlt="wallet icon"
+         iconPath="assets/images/icons/empty-wallet.svg"
+       >
+     </app-statistics-card>
+     </app-can>
+     }
+    <!-- First column -->
+    @if ( authService.checkPermissions('View_Missions' ,false)) {
+    <app-can action="View" resource="Missions">
+
+      <app-statistics-card
+        [title]="'tasks' | translate"
+        [bodyText]="kpis.tasks.toString()"
+        detailsUrl="transactions/tasks"
+        iconAlt="wallet icon"
+        iconPath="assets/images/icons/empty-wallet.svg"
+      >
+      </app-statistics-card>
+   </app-can>
+  }
+   <app-can action="List" resource="Bill">
+    <app-statistics-card
+        [title]="'paid-bills-count' | translate"
+        [bodyText]="billInfo.totalPaidBillsAmount"
+        [isCurrency]="true"
+        iconAlt="wallet icon"
+        iconPath="assets/images/icons/empty-wallet.svg"
+      >
+      </app-statistics-card>
+    </app-can>
+    <app-can action="List" resource="Bill">
+      <app-statistics-card
+      [title]="'unpaid-bills-count' | translate"
+      [bodyText]="billInfo.totalUnpaidBillsAmount"
+      [isCurrency]="true"
+      iconAlt="wallet icon"
+      iconPath="assets/images/icons/empty-wallet.svg"
+    >
+    </app-statistics-card>
+  </app-can>
+    <!-- Third column -->
+    <!-- <app-statistics-card title="التقارير" bodyText="32" detailsUrl="#" iconAlt="wallet icon"
+      iconPath="assets/images/icons/empty-wallet.svg">
+    </app-statistics-card> -->
+
+    <!-- Fourth column -->
+    <!-- <app-statistics-card title="التقارير" bodyText="32" detailsUrl="#" iconAlt="wallet icon"
+      iconPath="assets/images/icons/empty-wallet.svg">
+    </app-statistics-card> -->
+  </div>
+</div>
+<app-can action="List" resource="Bill">
+<div class="grid md:grid-cols-3 sm:grid-cols-1">
+  <div></div>
+  <p-dropdown
+    [options]="reportTypes"
+    [(ngModel)]="reportType"
+    (onChange)="handleFillData()"
+    optionLabel="name"
+    optionValue="value"
+    class="mt-3 report-type"
+    [placeholder]="'choose' | translate"
+  />
+</div>
+<div class="container max-w-full mx-auto mt-5 mb-20">
+  <div class="grid  lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-4 min-h-[340px]">
+    <app-general-bill-chart></app-general-bill-chart>
+    <app-calender-bill-chart></app-calender-bill-chart>
+    <!-- <p-card styleClass="violation-map">
+        <ng-template pTemplate="header">
+          <div class="flex justify-between items-center">
+            <p class="violation-map__title">خريطة المخالفات</p>
+            <p-button styleClass="violation-map__download">
+              <img src="assets/images/icons/dowmload.svg" alt="download icon" />
+            </p-button>
+          </div>
+        </ng-template>
+        <google-map [center]="center" [zoom]="zoom" width="100%"></google-map>
+      </p-card> -->
+  </div>
+</div>
+</app-can>
+<!-- @if (reportType == 'permits') {
+  <div class="container max-w-full mx-auto mt-5 mb-20">
+    <div class="grid grid-cols-2 md:grid-cols-2 gap-4 h-[340px]">
+    
+    </div>
+  </div>
+} -->

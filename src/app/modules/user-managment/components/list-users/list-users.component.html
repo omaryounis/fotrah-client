@@ -1,0 +1,195 @@
+<app-page-header [title]="'user-managment' | translate" buttonLabel="add-user">
+  <app-create-user left-content></app-create-user>
+</app-page-header>
+<div class="my-4">
+  <app-search-bar
+    [placeholder]="'search' | translate"
+    (onSearchValueChange)="onSearchTextChange($event)"
+    [isInlineSearch]="true"
+    (onClickSearch)="getUsersList(10,1)"
+    
+  ></app-search-bar>
+</div>
+<div
+  class="table-container container max-w-full mx-auto mb-20 overflow-x-auto min-h-lvh"
+>
+  <p-table
+    class="table"
+    [value]="users"
+    [scrollable]="true"
+    scrollHeight="flex"
+    dataKey="id"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        @if(showTableCollapseMode) {
+        <th>{{ "id-no" | translate }}</th>
+        <th>{{ "username" | translate }}</th>
+        <!-- <th>{{'status' | translate}}</th> -->
+        <th>
+          <img
+            class="mx-auto"
+            src="assets/images/icons/three_dots_outline.svg"
+            alt="table action icon"
+            width="20"
+          />
+        </th>
+        } @else {
+        <th>{{ "username" | translate }}</th>
+        <th>{{ "id-no" | translate }}</th>
+
+        <th>{{ "email" | translate }}</th>
+        <!-- <th>{{'status' | translate}}</th> -->
+
+        <th>
+          <img
+            class="mx-auto"
+            src="assets/images/icons/three_dots_outline.svg"
+            alt="table action icon"
+            width="20"
+          />
+        </th>
+        }
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user let-expanded="expanded">
+      <tr>
+        @if (!showTableCollapseMode) {
+        <td>{{ user.fullName ? user.fullName : user.userName }}</td>
+        }
+        <td class="w-[200px]">{{ user.identityNumber }}</td>
+        @if (showTableCollapseMode) {
+        <td>
+          <p-button
+            type="button"
+            [text]="true"
+            [pRowToggler]="user"
+            styleClass="text-[#9C754E]"
+            [icon]="expanded ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"
+          ></p-button>
+        </td>
+        } @if (!showTableCollapseMode) {
+        <td>{{ user.email }}</td>
+
+        }
+
+        <td>
+          <div class="flex justify-center">
+            @if (showTableCollapseMode) {
+            <p-button
+              class="navbar__profile-dropdown"
+              type="button"
+              icon="pi pi-ellipsis-h"
+              (click)="toggleActionsMenu($event)"
+            >
+            </p-button>
+            <p-menu
+              styleClass="rtl"
+              #menu
+              [popup]="true"
+              appendTo="body"
+              [model]="actionItems"
+            >
+            </p-menu>
+            } @else {
+            <!-- <p-button styleClass="text-[#4B4F54]" icon="pi pi-download" size="small" [text]="true"></p-button> -->
+
+            <p-button
+              styleClass="text-[#4B4F54]"
+              icon="pi pi-eye"
+              [text]="true"
+              (onClick)="openShowUser(user)"
+            ></p-button>
+            <p-button
+              styleClass="text-[#4B4F54]"
+              icon="pi pi-file-edit"
+              [text]="true"
+              (onClick)="openEditUser(user)"
+            ></p-button>
+            <div class="flex items-center  justify-start gap-2 cursor-pointer"  (click)="openActivationModal(user)">
+              <label
+                class="font-neo "
+               
+                for="activityStatus"
+                >{{
+                  user.status
+                    ? ("active" | translate)
+                    : ("not-active" | translate)
+                }}</label
+              >
+              <p-inputSwitch
+                styleClass="h-[1.75rem]"
+                inputId="activityStatus"
+                [(ngModel)]="user.status"
+                [disabled]="true"
+              ></p-inputSwitch>
+            </div>
+            }
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-user>
+      <tr>
+        <td class="pb-0" colspan="100">
+          <div class="flex justify-between items-center flex-wrap w-full">
+            <div class="w-1/2 mb-5">
+              <p class="text-primary text-sm font-semibold mb-1">
+                {{ "username" | translate }}
+              </p>
+              <p class="text-xs text-[#464748]">{{ user.name }}</p>
+            </div>
+            <div class="w-1/2 mb-5">
+              <p class="text-primary text-sm font-semibold mb-1">
+                {{ "id-no" | translate }}
+              </p>
+              <p class="text-xs text-[#464748]">{{ user.nationalId }}</p>
+            </div>
+            <div class="w-1/2 mb-5">
+              <p class="text-primary text-sm font-semibold mb-1">
+                {{ "email" | translate }}
+              </p>
+              <p class="text-xs text-[#464748]">{{ user.email }}</p>
+            </div>
+            <div class="w-1/2 mb-5">
+              <p class="text-primary text-sm font-semibold mb-1">
+                {{ "status" | translate }}
+              </p>
+              <p class="text-xs text-[#464748]">{{ user.status }}</p>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  @if(users.length > 0 ) {
+  <p-paginator
+    (onPageChange)="onPageChange($event)"
+    [first]="first"
+    [rows]="rows"
+    [totalRecords]="totalCount"
+    [rowsPerPageOptions]="[10, 20, 30]"
+  />
+  }
+</div>
+
+<app-edit-user
+  [modalService]="editModalService"
+  [userData]="selectedUser"
+></app-edit-user>
+<app-show-user
+  [modalService]="showModalService"
+  [userData]="selectedUser"
+></app-show-user>
+<app-crud-modal
+  [config]="deleteConfig"
+  mode="toggleActivation"
+  (onSubmit)="submitDeleteUser()"
+  (onCancel)="closeDeleteModal()"
+>
+  <app-user-form
+    form
+    [userData]="selectedUser"
+    mode="toggleActivation"
+  ></app-user-form>
+</app-crud-modal>

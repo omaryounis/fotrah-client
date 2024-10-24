@@ -1,0 +1,56 @@
+:host ::ng-deep {
+  .chart-label {
+    @apply text-primary ms-2 sm:text-sm font-frutiger relative after:content-[''] after:inline-block after:w-[8px] after:h-[8px] after:bg-primary after:absolute after:right-[-12px] after:top-[40%] after:rounded-full;
+  }
+
+  .violation-map,
+  .violation-statistics {
+    @apply rounded-lg h-full;
+    box-shadow: 0px 0px 27px 0px rgba(0, 0, 0, 0.05);
+
+    &__title {
+      @apply font-neo md:text-lg sm:text-sm font-semibold;
+    }
+
+    &__download {
+      @apply bg-transparent border-gray-300 rounded-md;
+    }
+
+    .p-card-header {
+      @apply text-primary p-6 pb-0;
+    }
+
+    .p-card-body {
+      @apply py-0;
+    }
+  }
+
+  .p-multiselect {
+    @apply w-[150px];
+  }
+.report-type {
+  .p-dropdown  {
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    padding: 5px 10px;
+    box-shadow: 0px 0px 10px #eee;
+}
+}
+
+  .violation-statistics {
+    .p-card-body {
+      height: calc(100% - 52px);
+    }
+
+    .p-card-content {
+      @apply h-full;
+    }
+
+    &__chart {
+      div {
+        @apply h-[340px];
+      }
+    }
+  }
+}

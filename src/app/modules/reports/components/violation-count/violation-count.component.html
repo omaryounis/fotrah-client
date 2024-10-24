@@ -1,0 +1,32 @@
+<!-- Report Filters -->
+<div class=" w-full">
+  <div class="form-group">
+    <label class="!text-primary" for="username">{{'period' | translate}}</label>
+    <p-calendar styleClass="w-full" id="calender-clear" [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true"
+      [showIcon]="true"  [showClear]="true"  (onSelect)="handleDateSelect($event)" (onClear)="getReports()" dateFormat="yy/mm/dd" dataType="string">
+    </p-calendar>
+  </div>
+</div>
+<p-card styleClass="chart-card mt-11">
+  <ng-template pTemplate="header">
+    <div class="flex justify-between items-center">
+      <p class="chart-card__title"> {{title | translate}} </p>
+      <p-button [label]="'export' | translate" icon="pi pi-file-export" (onClick)="handelReportExport()" />
+    </div>
+  </ng-template>
+  <div class="grid grid-cols-1 md:grid-cols-2 md:gap-11 place-content-center h-full">
+    <app-doughnut-with-label [data]="violationCountData"></app-doughnut-with-label>
+    <div class="flex flex-col">
+      <div class="gredient-green mb-8">
+        <p>{{'paid-bills-count' | translate}} </p>
+        <p>{{paidBillsCount}}</p>
+      </div>
+      <div class="secndary-card">
+        <p >{{'unpaid-bills-count' | translate}}</p>
+        <p>{{ unpaidBillsCount }}</p>
+      </div>
+    </div>
+  </div>
+</p-card>
+
+  

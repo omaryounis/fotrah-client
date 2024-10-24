@@ -1,0 +1,153 @@
+@if (mode === "toggleActivation") {
+  <div class="w-full text-center min-h-10">
+    <div class="flex justify-center w-full mb-6">
+      @if (!activityData.status) {<i class="pi pi-verified text-primary" style="font-size: 5rem"></i>}
+      @else {<i class="pi pi-ban text-red-600" style="font-size: 5rem"></i>}
+    </div>
+  
+    <h3 [ngClass]="{'text-primary': !activityData.status , 'text-red-600': activityData.status}" class="font-frutiger text-lg">{{labelConfirmation | translate}}</h3>
+  </div>
+}
+@else {
+<form
+  #form="ngForm"
+  (mouseover)="getFormValidation(form.invalid!)"
+  (input)="getFormValidation(form.invalid!)"
+>
+  <div class="form-row">
+    <div class="form-group">
+      <label class="required-element" for="nameAr">
+        {{ "name-ar" | translate }}
+      </label>
+      <input
+        pInputText
+        name="nameAr"
+        aria-label="nameAr"
+        #nameAr="ngModel"
+        [(ngModel)]="activityData.nameAr"
+        [placeholder]="'name-ar' | translate"
+        required
+        pattern="[ء-ي0-9!@#$%^&*()_+{}\[\]:;',./<>?\- ]+"
+        placeholder="{{ 'name-ar' | translate }}"
+        [disabled]="mode === 'show'"
+      />
+      @if (nameAr.invalid && (nameAr.dirty || nameAr.touched)) {
+      <div class="text-red-600">
+        @if (nameAr.errors?.['required']) {
+        <span> {{ "this-field-required" | translate }}</span> } @if
+        (nameAr.errors?.['pattern']) {
+        <span> {{ "accept-only-arabic" | translate }}</span
+        >}
+      </div>
+      }
+    </div>
+    <div class="form-group">
+      <label class="required-element" for="nameEn">
+        {{ "name-en" | translate }}
+      </label>
+      <input
+        pInputText
+        name="nameEn"
+        aria-label="nameEn"
+        #nameEn="ngModel"
+        [(ngModel)]="activityData.nameEn"
+        pattern="[A-Za-z0-9!@#$%^&*()_+{}\[\]:;',./<>?\- ]+"
+        required
+        placeholder="{{ 'name-en' | translate }}"
+        [disabled]="mode === 'show'"
+      />
+      @if (nameEn.invalid && (nameEn.dirty || nameEn.touched)) {
+      <div class="text-red-600">
+        @if (nameEn.errors?.['required']) {
+        <span> {{ "this-field-required" | translate }}</span> } @if
+        (nameEn.errors?.['pattern']) {
+        <span> {{ "accept-only-english" | translate }}</span
+        >}
+      </div>
+      }
+    </div>
+    <!-- <div class="form-group">
+      <label class="required-element" for="sector"> {{'sector' | translate}} </label>
+      <input
+        pInputText
+        name="sector"
+        aria-label="sector"
+        #sector="ngModel"
+        [(ngModel)]="activityData.sector"
+        [placeholder]="'sector' | translate"
+        required
+        [disabled]="mode === 'show'"
+      />
+      @if (sector.invalid && (sector.dirty || sector.touched)) {
+        <div class="text-red-600">
+          @if (sector.errors?.['required']) { <span> {{'this-field-required' | translate}}</span> }
+          @if (sector.errors?.['pattern']) { <span> {{'accept-only-english' | translate}}</span>}
+        </div>
+      }
+    </div> -->
+    <div class="form-group">
+      <label class="required-element" for="code"
+        >{{ "activity-no" | translate }}
+      </label>
+      <input
+        pInputText
+        name="code"
+        aria-label="code"
+        #code="ngModel"
+        [(ngModel)]="activityData.code"
+        [placeholder]="'activity-no' | translate"
+        pattern="[a-zA-Z0-9]+"
+        required
+        [disabled]="mode === 'show'"
+      />
+      @if (code.invalid && (code.dirty || code.touched)) {
+      <div class="text-red-600">
+        @if (code.errors?.['required']) {
+        <span> {{ "this-field-required" | translate }}</span> } @if
+        (code.errors?.['pattern']) {
+        <span> {{ "not-contain-characters" | translate }}</span
+        >}
+      </div>
+      }
+    </div>
+  </div>
+  <div class="form-row !grid-cols-1">
+    <div class="form-group">
+      <label class="required-element" for="clasificationNumber">{{
+        "gfs-record" | translate
+      }}</label>
+      <p-dropdown
+        class="dropdown"
+        styleClass="w-full"
+        [options]="gfs_list"
+        [(ngModel)]="selected_gfs"
+        [optionLabel]="langService.getNameFormat()"
+        optionValue="id"
+        [showClear]="true"
+        (onChange)="setData()"
+        appendTo="body"
+        id="classification"
+        name="classification"
+        aria-label="classification"
+        [disabled]="mode === 'show'"
+      ></p-dropdown>
+    </div>
+    <div class="form-group">
+      <label for="activityDescription">
+        {{ "activity-desc" | translate }}
+      </label>
+      <textarea
+        pInputTextarea
+        id="activityDescription"
+        name="activityDescription"
+        aria-label="activityDescription"
+        [(ngModel)]="activityData.description"
+        [disabled]="mode === 'show'"
+        rows="5"
+        maxlength="255"
+      >
+      </textarea>
+    </div>
+  </div>
+</form>
+}

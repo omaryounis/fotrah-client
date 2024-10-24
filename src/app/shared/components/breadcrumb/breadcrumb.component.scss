@@ -1,0 +1,24 @@
+:host ::ng-deep {
+  .p-breadcrumb {
+    @apply bg-transparent border-transparent p-0;
+
+    .p-breadcrumb-list li .p-menuitem-link .p-menuitem-text {
+      @apply font-neo text-[#4B4F54] text-sm;
+    }
+
+    // [lang="ar"] .p-icon {
+    //   @apply transform scale-x-[-1] text-[#99744E];
+    // }
+
+    // [lang="en"] .p-icon {
+    //   @apply transform scale-x-[1] text-[#99744E];
+    // }
+
+    /* LTR Direction */
+
+  }
+
+
+
+
+}

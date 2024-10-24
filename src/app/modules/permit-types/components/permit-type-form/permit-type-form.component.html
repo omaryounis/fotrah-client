@@ -1,0 +1,122 @@
+@if (mode === "toggleActivation") {
+  <div class="w-full text-center min-h-10">
+    <div class="flex justify-center w-full mb-6">
+      @if (!permitTypeData.status) {<i class="pi pi-verified text-primary" style="font-size: 5rem"></i>}
+      @else {<i class="pi pi-ban text-red-600" style="font-size: 5rem"></i>}
+    </div>
+  
+    <h3 [ngClass]="{'text-primary': !permitTypeData.status , 'text-red-600': permitTypeData.status}" class="font-frutiger text-lg">{{labelConfirmation | translate}}</h3>
+  </div>
+}
+@else {
+<form #form="ngForm"  (mouseover)="getFormValidation(form.invalid!)" (input)="getFormValidation(form.invalid!)">
+  <div class="form-row">
+    <div class="form-group">
+      <label class="required-element" for="permitTypeNameAr">{{'name-ar' | translate}}</label>
+      <input
+        pInputText
+        id="permitTypeNameAr"
+        name="permitTypeNameAr"
+        aria-label="permitTypeNameAr"
+        #nameAr="ngModel"
+        [(ngModel)]="permitTypeData.nameAr"
+        required
+        pattern="[ء-ي0-9!@#$%^&*()_+{}\[\]:;',./<>?\- ]+"
+        placeholder="{{'name-ar' | translate}}"
+        [disabled]="mode === 'show'"
+      />
+      @if (nameAr.invalid && (nameAr.dirty || nameAr.touched)) {
+        <div class="text-red-600">
+          @if (nameAr.errors?.['required']) { <span> {{'this-field-required' | translate}}</span> }
+          @if (nameAr.errors?.['pattern'] ) { <span> {{'accept-only-arabic' | translate}}</span> }
+        </div>
+      }
+    </div>
+    <div class="form-group">
+      <label class="required-element" for="clasificationNameEn">{{'name-en' | translate}}</label>
+      <input
+        pInputText
+        id="permitTypeNameEn"
+        name="permitTypeNameEn"
+        aria-label="permitTypeNameEn"
+        #nameEn="ngModel"
+        required
+        [(ngModel)]="permitTypeData.nameEn"
+        pattern="[A-Za-z0-9!@#$%^&*()_+{}\[\]:;',./<>?\- ]+" 
+        placeholder="{{'name-en' | translate}}"
+        [disabled]="mode === 'show'"
+      />
+      @if (nameEn.invalid && (nameEn.dirty || nameEn.touched)) {
+        <div class="text-red-600">
+          @if (nameEn.errors?.['required']) { <span> {{'this-field-required' | translate}}</span> }
+          @if (nameEn.errors?.['pattern']) { <span> {{'accept-only-english' | translate}}</span>}
+        </div>
+      }
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group">
+      <label class="required-element" for="validityBillPaymentPeriodInDays">{{'Code' | translate}}</label>
+      <input
+        pInputText
+        id="validityBillPaymentPeriodInDays"
+        name="validityBillPaymentPeriodInDays"
+        type="text"
+        aria-label="validityBillPaymentPeriodInDays"
+        #code="ngModel"
+        [(ngModel)]="permitTypeData.code"
+        pattern="^[\d]+$" 
+        required
+        placeholder="{{'Code' | translate}}"
+        [disabled]="mode === 'show'"
+      />
+      @if (code.invalid && (code.dirty || code.touched)) {
+        <div class="text-red-600">
+          @if (code.errors?.['required']) { <span> {{'this-field-required' | translate}}</span> }
+          @if (code.errors?.['pattern']) { <span> {{'accept-only-numbers' | translate}}</span>}
+        </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label class="required-element" for="periodDays">{{'period-days' | translate}}</label>
+      <input
+        pInputText
+        id="periodDays"
+        name="periodDays"
+        type="text"
+        pattern="^[\d]+$" 
+        aria-label="periodDays"
+        #periodDays="ngModel"
+        required
+        [(ngModel)]="permitTypeData.validityBillPaymentPeriodInDays"
+        placeholder="{{'period-days' | translate}}"
+        [disabled]="mode === 'show'"
+      />
+      @if (periodDays.invalid && (periodDays.dirty || periodDays.touched)) {
+        <div class="text-red-600">
+          @if (periodDays.errors?.['required']) { <span> {{'this-field-required' | translate}}</span> }
+          @if (periodDays.errors?.['pattern']) { <span> {{'accept-only-numbers' | translate}}</span>}
+        </div>
+      }
+    </div>
+  </div>
+  <div class="form-row !grid-cols-1">
+    <div class="form-group">
+      <label  for="excavation-typeDescription"> {{'Description' | translate}}  </label>
+      <textarea
+        pInputTextarea
+        id="excavation-typeDescription"
+        name="excavation-typeDescription"
+        aria-label="excavation-typeDescription"
+        [(ngModel)]="permitTypeData.descriptionAr"
+        [disabled]="mode === 'show'"
+        rows="5"
+        maxlength="255"
+      >
+      </textarea>
+    </div>
+  </div>
+  
+</form>
+}

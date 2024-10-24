@@ -1,0 +1,18 @@
+<div class="flex flex-col h-screen pt-5">
+  <header class="flex justify-between">
+    <div class="sm:inline-block  lang-area align-middle ms-[20px] ">
+
+      <p-button [rounded]="true" id="lang-icon" (onClick)="toggleLang()" icon="pi pi-globe"></p-button>
+      <p-button class="hidden" id="lang-label" [rounded]="true" [label]="browserLang == 'en' ? ('ar' | translate) : ('en' | translate)"></p-button>
+    </div>
+    <img
+      class="me-8"
+      width="180"
+      src="assets/images/RIPC_color_logo 1.png"
+      alt="Ribc logo"
+    />
+  </header>
+  <div class="flex flex-1 justify-center items-center sm:px-5 px-0">
+    <router-outlet></router-outlet>
+  </div>
+</div>

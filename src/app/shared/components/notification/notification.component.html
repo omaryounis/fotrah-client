@@ -1,0 +1,37 @@
+@if (isOpen) {
+
+  <div  class="card flex justify-content-center menu">
+    
+    <p-card class="font-neo text-primary" [header]="('notifications' | translate) + '(' + notificationCount + ')'"  >
+
+      <p-button [label]="'mark-all-as-read' | translate" [text]="true" [rounded]="true" icon="pi pi-check" (onClick)="markAllAsRead()" severity="info" iconPos="left" />
+      <div class="card-container">
+
+        @for (item of displayedNotifications(); track $index) {
+          
+          <div [dir]="lang == 'ar' ? 'rtl' : 'ltr'" class="item-menu border-t-2 pt-4 mt-3 px-2 flex justify-between cursor-pointer" (click)="markAsRead(item.notificationId)">
+            <div class="m-0 text-sm flex">
+           
+               {{lang == 'ar' ? item.messageAr : item.message}}
+            </div>
+            <div >
+              @if (item.isSeen == false) {
+                <i class="pi pi-circle-fill me-2 my-auto  text-[#874E9F]" style="font-size: 0.5rem"></i>
+              }@else {
+                <i class="pi pi-check-circle me-2 my-auto  text-[#a5a3a3]" style="font-size: 0.5rem"></i>
+              }    </div>
+          </div>
+          <div class="text-gray-300 text-xs px-2 ">
+            {{'before' | translate}} {{(calculateTimeDifference(item.creationDate , 'minutes') <= 60 ? (calculateTimeDifference(item.creationDate , 'minutes') + ('mis-ago' | translate)) :(calculateTimeDifference(item.creationDate , 'hours') + ('hours-ago' | translate)) ) }}
+          </div>
+          
+        }
+      </div>
+      <div class="flex justify-center w-full mt-3">
+
+        <p-button [label]="!isCollapsed ? ('show-more' | translate) : ('show-less' | translate)" class="show-all" [text]="true" [rounded]="true"  (onClick)="isCollapsed = !isCollapsed;updateList(); " severity="info" iconPos="left" />
+      </div>
+
+      </p-card>
+  </div>
+}

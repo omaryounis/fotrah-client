@@ -1,0 +1,3 @@
+<app-crud-modal [config]="modalConfig" (onSubmit)="submitUser()" (onCancel)="closeModal()">
+  <app-user-form form [userData]="userData" [mode]="'show'"></app-user-form>
+</app-crud-modal>

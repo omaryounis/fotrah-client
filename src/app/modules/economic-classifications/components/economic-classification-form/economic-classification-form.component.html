@@ -1,0 +1,95 @@
+@if (mode === "toggleActivation") {
+  <div class="w-full text-center min-h-10">
+    <div class="flex justify-center w-full mb-6">
+      @if (!economicClassification.status) {<i class="pi pi-verified text-primary" style="font-size: 5rem"></i>}
+      @else {<i class="pi pi-ban text-red-600" style="font-size: 5rem"></i>}
+    </div>
+  
+    <h3 [ngClass]="{'text-primary': !economicClassification.status , 'text-red-600': economicClassification.status}" class="font-frutiger text-lg">{{labelConfirmation | translate}}</h3>
+  </div>
+}
+@else {
+  <form #form="ngForm" (mouseover)="getFormValidation(form.invalid!)"  (input)="getFormValidation(form.invalid!)">
+  <div class="form-row">
+    <div class="form-group">
+      <label class="required-element" for="nameAr"> {{'name-ar' | translate}} </label>
+      <input
+        pInputText
+        name="nameAr"
+        aria-label="nameAr"
+        #nameAr="ngModel"
+        [(ngModel)]="economicClassification.nameAr"
+        [placeholder]="'name-ar' | translate"
+        required
+        pattern="[ء-ي0-9!@#$%^&*()_+{}\[\]:;',./<>?\- ]+"
+        placeholder="{{'name-ar' | translate}}"
+        [disabled]="mode === 'show'"
+      />
+      @if (nameAr.invalid && (nameAr.dirty || nameAr.touched)) {
+        <div class="text-red-600">
+          @if (nameAr.errors?.['required']) { <span> {{'this-field-required' | translate}}</span> }
+          @if (nameAr.errors?.['pattern']) { <span> {{'accept-only-arabic' | translate}}</span>}
+        </div>
+      }
+
+    </div>
+    <div class="form-group">
+      <label class="required-element" for="nameEn"> {{'name-en' | translate}} </label>
+      <input
+        pInputText
+        name="nameEn"
+        aria-label="nameEn"
+        #nameEn="ngModel"
+        [(ngModel)]="economicClassification.nameEn"
+        pattern="[A-Za-z0-9!@#$%^&*()_+{}\[\]:;',./<>?\- ]+" 
+        required
+        placeholder="{{'name-en' | translate}}"
+        [disabled]="mode === 'show'"
+      />
+      @if (nameEn.invalid && (nameEn.dirty || nameEn.touched)) {
+        <div class="text-red-600">
+          @if (nameEn.errors?.['required']) { <span> {{'this-field-required' | translate}}</span> }
+          @if (nameEn.errors?.['pattern']) { <span> {{'accept-only-english' | translate}}</span>}
+        </div>
+      }
+    </div>
+    </div>
+    <div class="form-row">
+    <div class="form-group">
+      <label for="beneficiaryAgencyName" class="required-element">{{'beneficiary-agency-name' | translate}}</label>
+      <input
+        pInputText
+        id="beneficiaryAgencyName"
+        name="beneficiaryAgencyName"
+        aria-label="beneficiaryAgencyName"
+        #beneficiaryAgencyName="ngModel"
+        required
+        [(ngModel)]="economicClassification.beneficiaryAgencyName"
+        [disabled]="mode === 'show'"
+      />
+ 
+    </div>
+    <div class="form-group">
+      <label class="required-element" for="clasificationNumber">{{'e-class-no' | translate}}</label>
+      <input
+        pInputText
+        id="clasificationNumber"
+        name="clasificationNumber"
+        aria-label="clasificationNumber"
+        #code="ngModel"
+        required
+        pattern="[a-zA-Z0-9]+" 
+        [(ngModel)]="economicClassification.code"
+        [disabled]="mode === 'show'"
+      />
+      @if (code.invalid && (code.dirty || code.touched)) {
+        <div class="text-red-600">
+          @if (code.errors?.['required']) { <span> {{'this-field-required' | translate}}</span> }
+          @if (code.errors?.['pattern']) { <span> {{'not-contain-characters' | translate}}</span>}
+        </div>
+      }
+    </div>
+  </div>
+  
+</form>
+}

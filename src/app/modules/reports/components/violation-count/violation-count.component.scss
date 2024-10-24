@@ -1,0 +1,20 @@
+.secndary-card {
+    @apply rounded-2xl pt-4 ps-6 pb-3 bg-[#eee] text-[#874e9f] font-neoBold text-sm;
+
+    box-shadow: 0px 4.367px 2.919px 0px #874e9f47;
+}
+
+::ng-deep {
+    #calender-clear .p-inputtext {
+        padding-inline-start: 1.75rem;
+    }
+    
+     .p-calendar-clear-icon , .p-dropdown-clear-icon{
+        right: 0.5rem;
+        left: 0.5rem;;
+    }
+  
+    .p-calendar .p-datepicker {
+        left: 0px !important;
+    }
+}

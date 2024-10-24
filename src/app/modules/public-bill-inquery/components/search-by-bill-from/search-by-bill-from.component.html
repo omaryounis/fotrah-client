@@ -1,0 +1,20 @@
+<form novalidate [formGroup]="searchByBillForm" (ngSubmit)="onSearch()">
+  <div class="form-row">
+    <div class="form-group">
+      <label for="billNumber" class="!font-readex !text-[#71717a] !text-base required-element">{{'bill-number' | translate}}</label>
+      <input pInputText class="!rounded-full" id="billNumber" name="billNumber" aria-label="billNumber"
+        formControlName="billNumber" [(ngModel)]="searchData.billNumber" placeholder="" />
+      <app-form-error [inputFormControl]="billNumber" [errorMessages]="errorMessages.billNumber"></app-form-error>
+    </div>
+    <div class="form-group">
+      <label for="identityNumber" class="!font-readex !text-[#71717a] !text-base required-element" >{{'id-no' | translate}}</label>
+      <input pInputText id="identityNumber" name="identityNumber" formControlName="identityNumber"
+        aria-label="identityNumber" [(ngModel)]="searchData.identityNumber" placeholder="" />
+      <app-form-error [inputFormControl]="identityNumber"
+        [errorMessages]="errorMessages.identityNumber"></app-form-error>
+    </div>
+  </div>
+  <div class="flex justify-center">
+    <p-button styleClass="search__submit-btn" type="submit" [disabled]="searchByBillForm.invalid">{{'send-inquiry' | translate}}</p-button>
+  </div>
+</form>

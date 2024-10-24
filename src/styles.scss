@@ -1,0 +1,287 @@
+/* You can add global styles to this file, and also import other style files */
+@layer tailwind-base, primeng;
+
+@import "tailwindcss/base" layer(tailwind-base);
+@tailwind components;
+@tailwind utilities;
+
+@import "primeicons/primeicons.css";
+@import "./assets/ripc/theme-rtl.scss";
+@import "primeng/resources/primeng.min.css";
+
+@font-face {
+  font-family: "Neo Sans W23";
+  src: url("./assets/fonts/alfont_com_NeoSansW23-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Neo Sans Arabic";
+  src: url("./assets/fonts/alfont_com_NeoSansArabic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "FFShamelFamilySansOneBold";
+  src: url("./assets/fonts/FFShamelFamily-SansOneBold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "FrutigerLTArabic-65Bold";
+  src: url("./assets/fonts/alfont_com_AlFont_com_FrutigerLTArabic-65Bold-1.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("./assets/fonts/Inter-VariableFont_slnt.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Readex Pro Deca ExtraLight";
+  src: url("./assets/fonts/ReadexPro-VariableFont_HEXP\,wght.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Readex Pro";
+  src: url("./assets/fonts/ReadexPro-Regular.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Readex Pro";
+  src: url("./assets/fonts/ReadexPro-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* styles.css */
+html {
+  background: #f8f8f8;
+}
+/* Default LTR styles */
+body {
+  direction: ltr;
+}
+/* Target required input elements */
+.required-element::after {
+  content: "*";
+  margin-inline-start: 5px; /* Adjust spacing as needed */
+  color: red; /* Optional: Change asterisk color */
+}
+/* RTL styles */
+[dir="rtl"] body {
+  direction: rtl;
+
+  .p-breadcrumb ol li .p-icon {
+    @apply transform scale-x-[-1] text-[#99744E];
+  }
+  .p-paginator .p-paginator-first, .p-paginator .p-paginator-prev, .p-paginator .p-paginator-next, .p-paginator .p-paginator-last {
+    transform: rotateY(180deg);
+  }
+
+}
+p ,h1 {
+  @apply font-neo;
+}
+html:lang(en) {
+  .p-breadcrumb ol li .p-icon {
+    @apply transform scale-x-[1] text-[#99744E];
+  }
+
+  .p-dialog {
+    direction: ltr !important;
+  }
+
+  .card.menu {
+    transform: translate(-90%, 3%);
+        z-index: 1000;
+  }
+  .navbar__notification .p-button .p-badge {
+    margin-left: -0.5rem;
+}
+}
+
+.p-button {
+  @apply font-neo;
+}
+
+.gredient-green {
+  @apply rounded-2xl pt-4 ps-6 pb-3 text-primary font-neoBold text-sm;
+  background: linear-gradient(91deg,
+      rgba(78, 155, 110, 0.4) 0.26%,
+      rgba(122, 193, 151, 0.4) 96.59%);
+  box-shadow: 0px 4.367px 10.919px 0px rgba(156, 117, 78, 0.25);
+}
+.p-paginator .p-dropdown {
+  padding-inline-start: 10px;
+}
+.form-row {
+  @apply grid grid-cols-2 gap-x-6 mb-6;
+}
+.table-container {
+  // overflow-y: visible;
+  min-height: calc(100vh + 100px);
+}
+.form-group {
+  label {
+    @apply inline-block font-neo text-[#4B4F54] text-sm mb-2 w-full;
+  }
+
+  .p-inputtext {
+    @apply text-sm placeholder:text-sm placeholder:text-[#86929E] placeholder:font-neo w-full border border-solid border-[#D7D7D7] rounded-lg pt-3 pb-3 ps-3 pe-4;
+  }
+  span {
+    @apply font-neo;
+  }
+  .dropdown {
+    & .p-inputtext {
+      @apply border-0;
+    }
+
+    & .p-dropdown-clear-icon {
+      @apply right-auto left-[2rem];
+    }
+  }
+}
+
+.p-component-overlay-enter {
+  animation-name: modal-overlay-enter;
+}
+.crud-modal.p-dialog .p-dialog-header .p-dialog-header-icon{
+  margin-inline-start: 8px;
+}
+.crud-modal {
+  &.p-dialog {
+    box-shadow: 8px 8px 20px 0px rgba(100, 130, 158, 0.2);
+    direction: rtl;
+    .text-center.min-h-10 {
+      min-height: 150px;
+    }
+    .p-dialog-header {
+      @apply border-0 p-6 rounded-t-lg;
+
+      .p-dialog-title {
+        @apply text-primary text-base font-neo;
+      }
+
+      .p-dialog-header-icon {
+        @apply text-red-500 border border-solid border-primary rounded-none w-6 h-6;
+
+        .p-icon {
+          @apply stroke-[red] w-2.5 h-7;
+        }
+      }
+    }
+
+    .p-dialog-footer {
+      @apply border-0 rounded-b-lg;
+
+      .p-button {
+        @apply font-neo font-semibold text-base py-3.5 px-7 leading-4 rounded-lg;
+      }
+
+      .p-button.p-button-secondary.p-button-outlined {
+        border: 1px solid #eff0f2;
+      }
+    }
+  }
+
+  @keyframes modal-overlay-enter {
+    0% {
+      @apply bg-transparent;
+    }
+
+    100% {
+      background-color: rgba($color: #000000, $alpha: 0.1);
+    }
+  }
+}
+
+
+[dir="ltr"] html {
+  .auth__form-warper {
+    padding-inline-end: 0;
+  }
+}
+
+
+[dir="rtl"] .auth__form-warper {
+  padding-inline-start: 0;
+
+}
+
+input:disabled,
+textarea:disabled {
+  @apply cursor-not-allowed opacity-75;
+}
+
+.p-toast.rtl {
+  .p-toast-message-content {
+    @apply flex-row-reverse;
+  }
+
+  .p-toast-message-text {
+    @apply text-right mr-3 ml-0;
+  }
+}
+
+.auth {
+  @apply flex flex-col justify-center items-center md:p-0 fold:px-4;
+
+  &__form-wrapper {
+    @apply bg-no-repeat bg-contain p-5 sm:p-11;
+    background-image: url("./assets/images/login_bg.png");
+
+  }
+
+  &__form {
+    @apply bg-white sm:w-[400px] p-6 sm:py-8 sm:px-10;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  &__form-title {
+    @apply font-neo text-primary text-xl sm:text-2xl sm:mb-10 mb-5;
+  }
+
+  &__form-subtitle {
+    @apply font-neo text-[#6D6D6D] text-sm sm:mb-10 mb-5;
+  }
+
+  &__form-label {
+    @apply block text-base sm:text-sm font-medium text-primary font-frutiger mb-[13.3px];
+  }
+
+  &__form-input {
+    @apply border border-solid rounded-md p-3 w-full;
+    border-color: #d7d7d7;
+
+    &.ng-invalid.ng-touched {
+      @apply border-red-600 border-2;
+    }
+  }
+
+  &__form-footer {
+    @apply flex sm:flex-row flex-col sm:items-center justify-between;
+  }
+
+  &__sign-up {
+    @apply text-xs sm:mb-0 mb-5;
+    color: #6d6d6d;
+  }
+
+  &__submit-btn {
+    @apply bg-primary text-white px-4 py-2 sm:text-sm text-[10px] rounded-md #{!important};
+    margin-left: auto !important;
+  }
+}

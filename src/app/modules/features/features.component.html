@@ -1,0 +1,13 @@
+<div class="quires">
+  <app-page-header [title]="'features' | translate" [showButton]="false" headerStyleClass="mb-4"></app-page-header>
+  <div class="flex flex-wrap gap-7 mt-8">
+    @for (item of cardItems; track $index; let last = $last) {
+    <app-can action="List" resource="Activities">
+      <a [class]="[ 'link-card' ]"
+        (click)="navigateToSub(item.routerLink)">
+        <img [src]="item.image" alt="copy icon" />
+        <span class="link-card__text">{{item.title | translate}}</span>
+      </a>
+    </app-can>
+    }
+  </div>

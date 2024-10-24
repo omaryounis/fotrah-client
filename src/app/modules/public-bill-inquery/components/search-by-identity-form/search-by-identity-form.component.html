@@ -1,0 +1,20 @@
+<form novalidate [formGroup]="searchByBillForm" (ngSubmit)="onSearch()">
+  <div class="form-row ">
+    <div class="form-group">
+      <label for="identityType" class="!font-readex !text-[#71717a] !text-base required-element ">{{'id-type' | translate}}</label>
+      <p-dropdown class="dropdown !rounded-full" styleClass="w-full" [options]="identityTypes()"
+        [(ngModel)]="searchData.identityType" optionLabel="name" optionValue="id" [showClear]="true" appendTo="body"
+        id="identityType" name="identityType" aria-label="identityType" formControlName="identityType"
+        placeholder=""></p-dropdown>
+      <app-form-error [inputFormControl]="identityType" [errorMessages]="errorMessages.identityType"></app-form-error>
+    </div>
+    <div class="form-group">
+      <label for="identityNumber" class="!font-readex !text-[#71717a] !text-base required-element">{{'id-no' | translate}}</label>
+      <input pInputText id="identityNumber" name="identityNumber" formControlName="identityNumber"
+        aria-label="identityNumber" [(ngModel)]="searchData.identityNumber" placeholder="" />
+      <app-form-error [inputFormControl]="identityNumber"
+        [errorMessages]="errorMessages.identityNumber"></app-form-error>
+    </div>
+  </div>
+  <p-button styleClass="search__submit-btn" type="submit" [disabled]="searchByBillForm.invalid">{{'send-inquiry' | translate}}</p-button>
+</form>

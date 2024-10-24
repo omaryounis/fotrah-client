@@ -1,0 +1,74 @@
+<div class="quires">
+  <app-page-header [title]="'profile' | translate" [showButton]="false" headerStyleClass="mb-4"></app-page-header>
+
+  <section>
+    <!-- <div class="flex">
+      <div class="me-[20px]" style="position: relative;">
+        <div class="p-image">
+          <p-button styleClass="text-[#fff] bg-primary " icon="pi pi-camera" [text]="true"></p-button>
+          <img src="assets/images/avatar.png" class="p-image w-[180px] h-[180px] rounded-[50rem]" alt="">
+        </div>
+      </div>
+      ...
+      <div class="flex">
+        <div class="my-auto">
+          <h1 class="text-primary font-frutiger text-2xl mb-2">{{userData!.fullName}} </h1>
+          <b class="text-gray-400 font-frutiger "> UI / UX </b>
+        </div>
+      </div>
+    </div>
+    <hr class="text-[#4E9B6E80] my-[4rem]"> -->
+
+    <div>
+      <form>
+        <div class="grid grid-cols-3 gap-4">
+          <div class="form-group">
+            <label for="firstName"> {{ "full-name" | translate }} </label>
+            <input pInputText id="firstName" name="firstName" aria-label="firstName" #firstName="ngModel"
+              [(ngModel)]="userData!.fullName" disabled placeholder="" />
+          </div>
+          <div class="form-group">
+            <label for="email"> {{ "email" | translate }} </label>
+            <input pInputText id="email" name="email" aria-label="email" #email="ngModel" [(ngModel)]="userData!.email"
+              [disabled]="mode === 'show'" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+              placeholder="example@ripc.gov.sa" />
+            @if (email.invalid && (email.dirty || email.touched)) {
+            <div class="text-red-600">
+              @if (email.errors?.['required']) {<span>
+                {{ "this-field-required" | translate }}</span>
+              } @if (email.errors?.['pattern']) {<span>
+                {{ "invalid-email-format" | translate }}</span>}
+            </div>
+            }
+          </div>
+          <div class="form-group">
+            <label for="mobileNumber"> {{ "mobileNumber" | translate }} </label>
+            <input pInputText id="mobileNumber" name="mobileNumber" aria-label="mobileNumber" #mobileNumber="ngModel"
+              [(ngModel)]="userData!.mobileNumber" [disabled]="mode === 'show'" required pattern="05\d{8}"
+              placeholder="05xxxxxxxxx" />
+            @if (mobileNumber.invalid && (mobileNumber.dirty ||
+            mobileNumber.touched)) {
+            <div class="text-red-600">
+              @if (mobileNumber.errors?.['required']) {
+              <span> {{ "this-field-required" | translate }}</span> } @if
+              (mobileNumber.errors?.['pattern']) {
+              <span>
+                {{ "must-contains-10digits-starts-with05" | translate }}</span>}
+            </div>
+            }
+          </div>
+        </div>
+        <!-- <div class="flex justify-end mt-3">
+          <div class="form-group">
+            @if (mode === 'edit') {
+            <p-button pAutoFocus [outlined]="true" class="save me-3" severity="secondary"
+              (click)="getUserInfo()">{{'cancel' | translate}}</p-button>
+            }
+            <p-button (onClick)="saveData()" class="save">
+              {{ mode === "show" ? ("edit" | translate ): ("add" | translate ) }}</p-button>
+          </div>
+        </div> -->
+      </form>
+    </div>
+  </section>
+</div>

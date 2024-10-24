@@ -1,0 +1,69 @@
+h1 {
+    text-align: start;
+    margin-inline-start: 20px;
+    margin-top: 10px;
+    font-size: 1.3rem;
+    @apply text-primary font-frutiger;
+}
+
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px auto;
+}
+
+.invoice-table th, .invoice-table td {
+    padding: 12px;
+    border: 1px solid #dee2e6;
+}
+
+.invoice-table th {
+    background-color: #f1f1f1;
+    color: #333;
+    text-align: left;
+}
+
+.payment-methods {
+    margin-top: 20px;
+    @apply grid grid-cols-1 md:grid-cols-2 gap-4 ;
+}
+
+.method {
+    margin-bottom: 20px;
+    @apply w-full rounded overflow-hidden shadow-lg p-7;
+}
+
+.method h2 {
+    font-size: 22px;
+    color: #9162a3;
+}
+
+.method ol {
+    padding-left: 20px;
+}
+
+.method ol li {
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 200
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    .invoice-table th, .invoice-table td {
+        padding: 8px;
+    }
+
+    .method ol {
+        padding-left: 10px;
+    }
+}
+
+::ng-deep {
+    .submit-btn {
+      @apply bg-white hover:bg-[#9162a3] hover:border-[#9162a3] border-[#9162a3] text-[#9162a3] hover:text-[#fff] px-4 py-2 font-readex sm:text-base text-[10px] rounded-full block min-w-[158px];
+    }
+}

@@ -1,0 +1,18 @@
+<div class="quires">
+  <app-page-header [title]="'features' | translate" [showButton]="false" headerStyleClass="mb-4"></app-page-header>
+  <div class="flex flex-wrap gap-7 mt-8">
+    @for (item of cardItems; track $index) {
+    <app-can [action]="item.action" [resource]="item.resource">
+      <div [class]="['link-card']" [routerLink]="[item.routerLink]">
+        <img [src]="item.image" alt="copy icon" />
+        <span class="link-card__text">{{item.title | translate}}</span>
+      </div>
+    </app-can>
+    }
+
+
+
+    <!-- Add more cards here as needed -->
+  </div>
+
+</div>

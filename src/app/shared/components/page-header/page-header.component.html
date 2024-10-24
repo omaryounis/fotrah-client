@@ -1,0 +1,11 @@
+<header [className]="headerStyleClass">
+  <div class="page-header flex justify-between items-center mb-2">
+    <p class="text-primary font-neo sm:text-2xl text-sm font-semibold">
+      {{ title | translate }}
+    </p>
+    <ng-content select="[left-content]"></ng-content>
+  </div>
+  @if (showBreadcrumb) {
+  <app-breadcrumb></app-breadcrumb>
+  }
+</header>

@@ -1,0 +1,130 @@
+@if (btnText) {
+<p-button styleClass="bill-info__print-btn" (onClick)="printBill()">{{ btnText }}</p-button>
+} @else {
+<p-button styleClass="bill-info__print-btn" icon="pi pi-print" (onClick)="printBill()"></p-button>
+}
+
+<section [dir]="pageDirection" class="bill-content hidden" #billPrintContent>
+  <header class="header">
+    <img style="display: block" width="212" src="assets/images/RIPC_color_logo 1.png" alt="print logo" />
+    <div>
+      <div style="margin-bottom: 10px">
+        <label> {{'the-date' | translate }} : </label>
+        <span>{{ rowData?.billDate | date:'dd/MM/yyyy' }}</span>
+      </div>
+      <div>
+        <label>{{'bill-number' | translate }} : </label>
+        <span>{{ rowData?.billNumber }}</span>
+      </div>
+    </div>
+  </header>
+  <div class="content">
+    <h1 style="text-align: center; color: #874e9f; font-weight: 500">{{'bill' | translate}}</h1>
+
+    <section class="table-section">
+      <h3 style="color: #874e9f; font-weight: 500">{{checkBillType() ? ('violater-data' | translate) : ('company-data' | translate ) }} : </h3>
+      <div style="display: flex">
+        <div style="display: flex; align-items: center; flex: 1">
+          <label style="font-weight: 600; margin-left: 10px">{{checkBillType() ? ('violater-name' | translate) : ('company-name' | translate ) }}: </label>
+          <p style="margin: 0">{{ rowData?.entityName || '-' }}</p>
+        </div>
+        <div style="display: flex; align-items: center; flex: 1">
+          <label style="font-weight: 600; margin-left: 10px">{{'id-no' |translate}} : </label>
+          <p style="margin: 0">{{ rowData?.identityNumber }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="table-section">
+      <h3 style="color: #874e9f; font-weight: 500">{{checkBillType() ? ('violation-data' | translate) : ('service-data' | translate)}} : </h3>
+      <table class="first-table">
+        <thead>
+          <tr>
+            <th>{{'service-type' | translate}}</th>
+            <th>{{'classify' | translate}}</th>
+            <th>{{'item' | translate}}</th>
+            <!-- <th>التكرار</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ rowData?.billCategory | translate}}</td>
+            <td>{{ rowData?.gfs }}</td>
+            <td>{{ rowData?.financilaItem }}</td>
+            <!-- <td>1</td> -->
+          </tr>
+        </tbody>
+      </table>
+    </section>
+@if(checkBillType()){
+  <section class="table-section" >
+    <h3 style="color: #874e9f; font-weight: 500">{{'location-data' | translate}} : </h3>
+    <table class="second-table">
+      <thead>
+        <tr>
+          <th>{{'violation-location' | translate}}</th>
+          <th>{{'location-classification' | translate}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ rowData?.municipal }}</td>
+          <td>{{'the-first' | translate}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+}
+
+    <section class="table-section">
+      <h3 style="color: #874e9f; font-weight: 500">{{'payment-data' | translate}} : </h3>
+      <table class="third-table">
+        <tr >
+          <td>{{ checkBillType() ? ('cash' | translate) : ('permit-fees' | translate)}}</td>
+          <td class="text-start">{{ calculatePaidAmount() }} {{'sar' | translate}}</td>
+        </tr>
+        <!-- <tr>
+          <td>التكرار</td>
+          <td>2</td>
+        </tr> -->
+        @if (!checkBillType()) {
+          <tr>
+            <td>{{'permits-visit-fees' | translate}}</td>
+            <td class="text-start">{{ rowData?.permitVisitFees }} {{'sar' | translate}}</td>
+          </tr>
+        }
+        <tr>
+          <td>{{'total-cash' | translate}}</td>
+          <td class="green text-start">{{ rowData?.totalAmount }} {{'sar' | translate}}</td>
+        </tr>
+        <tr>
+          <td>{{'the-date' | translate}}</td>
+          <td class="text-start">{{ rowData?.billDate | date:'dd/MM/yyyy' }}</td>
+        </tr>
+        <tr>
+          <td>{{'refrence-record-number' | translate}}</td>
+          <td class="text-start">400</td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- <section class="qr-code">
+      <p style="margin: 0 0 15px; font-weight: 500; text-align: center">
+        للتحقق من صحة المستند، يرجي مسح رمز الإستجابة السريعة أدناه
+      </p>
+      <img style="display: block; margin: 0 auto" src="assets/images/qr-code.png" alt="bill qr code" />
+    </section> -->
+
+    <footer style="
+        padding: 10px 0;
+        background-color: #874e9f;
+        color: white;
+        margin-top: 15px;
+        text-align: center;
+      ">
+      {{'for-objection-violation-visit-next-website' | translate}} WWW.RIPC.GOV.SA
+    </footer>
+<!-- <p-button [label]="'print' | translate" (onClick)="printBill()" icon="pi pi-print" iconPos="right" /> -->
+
+  </div>
+</section>

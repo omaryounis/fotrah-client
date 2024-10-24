@@ -1,0 +1,57 @@
+:host ::ng-deep {
+  .p-component-overlay-enter {
+    animation-name: modal-overlay-enter;
+  }
+
+
+
+  .p-dialog {
+    box-shadow: 8px 8px 20px 0px rgba(100, 130, 158, 0.2);
+
+    .p-dialog-header {
+      @apply border-0 p-6 rounded-t-lg;
+
+      .p-dialog-title {
+        @apply text-primary text-base font-neo;
+      }
+
+      .p-dialog-header-icon {
+        @apply text-red-500 border border-solid border-primary rounded-none w-6 h-6;
+
+        .p-icon {
+          @apply stroke-[red] w-2.5 h-7;
+        }
+      }
+    }
+
+
+
+    .p-dialog-footer {
+      @apply border-0 rounded-b-lg;
+
+      .p-button {
+        @apply font-neo font-semibold text-base py-3.5 px-7 leading-4 rounded-lg;
+      }
+
+      .p-button.p-button-secondary.p-button-outlined {
+        border: 1px solid #eff0f2;
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .p-dialog .p-dialog-content {
+    overflow: visible !important;
+  }
+}
+
+@keyframes modal-overlay-enter {
+  0% {
+    @apply bg-transparent;
+  }
+
+  100% {
+    background-color: rgba($color: #000000, $alpha: 0.1);
+  }
+}

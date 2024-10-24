@@ -1,0 +1,128 @@
+<form #form="ngForm" (mouseover)="getFormValidation(form.invalid!)"  (input)="getFormValidation(form.invalid!)">
+ <!-- @if(mode === "show") {
+  <div class="form-row">
+    <div class="form-group">
+      <label class="required-element" for="name">{{'name' | translate}}</label>
+      <input
+        pInputText
+        id="name"
+        name="name"
+        aria-label="amount"
+        [value]="getName()"
+        placeholder="{{'name' | translate}}"
+        [disabled]="mode === 'show'"
+        />
+    
+        
+      
+    </div>
+    <div class="form-group">
+      <label class="required-element" for="code">{{'Code' | translate}}</label>
+      <input
+        pInputText
+        id="code"
+        name="code"
+        aria-label="code"
+       [value]="financialData.code"
+        placeholder="{{'Code' | translate}}"
+        [disabled]="mode === 'show'"
+        />
+       
+      
+    </div>
+  </div>
+ } -->
+  <div class="form-row !grid-cols-1">
+    <div class="form-group">
+      <label class="required-element" for="excTypes">{{'excavation-types' | translate}}</label>
+      <p-dropdown
+        class="dropdown"
+        styleClass="w-full"
+        [options]="excTypes"
+        [(ngModel)]="selectedExcType"
+        [optionLabel]="langService.getNameFormat()"
+        [showClear]="true"
+        appendTo="body"
+        optionValue="id"
+        id="excTypes"
+        name="excTypes"
+        aria-label="excTypes"
+        (onChange)="setData()"
+        [disabled]="mode === 'show'"
+      ></p-dropdown>
+    </div>
+  </div>
+  <div class="form-row !grid-cols-1">
+    <div class="form-group">
+      <label class="required-element" for="excPathTypes">{{'excavation-path-types' | translate}}</label>
+      <p-dropdown
+        class="dropdown"
+        styleClass="w-full"
+        [options]="excPathTypes"
+        [(ngModel)]="selectedExcPathType"
+        [optionLabel]="langService.getNameFormat()"
+        [showClear]="true"
+        appendTo="body"
+        optionValue="id"
+        id="excPathTypes"
+        name="excPathTypes"
+        aria-label="excPathTypes"
+        (onChange)="setData()"
+        [disabled]="mode === 'show'"
+      ></p-dropdown>
+    </div>
+  </div>
+ 
+
+  <div class="form-row">
+    <div class="form-group">
+      <label class="required-element" for="max-days-number">{{'max-days-number' | translate}}</label>
+      <input
+        pInputText
+        id="max-days-number"
+        type="number"
+        name="max-days-number"
+        aria-label="amount"
+        #maxDaysNumber="ngModel"
+        min="1"
+        (change)="financialData.maxDaysNumber = financialData.maxDaysNumber! <= 0 ? 1 : financialData.maxDaysNumber"
+        required
+        [(ngModel)]="financialData.maxDaysNumber"
+        placeholder="{{'max-days-number' | translate}}"
+        [disabled]="mode === 'show'"
+        />
+        @if (maxDaysNumber.invalid && (maxDaysNumber.dirty || maxDaysNumber.touched)) {
+          <div class="text-red-600">
+            @if (maxDaysNumber.errors?.['required']) { <span> {{'this-field-required' | translate}}</span> }
+            <!-- @if (code.errors?.['pattern']) { <span> {{'accept-only-arabic' | translate}}</span>} -->
+          </div>
+        }
+      
+    </div>
+    <div class="form-group">
+      <label class="required-element" for="amount">{{'item-amout' | translate}}</label>
+      <input
+        pInputText
+        id="amount"
+        type="number"
+        name="amount"
+        aria-label="amount"
+        #amount="ngModel"
+        min="1"
+        (change)="financialData.feesPerDay = financialData.feesPerDay! <= 0 ? 1 : financialData.feesPerDay"
+        required
+        [(ngModel)]="financialData.feesPerDay"
+        placeholder="{{'item-amout' | translate}}"
+        [disabled]="mode === 'show'"
+        />
+        @if (amount.invalid && (amount.dirty || amount.touched)) {
+          <div class="text-red-600">
+            @if (amount.errors?.['required']) { <span> {{'this-field-required' | translate}}</span> }
+            <!-- @if (code.errors?.['pattern']) { <span> {{'accept-only-arabic' | translate}}</span>} -->
+          </div>
+        }
+      
+    </div>
+  </div>
+
+</form>

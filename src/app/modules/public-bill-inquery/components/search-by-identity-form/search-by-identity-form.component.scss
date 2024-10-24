@@ -1,0 +1,17 @@
+:host ::ng-deep {
+  .p-inputtext {
+    @apply rounded-full text-[#626262] text-lg font-bold placeholder:text-[#626262] placeholder:font-readex placeholder:text-lg placeholder:font-semibold;
+  }
+
+  .p-dropdown {
+    @apply rounded-full text-[#626262] text-lg font-bold placeholder:text-[#626262] placeholder:font-readex placeholder:text-lg placeholder:font-semibold;
+  }
+
+  .p-dropdown:not(.p-disabled):hover {
+    border-color: rgb(215, 215, 215);
+  }
+
+  .search__submit-btn {
+    @apply bg-[#9162a3] hover:bg-[#4f9d6f] hover:border-[#4f9d6f] border-[#9162a3] text-white px-4 py-2 font-readex sm:text-base text-[10px] rounded-full block min-w-[158px] #{!important};
+  }
+}

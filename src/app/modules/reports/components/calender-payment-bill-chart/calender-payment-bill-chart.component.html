@@ -1,0 +1,22 @@
+<p-card styleClass="violation-statistics p-5">
+  <ng-template pTemplate="header">
+    <div class="flex justify-between items-center">
+      <p class="chart-card__title text-primary"> {{'bills-payment-report' | translate}}</p>
+      <div class="inline">
+        <label class="font-frutiger"> </label>
+        <p-dropdown [options]="BillsFilter" [(ngModel)]="selectedBillFilter" (onChange)="fillChart($event.value.value)" optionLabel="name" class="mt-3 bill-chart"
+          [placeholder]="'choose' | translate" />
+
+      </div>
+    </div>
+  </ng-template>
+  <div>
+    <div class="flex justify-between mb-[38px]">
+      <b class="text-primary font-frutiger">{{'total' | translate}} : {{total}} {{'sar' | translate}}</b>
+      <b class="text-[#874e9f] me-2" > {{rangesDates}}</b>
+
+    </div>
+    <p-chart #canvas class="violation-statistics__chart h-[400px] text-center" id="bar-chart-2" [data]="chartData"
+      [options]="chartOptions"></p-chart>
+  </div>
+</p-card>

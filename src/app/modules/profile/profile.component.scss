@@ -1,0 +1,30 @@
+.p-image {
+  img {
+    object-fit: cover;
+    border: 11px solid #4E9B6E80;
+  }
+
+  p-button {
+    position: absolute;
+    bottom: 2%;
+    right: 10%;
+    // font-size: 30px;
+  }
+
+}
+
+::ng-deep {
+  .save .p-button {
+    padding: 8px 50px;
+  }
+
+  .p-image {
+    .p-button {
+      border-radius: 50px !important;
+    }
+
+    .pi {
+      font-size: 1.3rem;
+    }
+  }
+}

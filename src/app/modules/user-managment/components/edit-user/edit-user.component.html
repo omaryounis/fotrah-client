@@ -1,0 +1,8 @@
+<app-crud-modal
+  [config]="modalConfig"
+  (onSubmit)="submitUser()"
+  (onCancel)="closeModal()"
+  mode="edit"
+>
+  <app-user-form form [userData]="userData" mode="edit"></app-user-form>
+</app-crud-modal>

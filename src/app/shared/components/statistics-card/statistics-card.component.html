@@ -1,0 +1,16 @@
+
+  <p-card styleClass="statistics-card">
+    <ng-template pTemplate="header">
+      <div class="flex justify-between items-center">
+        <p class="statistics-card__title">{{ title }}</p>
+        <p class="statistics-card__percentage">{{ percentage }}</p>
+      </div>
+    </ng-template>
+    @if (isCurrency) { <p>{{ bodyText | currency : ' '}}</p> }
+    @else { <p>{{ bodyText }}</p> }
+    <ng-template pTemplate="footer">
+      @if (detailsUrl.trim() !== '') {<a [routerLink]="[detailsUrl]">{{'details' | translate}}</a>} 
+      @else{ <p class="text-white"> - </p>}
+      <img class="statistics-card__icon" [src]="iconPath" alt="{{ iconAlt }}" />
+    </ng-template>
+  </p-card>

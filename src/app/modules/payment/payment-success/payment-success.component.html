@@ -1,0 +1,30 @@
+<app-payment></app-payment>
+
+<div class="text-center">
+
+  <div class="w-full  mt-[100px] mb-8 ">
+    <div class="flex justify-center">
+      <img src="assets/images/photos/tap-to-pay.gif" width="20%" class="rounded-[200px] shadow-xl object-scale-down" alt="">
+    </div>
+    <p class="text-primary mt-[60px] font-neo sm:text-3xl text-sm font-semibold">
+      {{ 'confirm-pay-success' | translate }}
+    </p>
+    
+    @if (billData) {
+    
+      <p class="text-[#9162a3] mt-5 font-neo sm:text-md text-md font-semibold">
+        {{ checkBillType() ?  ('thanks-pay-violation' | translate) : ('please-activate-permit' | translate)}}
+      </p>
+    }
+    <div class="font-neo text-gray-600 mt-4">
+      {{'bill-ref-number' | translate}} : {{billRefNumber}} <i class="pi pi-copy ms-2 cursor-pointer" (click)="copyText()"></i>
+    </div>
+  <p-button styleClass="submit-btn mt-[40px]" (onClick)="finishProcess()"  type="submit" >{{'finish-process' | translate}}</p-button>
+  <!-- <div class="text-[#9162a3] mt-5 font-neo sm:text-sm text-xs   font-semibold px-auto">
+    <div class="py-3 bg-gray-100 shadow-md rounded-lg text-xs w-4/12 mx-auto">
+
+      <i class="pi pi-exclamation-circle me-2"></i>{{'note' | translate}} : {{'waiting-payment-updating' | translate}}
+    </div>
+  </div> -->
+  </div>
+  </div>

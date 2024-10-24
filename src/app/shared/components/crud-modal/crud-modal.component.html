@@ -1,0 +1,15 @@
+<p-dialog [header]="config.title | translate" [(visible)]="config.visible" [modal]="true" [style]="{ width: '610px' }"
+  [draggable]="false" [resizable]="false">
+  <ng-content select="[form]"></ng-content>
+  @if (mode != "show") {
+  <ng-template pTemplate="footer">
+    <div [class]="mode == 'toggleActivation' ?  'flex justify-center' : 'flex justify-end'">
+      <p-button pAutoFocus [label]="config.submitLable! | translate" type="submit"
+        [severity]=" 'primary'" [autofocus]="true"
+        (click)="handleSubmitClick()"></p-button>
+      <p-button pAutoFocus [label]="config.cancelLabel! | translate" [outlined]="true" severity="secondary"
+        (click)="handelCancelClick()"></p-button>
+    </div>
+
+  </ng-template>}
+</p-dialog>

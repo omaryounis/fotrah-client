@@ -1,0 +1,17 @@
+<p-card styleClass="violation-statistics">
+  <ng-template pTemplate="header">
+    <div class="flex justify-between items-center">
+      <p class="violation-statistics__title sm:text-[12px]">{{'bills-summary' | translate}} {{reportType == 'Bills' ? ('violations' | translate) :  ('permits' | translate) }}</p>
+      <div class="inline">
+        <!-- <label class="font-frutiger">{{"bill-type" | translate}}</label> -->
+        <p-multiSelect name="billType" class="ms-3" [showHeader]="false" [filter]="false" id="close-icon"  [(ngModel)]="selectedBillTypes" [showClear]="false" [defaultLabel]="'bill-type' | translate"  [options]="billTypes" (onChange)="fillChart($event.value)"
+          optionLabel="name"></p-multiSelect>
+      </div>
+    </div>
+  </ng-template>
+  <div>
+    <b class="chart-label">{{"value" | translate}}</b>
+    <p-chart #canvas class="violation-statistics__chart h-[340px] text-center" [responsive]="true" type="bar" id="bar-chart"
+      [plugins]="barChartPlugins" [data]="chartData" [options]="chartOptions"></p-chart>
+  </div>
+</p-card>

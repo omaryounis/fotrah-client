@@ -1,0 +1,56 @@
+@if (showSearchResults()) {
+<div class="my-8 mx-4">
+  <div class="card">
+    <div class="bg-white p-2">
+      <div class="overflow-x-auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>{{'bill-number' | translate}}</th>
+              <th>{{'bill-date' | translate}}</th>
+              <th>{{'bill-amount' | translate}}</th>
+              <th>{{'status' | translate}}</th>
+              <th>{{'details' | translate}}</th>
+              <th>{{'pay' | translate}}</th>
+           
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (bill of bills; track $index) {
+            <tr>
+              <td>{{ bill.billNumber }}</td>
+              <td>{{ bill.billDate | date:'dd/MM/yyyy' }}</td>
+              <td>
+                {{ bill.totalAmount }}
+                {{'sar-2' | translate}}
+              </td>
+              <td>
+                <div
+                  [class]="{'table-badge': true, 'lh-2': true, 'bg-success': bill.status === 'مسددة' || bill.status.toLowerCase() === 'paid', 'bg-danger': bill.status === 'غير مسددة' || bill.status.toLowerCase() === 'not paid', 'bg-info': bill.status === 'تحت اجراء استرداد' || bill.status.toLowerCase() === 'under refund'}">
+                  {{ bill.status }}</div>
+              </td>
+              <td>
+                <app-bill-print [rowData]="bill" [btnText]="'details' | translate" [withPrint]="false"></app-bill-print>
+              </td>
+              <td class="flex justify-center min-h-[4.0rem] align-middle">
+                @if(bill.isARBPaid && checUnPayedBillStatus(bill)) {
+                  <p-tag icon="pi pi-info-circle" severity="info" [rounded]="true"  [value]="'waiting-payment-confirmation' | translate" />
+                }@else if (checUnPayedBillStatus(bill) || checkPartialBillStatus(bill)) {
+                  <p-button styleClass="submit-btn" (onClick)="navigateToPayment('/public/payment/' + bill.billNumber)"> {{'pay' | translate}}</p-button>
+                }@else if(bill.isARBPaid && ( bill.status == billStatus.PAID_AR || bill.status ==  billStatus.PAID_EN) ){
+                  <p-tag icon="pi pi-check-circle" severity="primary" [rounded]="true"  [value]="'payment-confirmed' | translate" />
+                } @else  {
+                  <span class="m-auto">-</span>
+                }
+                
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+}

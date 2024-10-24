@@ -1,0 +1,37 @@
+<section class="auth">
+  <h1 class="sm:text-5xl text-2xl font-shamel text-primary mb-16">{{'fotrah' | translate}}</h1>
+  <div class="auth__form-wrapper">
+    <div class="auth__form">
+      <form novalidate [formGroup]="loginForm" (ngSubmit)="onLogin()" autocomplete="new-password">
+        <h2 class="auth__form-title">{{'login' | translate}}</h2>
+        @if(loginError) {
+        <div class="alert alert-danger">{{ loginError }}</div>
+        }
+        <div class="mb-5 sm:mb-8">
+          <label for="username" class="auth__form-label">{{'username' | translate}}</label>
+          <input type="text" id="username" class="auth__form-input" formControlName="username"
+            autocomplete="new-password" />
+          <app-form-error [inputFormControl]="userName" [errorMessages]="errorMessages.username"></app-form-error>
+        </div>
+
+        <div class="mb-5 sm:mb-2">
+          <label for="password" class="auth__form-label">{{'password' | translate}}</label>
+          <input type="password" id="password" name="password"  class="auth__form-input" formControlName="password"
+            autocomplete="new-password" />
+          <app-form-error [inputFormControl]="password" [errorMessages]="errorMessages.password"></app-form-error>
+        </div>
+
+        <!-- <div class="mb-5 sm:mb-2">
+          <p-button styleClass="text-[#874E9F] px-0" [label]="'forgot-password' | translate" [link]="true"
+            (onClick)="handelForgotPasswordClick()"></p-button>
+        </div> -->
+
+        <div class="auth__form-footer">
+          <p-button type="submit" styleClass="auth__submit-btn w-auto" [disabled]="loginForm.invalid">
+            {{'login' | translate}}
+          </p-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

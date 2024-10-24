@@ -1,0 +1,29 @@
+<app-page-header [title]="'municipalities' | translate">
+
+  <app-create-municipality left-content></app-create-municipality>
+
+</app-page-header>
+<div class="my-4">
+  <app-search-bar
+    [placeholder]="'search' | translate"
+    (onSearchValueChange)="onSearchTextChange($event)"
+    [isInlineSearch]="true"
+    (onClickSearch)="getMunicipalities(1,10)"
+  ></app-search-bar>
+</div>
+<div class="table-container container max-w-full mx-auto mb-20 overflow-x-auto">
+  <app-table
+    [dataSource]="municipals"
+    [columns]="columns"
+    [actions]="actions"
+  ></app-table>
+  @if (municipals.length > 0) {
+    <p-paginator 
+    (onPageChange)="onPageChange($event)" 
+    [first]="first"
+    [rows]="rows" 
+    [totalRecords]="totalCount()" 
+    [rowsPerPageOptions]="[10, 20, 30]" />
+  }
+</div>
+

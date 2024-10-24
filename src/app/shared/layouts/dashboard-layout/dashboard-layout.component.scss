@@ -1,0 +1,15 @@
+.wrapper {
+  @apply relative;
+  // direction: rtl;
+
+  main {
+    @apply flex-1 pt-10 px-6 max-w-full;
+    // direction: rtl;
+    min-height: calc(100vh - 66px);
+    background: linear-gradient(0deg, #f8f8f8 0%, #f8f8f8 100%), #fff;
+
+    @screen sm {
+      max-width: calc(100% - 241px);
+    }
+  }
+}

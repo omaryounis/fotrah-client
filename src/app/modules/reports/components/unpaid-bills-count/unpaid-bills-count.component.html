@@ -1,0 +1,25 @@
+<!-- Report Filters -->
+<div class=" w-full mb-11">
+  <div class="form-group">
+    <label class="!text-primary" for="username">{{'period' | translate}}</label>
+    <p-dropdown [options]="rangeDates" id="calender-clear"  class="w-full custom-dropdown font-frutiger" [(ngModel)]="selectedDate" optionLabel="name"
+      (onChange)="handleDateSelect()" [showClear]="true" (onClear)="getBills()" [placeholder]="'choose-period' | translate" />
+  </div>
+</div>
+<p-card styleClass="chart-card">
+  <ng-template pTemplate="header">
+    <div class="flex justify-between items-center">
+      <p class="chart-card__title"> {{'unpaid-bills-count' | translate}}</p>
+      <!-- <p-button label="تصدير" icon="pi pi-file-export" (onClick)="handelReportExport()" /> -->
+    </div>
+  </ng-template>
+  <div class="grid grid-cols-1 md:grid-cols-2 md:gap-11 place-content-center h-full">
+    <app-doughnut-with-label [data]="violationCountData"></app-doughnut-with-label>
+    <div class="flex flex-col">
+      <div class="gredient-green my-auto">
+        <p> {{'value' | translate}}</p>
+        <p>{{ unpaidBillsAmount + " " + ("sar-2" | translate)}}</p>
+      </div>
+    </div>
+  </div>
+</p-card>

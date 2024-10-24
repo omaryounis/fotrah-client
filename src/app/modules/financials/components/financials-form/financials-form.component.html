@@ -1,0 +1,203 @@
+@if (mode === "toggleActivation") {
+  <div class="w-full text-center min-h-10">
+    <div class="flex justify-center w-full mb-6">
+      @if (!financialData.status) {<i class="pi pi-verified text-primary" style="font-size: 5rem"></i>}
+      @else {<i class="pi pi-ban text-red-600" style="font-size: 5rem"></i>}
+    </div>
+  
+    <h3 [ngClass]="{'text-primary': !financialData.status , 'text-red-600': financialData.status}" class="font-frutiger text-lg">{{labelConfirmation | translate}}</h3>
+  </div>
+}
+@else {
+<form #form="ngForm" (mouseover)="getFormValidation(form.invalid!)"  (input)="getFormValidation(form.invalid!)">
+  <div class="form-row !grid-cols-1">
+    <div class="form-group">
+      <label class="required-element" for="gfsL">{{'ec-name' | translate}}</label>
+      <p-dropdown
+        class="dropdown"
+        styleClass="w-full"
+        [options]="gfsList"
+        [(ngModel)]="selectedGfs"
+        [optionLabel]="langService.getNameFormat()"
+        optionValue="id"
+        [showClear]="true"
+        appendTo="body"
+        id="gfsL"
+        name="gfsL"
+        aria-label="gfsL"
+        [disabled]="mode === 'show'"
+      ></p-dropdown>
+    </div>
+  </div>
+  <div class="form-row !grid-cols-1">
+    <div class="form-group">
+      <label class="required-element" for="activity">{{'activity' | translate}}</label>
+      <p-dropdown
+        class="dropdown"
+        styleClass="w-full"
+        [options]="filteredActivities"
+        [(ngModel)]="selectedActivity"
+        [optionLabel]="langService.getNameFormat()"
+        optionValue="id"
+        [showClear]="true"
+        appendTo="body"
+       
+        id="activity"
+        name="activity"
+        aria-label="activity"
+        [disabled]="mode === 'show'"
+      ></p-dropdown>
+    </div>
+  </div>
+ 
+  <div class="form-row">
+    <div class="form-group">
+      <label class="required-element" for="nameAr">{{'name-ar' | translate}}</label>
+      <input
+        pInputText
+        id="nameAr"
+        name="nameAr"
+        aria-label="nameAr"
+        #nameAr="ngModel"
+        [(ngModel)]="financialData.nameAr"
+        required
+        pattern="[ء-ي0-9!@#$%^&*()_+{}\[\]:;',./<>?\- ]+"
+        placeholder="{{'name-ar' | translate}}"
+        [disabled]="mode === 'show'"
+      />
+      @if (nameAr.invalid && (nameAr.dirty || nameAr.touched)) {
+        <div class="text-red-600">
+          @if (nameAr.errors?.['required']) { <span> {{'this-field-required' | translate}}</span> }
+          @if (nameAr.errors?.['pattern']) { <span> {{'accept-only-arabic' | translate}}</span>}
+        </div>
+      }
+    </div>
+    <div class="form-group">
+      <label class="required-element" for="nameEn">{{'name-en' | translate}}</label>
+      <input
+        pInputText
+        id="nameEn"
+        name="nameEn"
+        aria-label="nameEn"
+        #nameEn="ngModel"
+        [(ngModel)]="financialData.nameEn"
+        pattern="[A-Za-z0-9!@#$%^&*()_+{}\[\]:;',./<>?\- ]+" 
+        required
+        placeholder="{{'name-en' | translate}}"
+        [disabled]="mode === 'show'"
+      />
+      @if (nameEn.invalid && (nameEn.dirty || nameEn.touched)) {
+        <div class="text-red-600">
+          @if (nameEn.errors?.['required']) { <span> {{'this-field-required' | translate}}</span> }
+          @if (nameEn.errors?.['pattern']) { <span> {{'accept-only-english' | translate}}</span>}
+        </div>
+      }
+    </div>
+    </div>
+    <div class="form-row">
+    <div class="form-group">
+      <label class="required-element" for="code">{{'item-no' | translate}}</label>
+      <input
+        pInputText
+        id="code"
+        name="code"
+        aria-label="code"
+        #code="ngModel"
+        [(ngModel)]="financialData.code"
+      
+        required
+        placeholder="{{'item-no' | translate}}"
+        [disabled]="mode === 'show'"
+      />
+      @if (code.invalid && (code.dirty || code.touched)) {
+        <div class="text-red-600">
+          @if (code.errors?.['required']) { <span> {{'this-field-required' | translate}}</span> }
+          @if (code.errors?.['pattern']) { <span> {{'not-contain-characters' | translate}}</span>}
+
+        </div>
+      }
+    </div>
+    <div class="form-group">
+    <label class="required-element" for="code">{{'itteration-required' | translate}}</label>
+    <div class="flex flex-wrap form-group gap-3">
+      <div class="flex align-items-center">
+          <p-radioButton 
+              name="isRecurring" 
+              [value]="true" 
+              [disabled]="mode === 'show'"
+              #isRecurringTrue="ngModel"
+              [(ngModel)]="financialData.isRecurring" 
+              required
+              inputId="ingredient1" />
+          <label for="ingredient1" class="ms-2">
+              {{'yes' | translate}}
+          </label>
+      </div>
+      <div class="flex align-items-center">
+          <p-radioButton 
+              name="isRecurring" 
+              [value]="false" 
+              [disabled]="mode === 'show'"
+              #isRecurringFalse="ngModel"
+              [(ngModel)]="financialData.isRecurring" 
+              required
+              inputId="ingredient2" />
+          <label for="ingredient2" class="ms-2">
+              {{'no' | translate}}
+          </label>
+      </div>
+      </div>
+  </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group">
+      <label class="required-element" for="classification">{{'classification' | translate}}</label>
+      <p-dropdown
+        class="dropdown"
+        styleClass="w-full"
+        [options]="classification"
+        [(ngModel)]="selectedClassification"
+        optionLabel="name"
+        optionValue="code"
+        [showClear]="true"
+        appendTo="body"
+        id="classification"
+        name="classification"
+        [required]="true"
+        aria-label="classification"
+        [disabled]="mode === 'show'"
+      ></p-dropdown>
+      <!-- @if (selectedClassification.invalid && (selectedClassification.dirty || selectedClassification.touched)) {
+        <div class="text-red-600">
+          @if (selectedClassification.errors?.['required']) { <span> {{'this-field-required' | translate}}</span> }
+          @if (code.errors?.['pattern']) { <span> {{'accept-only-arabic' | translate}}</span>}
+        </div>
+      } -->
+    </div>
+    <div class="form-group">
+      <label class="required-element" for="amount">{{'item-amout' | translate}}</label>
+      <input
+        pInputText
+        id="amount"
+        type="number"
+        name="amount"
+        aria-label="amount"
+        #amount="ngModel"
+        (change)="financialData.amount = financialData.amount! <= 0 ? 1 : financialData.amount"
+        required
+        [(ngModel)]="financialData.amount"
+        placeholder="{{'item-amout' | translate}}"
+        [disabled]="mode === 'show'"
+        />
+        @if (amount.invalid && (amount.dirty || amount.touched)) {
+          <div class="text-red-600">
+            @if (amount.errors?.['required']) { <span> {{'this-field-required' | translate}}</span> }
+            <!-- @if (code.errors?.['pattern']) { <span> {{'accept-only-arabic' | translate}}</span>} -->
+          </div>
+        }
+      
+    </div>
+  </div>
+
+</form>
+}

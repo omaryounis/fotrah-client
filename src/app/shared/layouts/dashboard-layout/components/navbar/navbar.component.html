@@ -1,0 +1,96 @@
+<p-menubar [model]="items" class="navbar">
+  <ng-template pTemplate="start">
+    <!-- Web Logo -->
+    <img
+      class="sm:inline-block hidden"
+      src="assets/images/RIPC_white_logo.png"
+      alt="Ripc logo"
+      width="212"
+    />
+    <div class="sm:inline-block lang-area align-middle ms-[20px]">
+      <p-button
+        [rounded]="true"
+        id="lang-icon"
+        (onClick)="toggleLang()"
+        icon="pi pi-globe"
+      ></p-button>
+      <p-button
+        class="hidden"
+        id="lang-label"
+        [rounded]="true"
+        [label]="browserLang == 'en' ? ('ar' | translate) : ('en' | translate)"
+      ></p-button>
+    </div>
+
+    <!-- Mobile Logo -->
+    <img
+      class="sm:hidden inline-block"
+      src="assets/images/RIPC_color_logo 1.png"
+      alt="Ripc logo"
+    />
+  </ng-template>
+
+  <ng-template pTemplate="end">
+    <p-button
+      class="navbar__logout"
+      [rounded]="true"
+      icon="pi pi-sign-out"
+      (onClick)="onLogout()"
+    ></p-button>
+    <app-can action="View" resource="Missions">
+@if (notificationCount > 0) {
+  <p-button
+    class="navbar__notification"
+    pBadge
+    severity="danger"
+    (onClick)="toggleMenu()"
+    [rounded]="true"
+  >
+    <i class="pi pi-bell text-xxs"></i>
+  </p-button>
+}@else {
+  <p-button
+    class="navbar__notification"
+    (onClick)="toggleMenu()"
+    [rounded]="true"
+  >
+    <i class="pi pi-bell text-xxs"></i>
+  </p-button>
+}
+    <app-notification></app-notification>
+  </app-can>
+    <p-divider class="navbar__divider" layout="vertical"></p-divider>
+
+    <!-- Profile Menu -->
+    <div class="sm:inline-flex hidden">
+      <p-button
+        class="navbar__profile-dropdown"
+        type="button"
+        (click)="toggleProfileMenu($event)"
+      >
+        <img src="assets/images/avatar.svg" alt="profile image" />
+        <span>{{
+          userInfo?.fullName
+            ? userInfo?.fullName!.split(" ")[0]
+            : userInfo?.userName
+        }}</span>
+        <i
+          class="pi"
+          [class]="isButtonClicked ? 'pi-angle-up' : 'pi-angle-down'"
+        ></i>
+      </p-button>
+      <p-menu #menu [popup]="true" [model]="profileItems"></p-menu>
+    </div>
+
+    <!-- Mobile Menu Toggler -->
+    <p-button
+      class="navbar__mobile-menu"
+      [rounded]="true"
+      (onClick)="onOpenSideBar()"
+    >
+      <span>
+        <img src="assets/images/icons/hamburger_menu.svg" alt="" width="24px" />
+      </span>
+    </p-button>
+  </ng-template>
+</p-menubar>

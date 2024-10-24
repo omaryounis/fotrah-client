@@ -1,0 +1,59 @@
+.menu {
+    position: absolute;
+    transition: auto;
+    height:300px;
+    transform: translate(90%, 3%);
+    z-index: 1000;
+}
+html:lang(en) { 
+    .menu {
+     
+        transform: translate(-90%, 3%);
+        z-index: 1000;
+    }
+}
+.card .p-element {
+    .card-container {
+        height:300px;
+        overflow-y: auto;
+        /* Style the container */
+
+  
+  /* Style the scrollbar */
+  &::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+  }
+  
+  /* Style the track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color of the scrollbar track */
+    border-radius: 10px; /* Optional: Rounded corners */
+  }
+  
+  /* Style the thumb */
+  &::-webkit-scrollbar-thumb {
+    background: var(--primary-100); /* Color of the scrollbar thumb */
+    border-radius: 10px; /* Optional: Rounded corners */
+  }
+  
+  /* Style the thumb on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #874E9F; /* Color when hovered */
+  }
+    }
+    min-width: 400px;
+}
+::ng-deep {
+    .show-all.p-element {
+        min-width: auto !important;
+    }
+    .p-card .p-card-title {
+        font-size: 1.2rem;
+        font-family: 'FrutigerLTArabic-65Bold';
+        font-weight: 700;
+        color: var(--primary-500);
+        margin-bottom: 0.5rem;
+    }
+
+    
+}

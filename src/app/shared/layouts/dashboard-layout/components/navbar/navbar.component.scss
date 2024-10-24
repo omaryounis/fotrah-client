@@ -1,0 +1,108 @@
+:host ::ng-deep {
+  .p-menubar {
+    @apply border border-solid border-[#d7d7d7] md:pl-16;
+
+    @screen sm {
+      background: linear-gradient(90deg,
+          #cfbb9f -0.26%,
+          #90ab87 14.07%,
+          #4e9b6e 104.6%);
+    }
+
+    &-end {
+      margin-inline-end: 0;
+      margin-inline-start: auto;
+    }
+  }
+
+  .navbar {
+    .p-menubar-end {
+      @apply flex items-center;
+    }
+
+    .lang-area {
+      @apply bg-white/20 border-0 pe-0 p-0 rounded-full;
+
+      .p-button {
+        @apply bg-transparent border-0;
+      }
+
+      #lang-label {
+        // position: relative;
+        // right: -3px;
+        // height: auto;
+        // width: 0px;
+        transition: all 1s;
+      }
+
+      #lang-icon:hover+#lang-label {
+        display: inline;
+        // height: 37.7px;
+        // width: 37.7px;
+      }
+    }
+
+    &__logout,
+    &__notification,
+    &__mobile-menu,
+    &__profile-dropdown {
+      .p-button {
+        @apply bg-white/20 border-0 pe-0 sm:px-4 sm:py-2 p-0;
+
+        &:focus {
+          box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
+
+    &__logout {
+      @apply me-1.5 sm:inline-block hidden;
+    }
+
+    &__notification {
+      .p-button .p-badge {
+        margin-left: 0.5rem;
+        margin-top: -10px;
+        min-width: 0.5rem;
+        height: 0.5rem;
+        line-height: 1rem;
+    }
+      .p-button {
+        @apply sm:p-[9px] p-0 me-1;
+        padding: 10px;
+        width: 38px;
+
+        & span {
+          @apply block relative;
+          // after:content-[''] after:inline-block after:w-1 after:h-1 after:bg-[#F43F5E] after:absolute after:right-[1px] after:top-[-1px] after:rounded-full
+        }
+      }
+    }
+
+    &__divider {
+      @apply sm:flex hidden;
+    }
+
+    &__profile-dropdown {
+      span {
+        @apply text-sm font-semibold ps-2;
+      }
+
+      i {
+        @apply ps-2;
+      }
+
+      .p-icon-wrapper {
+        width: 14px;
+      }
+    }
+
+    &__mobile-menu {
+      @apply bg-transparent sm:hidden inline-block;
+
+      .p-button {
+        @apply bg-transparent border-transparent;
+      }
+    }
+  }
+}

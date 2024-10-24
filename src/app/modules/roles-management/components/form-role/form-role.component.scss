@@ -1,0 +1,20 @@
+.w-100 {
+  display: grid !important;
+  width: 100% !important;
+}
+
+::ng-deep {
+
+  .p-dialog-content {
+    overflow-y: visible !important;
+  }
+  .isDisableOption ul li {
+    pointer-events: none !important;
+    cursor: not-allowed !important;
+  }
+  .p-dropdown-panel .p-dropdown-header .p-dropdown-filter {
+    padding-right: 0rem !important;
+    margin-right:  0rem !important;
+    padding-inline-start: 30px !important;
+  }
+}

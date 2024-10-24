@@ -1,0 +1,14 @@
+.p-button-secondary {
+  &.rtl {
+    .p-splitbutton .p-splitbutton-defaultbutton {
+      border-radius: $borderRadius;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    .p-splitbutton-menubutton {
+      border-radius: $borderRadius;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}

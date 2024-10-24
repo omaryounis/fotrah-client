@@ -1,0 +1,25 @@
+<app-page-header [title]="'permit-types' | translate">
+  <app-create-permit-type left-content></app-create-permit-type>
+</app-page-header>
+<div class="my-4">
+  <app-search-bar
+    [placeholder]="'search' | translate"
+    (onSearchValueChange)="onSearchTextChange($event)"
+  ></app-search-bar>
+</div>
+<div class="table-container container max-w-full mx-auto mb-20 overflow-x-auto">
+  <app-table
+    [dataSource]="permitTypes"
+    [columns]="columns"
+    [actions]="actions"
+  ></app-table>
+  @if (permitTypes.length > 0) {
+    <p-paginator 
+    (onPageChange)="onPageChange($event)" 
+    [first]="first"
+    [rows]="rows" 
+    [totalRecords]="totalCount()" 
+    [rowsPerPageOptions]="[10, 20, 30]" />
+  }
+</div>
+

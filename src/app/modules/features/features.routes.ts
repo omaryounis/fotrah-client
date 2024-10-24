@@ -1,0 +1,26 @@
+import { Routes } from "@angular/router";
+
+import { FeaturesComponent } from "./features.component";
+import { SubFeaturesComponent } from "./components/sub-features/sub-features.component";
+import { CancelViolationComponent } from "./components/cancel-violation/cancel-violation.component";
+import { PermissionGuard } from "@shared/guards/permission/permission.guard";
+
+
+export const featuresRoutes: Routes = [
+  {
+    path: "features",
+    component: FeaturesComponent,
+    canActivate : [PermissionGuard],
+    data: { permissions : ['View_Features'] }
+  },
+
+  {
+    path: "features/:billType",
+    component: SubFeaturesComponent,
+  },
+  {
+    path: "features/:billType/:cancelType",
+    component: CancelViolationComponent,
+
+  },
+];

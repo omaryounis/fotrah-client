@@ -1,0 +1,16 @@
+section#rightPanel {
+  position: relative;
+  background: #f0f0f0 url("../../../../assets/images/bg_hero.jpeg") no-repeat 63% 50%;
+  background-size: cover;
+  height: 100vh;
+}
+
+@media only screen and (max-width: 768px) {
+  section#rightPanel {
+    right: 0;
+    left: 0;
+    height: 6rem;
+    width: 100%;
+    position: relative;
+  }
+}

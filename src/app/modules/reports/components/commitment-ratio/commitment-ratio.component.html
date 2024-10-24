@@ -1,0 +1,29 @@
+<p-card styleClass="chart-card">
+  <ng-template pTemplate="header">
+    <div class="flex justify-between items-center">
+      <p class="chart-card__title">نسبة الإلتزام</p>
+      <p-multiSelect
+        [options]="cities"
+        [(ngModel)]="selectedCities"
+        optionLabel="name"
+        [filter]="false"
+        [showClear]="false"
+        placeholder="اختيار البلدية"
+      >
+        <ng-template pTemplate="header">
+          <div class="select-all-header">
+            <span>الكل</span>
+          </div>
+        </ng-template>
+      </p-multiSelect>
+    </div>
+  </ng-template>
+  <p-chart
+    class="chart-card__chart"
+    type="line"
+    [data]="commitmentRatioData"
+    [options]="commitmentRationOptions"
+    [plugins]="[commitmentRationPlugin]"
+    height="calc(100% - 52px)"
+  ></p-chart>
+</p-card>

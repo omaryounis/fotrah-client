@@ -1,0 +1,25 @@
+<p-card styleClass="violation-statistics p-5">
+  <ng-template pTemplate="header">
+    <div class="flex justify-between items-center">
+      <p class="chart-card__title text-primary"> {{'objections-report' | translate}}</p>
+      
+    </div>
+  </ng-template>
+<div class=" w-full">
+  <div class="form-row gap-3 !grid-cols-1">
+  <div class="form-group ">
+    <label class="!text-primary" for="username">{{'period' | translate}}</label>
+    <p-calendar styleClass="w-full" id="calender-clear" [(ngModel)]="range_dates" selectionMode="range" [readonlyInput]="true"
+      [showIcon]="true"  [showClear]="true"    dateFormat="yy/mm/dd" dataType="string">
+    </p-calendar>
+  </div>
+
+  <div class="form-group">
+    <!-- <label class="text-white"> {{'.' | translate}} </label> -->
+    <div class="flex justify-between items-center">
+      <p-button [label]="'export' | translate"  (onClick)="handelReportExport()" />
+    </div>
+  </div>
+  </div>
+</div>
+</p-card>

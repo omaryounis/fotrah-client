@@ -1,0 +1,47 @@
+<p class="text-primary font-neo mb-[7px] sm:text-2xl text-sm font-semibold">
+  {{'reports' | translate}}
+</p>
+<app-breadcrumb></app-breadcrumb>
+<div class="table-container container max-w-full block mx-auto mt-5">
+
+  <app-can action="List" resource="Bill">
+  <div class="grid grid-cols-1 xl:grid-cols-3 mb-5">
+    <p-dropdown [options]="reportTypes" [(ngModel)]="reportType" (onChange)="handleFillData()" optionLabel="name"
+      optionValue="value" class="mt-3 w-full report-type" [placeholder]="'choose' | translate" />
+
+  </div>
+  @if(reportType == enumsOfReports.VIOLATIONS){
+  <p class="text-primary font-neo mb-[7px] sm:text-2xl text-sm font-semibold">
+    {{'reports-violations' | translate}}
+  </p>
+  }@else {
+  <p class="text-primary font-neo mb-[7px] sm:text-2xl text-sm font-semibold">
+    {{'reports-permits' | translate}}
+  </p>
+  }
+  
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+      <app-violation-count [reportType]="reportType" [title]="'total-bills'" class="mb-[150px]"></app-violation-count>
+      <app-unpaid-bills-count [reportType]="reportType" class="mb-[150px]"></app-unpaid-bills-count>
+      <app-quarter-bills [reportType]="reportType"></app-quarter-bills>
+      <app-calender-bill-chart [reportType]="reportType"></app-calender-bill-chart>
+      @if (reportType == enumsOfReports.VIOLATIONS) {
+        <app-notification-report></app-notification-report>
+      }
+    </div>
+  </app-can>
+
+  <app-can action="Procceed" resource="Objection">
+
+    <div class="grid grid-cols-1 mt-3 xl:grid-cols-2 gap-4">
+  
+      <app-objection-report></app-objection-report>
+    </div>
+  </app-can>
+</div>
+<div class="container max-w-full mx-auto mt-5 mb-20">
+
+  <!-- <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+    <app-violation-count [title]="'total-bills-permits'"></app-violation-count>
+  </div> -->
+</div>

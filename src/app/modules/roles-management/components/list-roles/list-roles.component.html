@@ -1,0 +1,111 @@
+<app-page-header [title]="'roles-management' | translate" [buttonLabel]="'add-role'| translate">
+  <app-create-role left-content></app-create-role>
+</app-page-header>
+<div class="my-4">
+  <app-search-bar [placeholder]="'search' | translate"
+  (onClickSearch)="getRoles(10,1)"
+  [isInlineSearch]="true"
+  (onSearchValueChange)="onSearchTextChange($event)"></app-search-bar>
+</div>
+<div class="container max-w-full mx-auto mb-20 min-h-lvh overflow-x-auto">
+  <p-table class="table" [value]="roles" [scrollable]="true" scrollHeight="flex" dataKey="id">
+    <ng-template pTemplate="header">
+      <tr>
+        @if(showTableCollapseMode) {
+        <th> {{'role-name' | translate}}</th>
+        <th> {{'empl-counts' | translate}}</th>
+        <th> {{'status' | translate}}</th>
+        <th>
+          <img class="mx-auto" src="assets/images/icons/three_dots_outline.svg" alt="table action icon" width="20" />
+        </th>
+        } @else {
+          <th> ID </th>
+        <th> {{'role-name' | translate}}</th>
+        <th> {{'empl-counts' | translate}}</th>
+        <th> {{'status' | translate}}</th>
+        <th>
+          <img class="mx-auto" src="assets/images/icons/three_dots_outline.svg" alt="table action icon" width="20" />
+        </th>
+        }
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-role let-expanded="expanded">
+      <tr>
+        <td class="w-[200px]">{{ role.id }}</td>
+        @if (!showTableCollapseMode) {
+        <td>{{  getFormatedName({ nameAr : role.nameAr , nameEn : role.nameEn})  }}</td>
+        }
+        @if (showTableCollapseMode) {
+        <td>
+          <p-button type="button" [text]="true" [pRowToggler]="role" styleClass="text-[#9C754E]"
+            [icon]="expanded ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"></p-button>
+        </td>
+        } @if (!showTableCollapseMode) {
+        <td>{{ role.usersPerRoleCount }}</td>
+        }
+        <td>
+          <p class="c-badge text-primary"> {{role.status ?? ('active' | translate) }} <span
+              class="text-lg align-middle ms-2">
+              &#8226;</span></p>
+        </td>
+        <td>
+          <div class="flex justify-center">
+            @if (showTableCollapseMode) {
+            <p-button class="navbar__profile-dropdown" type="button" icon="pi pi-ellipsis-h"
+              (click)="toggleActionsMenu($event)">
+            </p-button>
+            <p-menu #menu [popup]="true" appendTo="body" [model]="actionItems">
+            </p-menu>
+            } @else {
+
+            <!-- <p-button styleClass="text-[#4B4F54]" icon="pi pi-trash" [text]="true"></p-button> -->
+            <p-button styleClass="text-[#4B4F54]" icon="pi pi-eye" [text]="true"
+              (onClick)="openShowRole(role)"></p-button>
+            <p-button styleClass="text-[#4B4F54]" icon="pi pi-file-edit" [text]="true"
+              (onClick)="openEditRole(role)"></p-button>
+            }
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-role>
+      <tr>
+        <td class="pb-0" colspan="100">
+          <div class="flex justify-between items-center flex-wrap w-full">
+            <div class="w-1/2 mb-5">
+              <p class="text-primary text-sm font-semibold mb-1">
+                {{'role' | translate}}
+              </p>
+              <p class="text-xs text-[#464748]">{{ role.nameAr }}</p>
+            </div>
+            <div class="w-1/2 mb-5">
+              <p class="text-primary text-sm font-semibold mb-1"> {{'no' | translate}} </p>
+              <p class="text-xs text-[#464748]">{{ role.id }}</p>
+            </div>
+            <div class="w-1/2 mb-5">
+              <p class="text-primary text-sm font-semibold mb-1">
+                {{'emp-counts' | translate}}
+              </p>
+              <p class="text-xs text-[#464748]">{{ role.empCounts }}</p>
+            </div>
+            <div class="w-1/2 mb-5">
+              <p class="text-primary text-sm font-semibold mb-1"> {{'status' | translate}}</p>
+              <p class="text-xs text-[#464748]">{{ role.status }}</p>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  @if (roles.length > 0) {
+    <p-paginator 
+    (onPageChange)="onPageChange($event)" 
+    [first]="first"
+    [rows]="rows" 
+    [totalRecords]="totalCount()" 
+    [rowsPerPageOptions]="[10, 20, 30]" />
+  }
+</div>
+
+<app-edit-role [modalService]="editModalService" [roleData]="selectedRole"></app-edit-role>
+<app-show-role [modalService]="showModalService" [roleData]="selectedRole"></app-show-role>

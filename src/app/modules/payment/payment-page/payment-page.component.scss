@@ -1,0 +1,59 @@
+.link-card {
+    @apply bg-gray-100 relative overflow-clip min-h-[250px] flex flex-col cursor-pointer items-center justify-center gap-y-[34px] py-[34px] rounded-2xl min-w-[250px] ;
+    box-shadow: 0px 0px 24.399px 0px silver;
+  
+    &__text {
+      @apply font-neo text-primary font-semibold text-lg;
+      
+    }
+     span {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    &__info{
+      @apply font-neo text-[#9162a3] font-semibold text-sm;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 8px ;
+      backdrop-filter: blur(10px);
+      // background-color:  rgba(0, 123, 255, 0.5); 
+      opacity: 0;
+      transform: translateY(100%);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      visibility: hidden;
+    }
+ 
+  }
+
+ .link-card:hover { 
+  box-shadow: none;
+  background-color: #9162a34a;
+  img {
+    display: none;
+  }
+  .link-card__text {
+    color: #fff;
+    font-size: x-large;
+  }
+  p {
+  opacity: 1;
+  transform: translateY(-60%);
+  visibility: visible;
+ }
+}
+ .link-card:hover span {
+  // opacity: 1;
+  transform: translateY(-20px);
+  // visibility: visible;
+ }
+  .disabled-link {
+    cursor: help;
+    background-color: #eee;
+  
+  }
+ ::ng-deep {
+     .submit-btn {
+       @apply bg-white hover:bg-[#9162a3] hover:border-[#9162a3] border-[#9162a3] text-[#9162a3] hover:text-[#fff] px-4 py-2 font-readex sm:text-base text-[10px] rounded-full block min-w-[158px];
+     }
+ }

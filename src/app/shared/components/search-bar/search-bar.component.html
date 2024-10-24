@@ -1,0 +1,53 @@
+<div class="flex  justify-start mt-5 gap-1.5">
+  <div class="search-bar p-input-icon-right w-1/2">
+    <i class="pi pi-search !me-3 text-red-[#727983]"></i>
+    <input
+      class="w-full border-[#EFF0F2] rounded-lg placeholder:text-[#727983] placeholder:font-neo"
+      pInputText=""
+      type="text"
+      [placeholder]="placeholder"
+      #searchValueInput="ngModel"
+      required
+      [(ngModel)]="searchValue"
+      (keydown.enter)="triggerSearchBtnClick()"
+      (ngModelChange)="triggerOnSearchValueChange(); triggerSearchBtnClick()"
+    />
+  </div>
+  @if(isInlineSearch) {
+  <div class="search-actions flex justify-start my-auto gap-1.5">
+    <p-button
+      [disabled]="searchValue == ''"
+      (onClick)="triggerSearchBtnClick()"
+      >{{ "search" | translate }}</p-button
+    >
+    <p-button
+      (onClick)="triggerResetData()"
+      styleClass="bg-white border-white text-primary"
+    >
+      {{ "reset" | translate }}
+    </p-button>
+  </div>
+}
+  <!-- @if (searchValueInput.invalid && (searchValueInput.dirty || searchValueInput.touched)) {
+        <div class="text-red-600">
+          @if (searchValueInput.errors?.['required']) { <span> {{'please-enter-bill-no' | translate}}</span> }
+        </div>
+        [tooltipPosition]="position"
+      [pTooltip]="!isInlineSearch ? '' : ('enter-to-search' | translate)"
+      } -->
+</div>
+@if(showSearchAvtions) {
+<div class="search-actions flex flex-row-reverse justify-start mt-5 gap-1.5">
+  <p-button
+    [disabled]="searchValue == ''"
+    (onClick)="triggerSearchBtnClick()"
+    >{{ "search" | translate }}</p-button
+  >
+  <p-button
+    (onClick)="triggerResetBtnClick()"
+    styleClass="bg-white border-white text-primary"
+  >
+    {{ "reset" | translate }}
+  </p-button>
+</div>
+}

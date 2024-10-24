@@ -1,0 +1,16 @@
+<div class="flex items-center justify-end">
+  <label class="font-neo me-2"  for="activityStatus">{{
+    rowData.status ? ("active" | translate) : "not-active" | translate
+  }}</label>
+  <app-can action="Edit" resource="Activities">
+  <div class=" gap-2 cursor-pointer" (click)="openModal($event)">
+    <p-inputSwitch
+      styleClass="h-[1.75rem]"
+      inputId="activityStatus"
+      [(ngModel)]="rowData.status"
+      [disabled]="true"
+   
+    ></p-inputSwitch>
+  </div>
+  </app-can>
+</div>

@@ -1,0 +1,48 @@
+:host ::ng-deep {
+  .p-menubar {
+    @apply border border-solid border-[#d7d7d7] md:pl-16;
+
+    @screen sm {
+      background: linear-gradient(90deg,
+          #cfbb9f -0.26%,
+          #90ab87 14.07%,
+          #4e9b6e 104.6%);
+    }
+
+    &-end {
+      margin-right: auto;
+      margin-left: 0;
+    }
+  }
+
+  .navbar {
+    .p-menubar-end {
+      @apply flex items-center;
+    }
+
+    &__logout,
+    &__notification {
+      .p-button {
+        @apply bg-white/20 border-0 pe-0 sm:px-4 sm:py-2 p-0;
+
+        &:focus {
+          box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
+
+    &__logout {
+      @apply me-1.5 sm:inline-block hidden;
+    }
+
+    &__notification {
+      .p-button {
+        @apply sm:p-[9px] p-0 me-1;
+
+        & span {
+          @apply block relative after:content-[''] after:inline-block after:w-1 after:h-1 after:bg-[#F43F5E] after:absolute after:right-[1px] after:top-[-1px] after:rounded-full;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+:host ::ng-deep {
+    .page-header>p {
+      @apply text-[#09090b] font-readexBold;
+    }
+  
+    .quires__search-form {
+      @apply mb-7;
+    }
+  
+    .p-radiobutton .p-radiobutton-box.p-highlight {
+      background-color: #9162a3;
+      border-color: #9162a3;
+    }
+  }
+  
+  .service-description {
+    @apply text-[#626262] text-xl font-readexRegular font-semibold;
+  }
+  
+  .public-bill-inquery .lang-area {
+    @apply bg-[#9162a3] border-0 pe-0 p-0 rounded-full;
+  
+    .p-button {
+      @apply bg-transparent border-0;
+    }
+  
+    #lang-label {
+      // position: relative;
+      // right: -3px;
+      // height: auto;
+      // width: 0px;
+      transition: all 1s;
+    }
+  
+    #lang-icon:hover+#lang-label {
+      display: inline !important;
+      // height: 37.7px;
+      // width: 37.7px;
+    }
+  }
+  
+  ::ng-deep {
+    .lang-area {
+  
+      .p-button {
+        background-color: transparent;
+        border: 0px;
+      }
+    }
+  
+    .p-button.p-button-icon-only.p-button-rounded {
+      // border-radius: 50%;
+      height: inherit !important;
+    }
+  }

@@ -1,0 +1,7 @@
+:host ::ng-deep {
+  .search-actions {
+    .p-button {
+      @apply font-neo font-semibold text-xs;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+.rtl {
+  .p-menuitem-icon.pi {
+    @apply mr-0 ms-2 #{!important};
+  }
+  .p-menuitem-link {
+    direction: rtl;
+
+    .p-menuitem-icon {
+      @apply mr-0 me-1 #{!important};
+    }
+  }
+}

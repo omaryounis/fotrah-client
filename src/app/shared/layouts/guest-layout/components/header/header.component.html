@@ -1,0 +1,21 @@
+<p-menubar class="navbar" dir="rtl">
+	<ng-template pTemplate="start">
+		<a [routerLink]="['/dashboard']">
+			<!-- Web Logo -->
+			<img class="sm:inline-block hidden" src="assets/images/RIPC_white_logo.png" alt="Ripc logo" width="212" />
+			<!-- Mobile Logo -->
+			<img class="sm:hidden inline-block" src="assets/images/RIPC_color_logo 1.png" alt="Ripc logo" />
+		</a>
+	</ng-template>
+
+	<ng-template pTemplate="end">
+		<p-button class="navbar__logout" [rounded]="true" icon="pi pi-sign-out" (onClick)="onLogout()"></p-button>
+
+		<p-button class="navbar__notification" [rounded]="true">
+			<span>
+				<img class="sm:inline-block hidden" src="assets/images/icons/notification.svg" alt="" width="18px" />
+				<img class="sm:hidden inline-block" src="assets/images/icons/notification_gray.svg" alt="" width="24px" />
+			</span>
+		</p-button>
+	</ng-template>
+</p-menubar>

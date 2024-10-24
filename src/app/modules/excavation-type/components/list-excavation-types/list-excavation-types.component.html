@@ -1,0 +1,26 @@
+<app-page-header [title]="excavationRoute | translate">
+  <app-create-excavation-type left-content></app-create-excavation-type>
+
+</app-page-header>
+
+<div class="my-4">
+  <app-search-bar
+    [placeholder]="'search' | translate"
+    (onSearchValueChange)="onSearchTextChange($event)"
+  ></app-search-bar>
+</div>
+<div class="table-container container max-w-full mx-auto mb-20 overflow-x-auto">
+  <app-table
+    [dataSource]="excavationTypes"
+    [columns]="columns"
+    [actions]="actions"
+  ></app-table>
+@if (excavationTypes.length > 0) {
+  <p-paginator 
+  (onPageChange)="onPageChange($event)" 
+  [first]="first"
+  [rows]="rows" 
+  [totalRecords]="totalCount()" 
+  [rowsPerPageOptions]="[10, 20, 30]" />
+}
+</div>

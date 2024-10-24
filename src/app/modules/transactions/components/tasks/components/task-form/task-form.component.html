@@ -1,0 +1,197 @@
+<form>
+  <div class="form-row mb-0">
+    @for (item of details; track $index) {
+       @if(item.value != null &&    !item.key.toLocaleLowerCase().includes('description') ){
+    <div class="form-group">
+      <label for="key">{{ item.key | translate }}</label>
+      <input
+        pInputText
+        id="key"
+        name="key"
+        aria-label="key"
+        [value]="item.value"
+        disabled
+      />
+    </div>
+    } }
+  </div>
+  @if (checkHasDescription()) {
+    <div class="form-row !grid-cols-1">
+      @for (item of details; track $index) { @if(item.value != null &&
+      item.key.toLocaleLowerCase().includes('description')){
+      <div class="form-group">
+        <label for="key">{{ item.key | translate }}</label>
+        <textarea
+          pInputTextarea
+          id="description"
+          name="description"
+          aria-label="description"
+          [(ngModel)]="item.value"
+          [disabled]="true"
+          rows="5"
+          maxlength="255"
+        >
+        </textarea>
+      </div>
+  
+      } }
+    </div>
+  }
+  @if (votes.length > 0) {
+    <p-card class="p-2 ">
+      <ng-template pTemplate="header">
+        <div class="flex text-primary my-3 cursor-pointer" (click)="is_collapsed = !is_collapsed">
+          <label for="commitee" class="me-auto" >{{'commitee-votes' | translate}}</label> 
+          <i class="pi my-auto" [ngClass]="{'pi-angle-double-down': !is_collapsed , 'pi-angle-double-up': is_collapsed}" ></i>
+        </div>
+      </ng-template>
+  
+   
+        @if (is_collapsed) {
+          @for (item of votes; track $index) {
+          <div class="grid grid-cols-4 gap-2 vote-section" >
+           <!-- <div class="form-group">
+             <label for="key">{{ 'role' | translate }}</label>
+             <label for="key">{{ item.roleName }}</label>
+           </div> -->
+           <div class="form-group">
+             <label class="key">{{ 'voter-name' | translate }}</label>
+             <label for="key">{{ item.voterName }} ( {{ item.roleName}} )</label>
+           </div>
+           <div class="form-group">
+             <label class="key">{{ 'vote-date' | translate }}</label>
+             <label for="key">{{ item.createdAt | date : 'yy MMM dd' }}</label>
+           </div>
+           <div class="form-group">
+            <label class="key">{{ 'Note' | translate }}</label>
+            <label for="key">
+              <ul style="list-style-type: circle;" class="px-3">
+                @for (res of splitString(item.comment); track $index) {
+                  <li>
+                   {{res}}
+                  </li>
+                }
+              </ul>
+            </label>
+          </div>
+           <div class="form-group grid-cols-1 flex">
+             @if (item.vote) {
+              <p-button 
+              [label]="'vote-accept' | translate" 
+              severity="primary" 
+              class="my-auto"
+              [text]="true"
+              badgeClass="p-badge-info" />
+             }@else {
+              <p-button 
+              [label]="'vote-reject' | translate" 
+              severity="danger" 
+              class="my-auto"
+              [text]="true"
+              badgeClass="p-badge-info" />
+             }
+           </div>
+        
+          </div>
+        } 
+        }
+      
+    
+  </p-card>
+  }
+  @for (attachment of attachments; track $index) {
+    <label for="key">{{ getAttachmnetTitle(attachment.type) | translate }}</label>
+  <div class="form-row">
+    @for (item of attachment.data ; track $index) {
+    <div class="form-group file">
+      <div
+        class="mt-3 border-2 flex-[!important] border-gray-300 rounded-md p-2 pb-1"
+      >
+        <label
+          [for]="'attachment_' + $index"
+          class="w-full flex justify-between"
+        >
+          <span>{{
+            item.filename ?? ("file" | translate) + ($index + 1)
+          }}</span>
+        
+            <i
+              class="pi pi-download my-auto w-[23px] ms-auto cursor-pointer text-primary"
+              (click)="downloadFile(item.base64Data, item.filename , taskData.requestTypeId == requestTypes.OBJECTION ? false : true)"
+              severity="danger"
+            ></i>
+        
+        </label>
+      </div>
+    </div>
+  }
+  </div>
+}
+  <div class="flex flex-wrap form-group gap-3">
+    <div class="flex align-items-center">
+      <p-radioButton
+        name="status"
+        value="accept"
+        [(ngModel)]="taskData.status"
+        (ngModelChange)="updateData()"
+        inputId="ingredient1"
+      />
+      <label for="ingredient1" class="ms-2">
+        {{ getApproveLabel() | translate }}
+      </label>
+    </div>
+    @if (is_valid_reject) {
+
+      <div class="flex align-items-center">
+        <p-radioButton
+          name="status"
+          value="reject"
+          [(ngModel)]="taskData.status"
+          (ngModelChange)="updateData()"
+          inputId="ingredient2"
+        />
+        <label for="ingredient2" class="ms-2">
+          {{ is_voting ? ('vote-reject'| translate ) : ('reject' | translate ) }}
+        </label>
+      </div>
+    }
+  </div>
+  @if ( taskData.requestTypeId == requestTypes.OBJECTION && taskData.requestStatusId != statusTypes.PENDING) {
+    <div class="form-row !grid-cols-1 mt-2">
+      <div class="form-group">
+        <label for="key">{{is_voting ? ('objection-reason' | translate) :  ('proceed-reason' | translate)  }}</label>
+        <p-multiSelect name="objection-reason" class="w-full" [showHeader]="false" [filter]="false" id="close-icon" (onChange)="updateData()"  [(ngModel)]="taskData.reasons" [showClear]="false" [defaultLabel]="'choose' | translate"  [options]="vote_reasons" [optionLabel]="'name'" [optionValue]="'name'"
+        optionLabel="name"></p-multiSelect>
+      </div>
+    </div>
+    <div class="form-row !grid-cols-1 mt-2">
+      <div class="form-group">
+        <label for="key">{{('Note' | translate)  }}</label>
+    <div class="rounded-md " pInputTextarea>
+      <ul style="list-style-type: circle;" class="px-3">
+        @for (item of taskData.reasons; track $index) {
+          <li>{{item}}</li>
+        }
+      </ul>
+      <textarea
+      id="description"
+      name="description"
+      aria-label="description"
+      class="b-none w-full"
+      #objectionReason="ngModel"
+      [(ngModel)]="taskData.objectionReason"
+      rows="5"
+      maxlength="255"
+      [required]="taskData.reasons?.length == 0"
+    >
+    </textarea>
+    </div>
+        @if (objectionReason.invalid && (objectionReason.dirty || objectionReason.touched)) {
+          <div class="text-red-600">
+            @if (objectionReason.errors?.['required']) { <span> {{'this-field-required' | translate}}</span> }
+          </div>
+        }
+      </div>
+    </div>
+  }
+</form>

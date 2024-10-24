@@ -1,0 +1,36 @@
+<div class="quires">
+  <app-page-header [title]="'transactions' | translate" [showButton]="false" headerStyleClass="mb-4"></app-page-header>
+  <div class="flex flex-wrap gap-7 mt-8">
+    <app-can [action]="cardItems[0].action" [resource]="cardItems[0].resource">
+    <a [class]="['link-card']" [routerLink]="[cardItems[0].routerLink]" >
+      <div class="w-12 h-12 img-card" >
+        <img [src]="cardItems[0].image" alt="copy icon" />
+      </div>
+      <span class="link-card__text">{{cardItems[0].title}}</span>
+    </a>
+  </app-can>
+    
+    <app-can [action]="cardItems[1].action" [resource]="cardItems[1].resource">
+    <a [class]="['link-card']" [routerLink]="[cardItems[1].routerLink]" [queryParams]="{ request_type : cardItems[1].params}">
+      <div class="w-12 h-12 img-card" >
+        <img [src]="cardItems[1].image" alt="copy icon" />
+      </div>
+      <span class="link-card__text">{{cardItems[1].title}}</span>
+    </a>
+  </app-can>
+    <app-can-list [roles]="['Procceed_Objection_CommitteeCoordinator' , 'Procceed_NotSerious_Objection_CommitteeCoordinator']">
+    <a [class]="['link-card']" [routerLink]="[cardItems[2].routerLink]" [queryParams]="{ request_type : cardItems[2].params}">
+      <div class="w-12 h-12 img-card" >
+        <img [src]="cardItems[2].image" alt="copy icon" />
+      </div>
+      <span class="link-card__text">{{cardItems[2].title}}</span>
+    </a>
+  </app-can-list>
+    <!-- @for (item of cardItems; track $index; let last = $last) {
+      @if (item.params) {
+      }@else {
+
+      }
+    } -->
+
+  </div>

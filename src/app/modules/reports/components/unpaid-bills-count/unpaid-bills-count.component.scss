@@ -1,0 +1,14 @@
+:host ::ng-deep {
+  .p-dropdown {
+    @apply w-full font-frutiger;
+
+    .p-dropdown-label {
+      @apply font-frutiger;
+    }
+
+    .p-inputtext {
+      border: none;
+    }
+  }
+
+}

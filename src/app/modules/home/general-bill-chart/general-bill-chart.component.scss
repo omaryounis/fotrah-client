@@ -1,0 +1,6 @@
+::ng-deep{
+
+    .violation-statistics .p-multiselect {
+       @apply lg:w-[200px];
+    }
+}

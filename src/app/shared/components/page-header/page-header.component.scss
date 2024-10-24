@@ -1,0 +1,10 @@
+:host ::ng-deep {
+  .page-header {
+    &__button {
+      @apply rounded-lg;
+      .p-button-icon {
+        @apply text-sm font-semibold;
+      }
+    }
+  }
+}

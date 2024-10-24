@@ -1,0 +1,36 @@
+:host ::ng-deep {
+  .sidebar {
+    .p-sidebar {
+      @apply sm:static sm:top-[66px] sm:translate-x-0 sm:visible sm:opacity-100 sm:transition-none sm:w-[241px] w-full shadow-none #{!important};
+    }
+
+    &__menu-item {
+      @apply mb-4;
+
+      a {
+        @apply flex items-center py-1 px-1.5 transition-all duration-300;
+        &.active,
+        &:hover {
+          border-radius: 12px;
+          background: rgba(78, 155, 110, 0.1);
+        }
+      }
+      img {
+        @apply p-1.5 me-[18px] bg-[#F2F2F2] rounded-xl;
+      }
+      span {
+        @apply font-frutiger text-[#4D4D4D] text-sm;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 640px) {
+  :host ::ng-deep {
+    .sidebar {
+      .p-sidebar {
+        height: calc(100vh - 66px);
+      }
+    }
+  }
+}

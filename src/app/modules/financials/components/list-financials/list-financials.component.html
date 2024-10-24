@@ -1,0 +1,27 @@
+<app-page-header [title]="'financials' | translate">
+  <app-create-financial left-content></app-create-financial>
+
+</app-page-header>
+<div class="my-4">
+  <app-search-bar
+    [placeholder]="'search' | translate"
+    (onClickSearch)="getFinancialItems(10,1)"
+  [isInlineSearch]="true"
+    (onSearchValueChange)="onSearchTextChange($event)"
+  ></app-search-bar>
+</div>
+<div class="table-container container max-w-full mx-auto mb-20 overflow-x-auto">
+  <app-table
+    [dataSource]="financialItems"
+    [columns]="columns"
+    [actions]="actions"
+  ></app-table>
+ @if (financialItems.length > 0) {
+   <p-paginator 
+   (onPageChange)="onPageChange($event)" 
+   [first]="first"
+   [rows]="rows" 
+   [totalRecords]="totalCount()" 
+   [rowsPerPageOptions]="[10, 20, 30]" />
+ }
+</div>

@@ -1,0 +1,56 @@
+<p-card styleClass="violation-statistics p-5">
+  <ng-template pTemplate="header">
+    <div class="flex justify-between items-center">
+      <p class="chart-card__title text-primary"> {{'quarter-bills' | translate}}</p>
+      <!-- <p-button label="تصدير" icon="pi pi-file-export" (onClick)="handelReportExport()" /> -->
+    </div>
+  </ng-template>
+  <div class="w-full flex justify-end align-middle font-neo text-[12px]  ">  
+    <i class="pi pi-circle-fill me-2 my-auto  text-[#4E9B6E]" style="font-size: 0.7rem"></i>
+    <b class="chart-label me-4">{{"paid" | translate}}</b>
+    <i class="pi pi-circle-fill me-2 my-auto  text-[#874E9F]" style="font-size: 0.7rem"></i>
+    <b class="chart-label me-4">{{"unpaid" | translate}}</b>
+    <i class="pi pi-circle-fill me-2 my-auto  text-[#99744ECC]" style="font-size: 0.7rem"></i>
+    <b class="chart-label me-4">{{"total-bills" | translate}}</b>
+  
+  </div>
+  <div class="grid grid-cols-4 gap-10 mt-8 font-frutiger">
+    
+   @if (chartData[1]) {
+    <div class="text-center">
+    <p-chart #canvas1 class="violation-statistics__chart h-[340px] text-center" type="bar" id="bar-chart-1"
+     [data]="chartData[1]" [options]="chartOptions"></p-chart>
+     <h1>
+     {{'Q1' | translate}}
+     </h1>
+    </div>
+   } 
+   @if (chartData[2]) {
+    <div class="text-center">
+     <p-chart #canvas2 class="violation-statistics__chart h-[340px] text-center" type="bar" id="bar-chart-2"
+        [data]="chartData[2]" [options]="chartOptions"></p-chart>
+        <h1>
+          {{'Q2' | translate}}
+         </h1>
+        </div>
+   }
+   @if (chartData[3]) {
+    <div class="text-center">
+    <p-chart #canvas3 class="violation-statistics__chart h-[340px] text-center" type="bar" id="bar-chart-3"
+       [data]="chartData[3]" [options]="chartOptions"></p-chart>
+       <h1>
+        {{'Q3' | translate}}
+       </h1>
+      </div>
+   }
+   @if (chartData[4]) {
+    <div class="text-center">
+    <p-chart #canvas4 class="violation-statistics__chart h-[340px] text-center" type="bar" id="bar-chart-4"
+       [data]="chartData[4]" [options]="chartOptions"></p-chart>
+         <h1>
+          {{'Q4' | translate}}
+     </h1>
+    </div>
+   }
+  </div>
+</p-card>

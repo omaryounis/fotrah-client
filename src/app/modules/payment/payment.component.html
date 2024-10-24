@@ -1,0 +1,13 @@
+<div class="public-bill-inquery px-8" >
+  <div class="">
+    <div class="sm:inline-block  lang-area align-middle ms-[20px] float-end">
+
+      <p-button  id="lang-label" [rounded]="true"  (onClick)="toggleLang()" [label]="browserLang == 'en' ? ('ar' | translate) : ('en' | translate)"></p-button>
+      <p-button [rounded]="true" id="lang-icon" icon="pi pi-globe"></p-button>
+    </div>
+  <app-page-header [title]="'payment-page' | translate" [showButton]="false" [showBreadcrumb]="false"
+    headerStyleClass="mb-2 mt-4"></app-page-header>
+  </div>
+
+    <!-- <app-payment-page [billNumber]="billNumber"></app-payment-page> -->
+</div>

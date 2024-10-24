@@ -1,0 +1,18 @@
+a.logo {
+  display: block;
+  max-width: 15rem;
+  margin: 5vh auto 6vh;
+}
+
+@media only screen and (max-width: 768px) {
+  a.logo {
+    display: block;
+    max-width: 9rem;
+    margin: auto;
+    position: relative;
+    top: 1.5rem;
+    right: 0;
+    left: 0;
+    width: 8rem;
+  }
+}

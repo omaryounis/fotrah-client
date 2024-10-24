@@ -1,0 +1,16 @@
+<div class="flex items-center justify-end">
+<label class="font-neo me-3"  for="gfs">{{
+  rowData.status ? ("active" | translate) : "not-active" | translate
+}}</label>
+<app-can action="Edit" resource="Gfs">
+<div class="flex items-center justify-end gap-2 cursor-pointer" (click)="openModal($event)">
+  <p-inputSwitch
+    styleClass="h-[1.75rem]"
+    inputId="gfs"
+    [(ngModel)]="rowData.status"
+    [disabled]="true"
+ 
+  ></p-inputSwitch>
+</div>
+</app-can>
+</div>

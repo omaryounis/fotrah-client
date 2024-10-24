@@ -1,0 +1,56 @@
+<div class="public-bill-inquery px-8" >
+  <div class="">
+    <div class="sm:inline-block  lang-area align-middle ms-[20px] float-end">
+
+      <p-button  id="lang-label" [rounded]="true"  (onClick)="toggleLang()" [label]="browserLang == 'en' ? ('ar' | translate) : ('en' | translate)"></p-button>
+      <p-button [rounded]="true" id="lang-icon" icon="pi pi-globe"></p-button>
+    </div>
+  <app-page-header [title]="'inqiury-bills' | translate" [showButton]="false" [showBreadcrumb]="false"
+    headerStyleClass="mb-2 mt-4"></app-page-header>
+  </div>
+  @if(!showSearchResults()) {
+  <h4 class="service-description"></h4>
+
+  }
+  @if(showSearchResults()) {
+  <div class="flex justify-start">
+    <button class="text-[#9162a3] border border-solid border-[#9162a3] rounded-full py-[0.375rem] px-[0.75rem]"
+      (click)="backToHome()">
+      →
+     {{'back-to-search' | translate}}
+    </button>
+  </div>
+  }
+
+  <div class="flex flex-col items-center w-full">
+    @if (!showSearchResults()) {
+    <section class="flex flex-col items-center justify-center my-12 font-neo">
+      <label class="mb-3 block text-[#09090b] font-semibold font-readex"></label>
+      <div class="lg:flex lg:items-center lg:gap-8  md:flex md:items-center md:gap-8 w-full">
+        <div class="flex align-items-center  md:text-lg text-xs mb-3">
+          <p-radioButton name="searchType" value="searchByBill" [(ngModel)]="selectedSearchType"
+            inputId="ingredient1"> {{'back-to-search' | translate}}</p-radioButton>
+          <label for="ingredient1" class="ms-2 font-readex"> {{'choose-search-type' | translate}}</label>
+        </div>
+
+        <div class="flex align-items-center  md:text-lg text-xs mb-3">
+          <p-radioButton name="searchType" value="searchByIdentity" [(ngModel)]="selectedSearchType"
+            inputId="ingredient2"> {{'by-bill-number' | translate}}</p-radioButton>
+          <label for="ingredient2" class="ms-2 font-readex">{{'by-idno' | translate}}</label>
+        </div>
+      </div>
+    </section>
+    <section class="quires__search-form w-full">
+      @if(selectedSearchType === "searchByBill") {
+      <app-search-by-bill-from></app-search-by-bill-from>
+      }
+      @if(selectedSearchType === "searchByIdentity") {
+      <app-search-by-identity-form></app-search-by-identity-form>
+      }
+    </section>
+    }
+    <section class="w-full">
+      <app-bill-search-table></app-bill-search-table>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<div class="quires">
+  <app-page-header [title]="'queries' | translate" [showButton]="false" headerStyleClass="mb-4"></app-page-header>
+
+  <section class="quires__search-bar">
+    <p class="search-label">{{'bill-number' | translate}} </p>
+
+    <app-search-bar [placeholder]="'search-bill' | translate" [showSearchAvtions]="true" (onClickSearch)="search()"
+      (onSearchValueChange)="changeSearchValue($event)" (onResetSearchValue)="resetSearchResults()"></app-search-bar>
+  </section>
+
+  @if (showBill()) {
+  <section class="quires__bill">
+    <div class="bill-info">
+      <p class="bill-info__title"> {{'bill-information' | translate}} </p>
+      <app-bill-print [rowData]="billInformation"></app-bill-print>
+    </div>
+
+    <div class="bill-table">
+      <div class="bill-table__item">
+        <label class="bill-table__item-label">{{'bill-number' | translate}}</label>
+        <p class="bill-table__item-info">{{ billInformation.billNumber }}</p>
+      </div>
+      <div class="bill-table__item">
+        <label class="bill-table__item-label">{{'bill-date' | translate}}</label>
+        <p class="bill-table__item-info">{{ billInformation.billDate | date:'dd/MM/yyyy' }}</p>
+      </div>
+      <div class="bill-table__item">
+        <label class="bill-table__item-label">{{'bill-amount' | translate}}</label>
+        <p class="bill-table__item-info">{{ billInformation.totalAmount }} {{'sar' | translate}}</p>
+      </div>
+      <div class="bill-table__item">
+        <label class="bill-table__item-label">{{'bill-status' | translate}}</label>
+        <p class="bill-table__item-info">{{ billInformation.status.toLowerCase() | translate }}</p>
+      </div>
+      <div class="bill-table__item">
+       
+        <label class="bill-table__item-label"> {{checkBillType() ? ('violater-name' | translate) : ('company-name' | translate ) }}</label>
+        <p class="bill-table__item-info">{{ billInformation.entityName }}</p>
+      </div>
+      <div class="bill-table__item">
+        <label class="bill-table__item-label">{{'id-no' | translate}}</label>
+        <p class="bill-table__item-info">{{ billInformation.identityNumber }}</p>
+      </div>
+    </div>
+  </section>
+  <!-- @if (billInformation.status == billStatus.UPPAID_AR || billInformation.status ==  billStatus.UPPAID_EN) {
+  <div class="flex justify-end w-full mt-3">
+    <p-button pAutoFocus class="cancel-bill" severity="success" [label]="'pay' | translate" [autofocus]="true"
+      (onClick)="navigateToPayment('/public/payment/' + billInformation.billNumber)" ></p-button>
+  </div>
+  } -->
+  }
+</div>
