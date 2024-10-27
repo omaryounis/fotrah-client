@@ -5,6 +5,7 @@ export interface IBillReportResponse {
     totalBillsCount: number,
     paidBillsCount: number,
     unpaidBillsCount: number,
+    canceledBillsCount: number,
     totalUnpaidBillsAmount: number,
   }
 }

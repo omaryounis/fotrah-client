@@ -25,6 +25,7 @@ export class ViolationCountComponent implements OnInit, OnDestroy {
   violationCountData: any;
   paidBillsCount: string = "0";
   unpaidBillsCount: string = "0";
+  canceledBillsCount: string = "0";
   violationCountDataPermits: any;
   paidBillsCountPermits: string = "0";
   unpaidBillsCountPermits: string = "0";
@@ -99,6 +100,7 @@ export class ViolationCountComponent implements OnInit, OnDestroy {
       this.violationCountData = this.updateChartData(String(reportData?.data?.totalBillsCount));
       this.paidBillsCount = String(reportData?.data?.paidBillsCount);
       this.unpaidBillsCount = String(reportData?.data?.unpaidBillsCount);
+      this.canceledBillsCount = String(reportData?.data?.canceledBillsCount);
     });
     this.violationCountData = this.violationCountDataPermits = {
       // labels: [this.langService.getInstantTranslation('total-bills')],
@@ -131,5 +133,8 @@ export class ViolationCountComponent implements OnInit, OnDestroy {
     if (this.violationCountSubscriptionPermits) this.violationCountSubscriptionPermits.unsubscribe();
     if (this.reportServiceSubscription) this.reportServiceSubscription.unsubscribe();
     if (this.reportServiceSubscriptionPermits) this.reportServiceSubscriptionPermits.unsubscribe();
+  }
+  getCanceledBillsTranslated(){
+    return this.reportType == 'PermitsBills' ? 'canceled-permit-bills-count' : 'canceled-bills-count';
   }
 }

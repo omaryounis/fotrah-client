@@ -3,7 +3,21 @@
 
     box-shadow: 0px 4.367px 2.919px 0px #874e9f47;
 }
-
+.gredient-gray {
+    @apply rounded-2xl pt-4 ps-6 pb-3 text-primary font-neoBold text-sm;
+    background: linear-gradient(91deg,
+        rgba(211, 211, 211, 0.4) 0.26%,
+        rgba(169, 169, 169, 0.4) 96.59%);
+    box-shadow: 0px 4.367px 10.919px 0px rgba(156, 117, 78, 0.25);
+    margin-bottom: 2rem;
+  }
+.gredient-red {
+    @apply rounded-2xl pt-4 ps-6 pb-3 text-red-700 font-neoBold text-sm;
+    background: linear-gradient(91deg,
+        rgba(255, 99, 71, 0.4) 0.26%, /* Tomato color */
+        rgba(255, 69, 58, 0.4) 96.59%); /* Red color */
+    box-shadow: 0px 4.367px 10.919px 0px rgba(156, 117, 78, 0.25);
+  }
 ::ng-deep {
     #calender-clear .p-inputtext {
         padding-inline-start: 1.75rem;

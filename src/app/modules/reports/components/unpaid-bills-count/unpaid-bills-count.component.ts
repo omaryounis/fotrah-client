@@ -25,6 +25,7 @@ export class UnpaidBillsCountComponent {
   violationCountData: any;
   paidBillsCount: string = "0";
   unpaidBillsAmount: string = "0";
+  canceledBillsCount: string = "0";
   reportServiceSubscription!: Subscription;
   unPaidBills!: Subscription;
   reportExportSubscription!: Subscription;
@@ -89,6 +90,7 @@ export class UnpaidBillsCountComponent {
     this.reportServiceSubscription = this.reportsService.unpaidBillsReport$.subscribe((reportData) => {
       this.violationCountData = this.updateChartData(String(reportData?.data?.unpaidBillsCount));
       this.paidBillsCount = String(reportData?.data?.paidBillsCount);
+      this.canceledBillsCount = String(reportData?.data?.canceledBillsCount);
       this.unpaidBillsAmount = reportData?.data?.totalUnpaidBillsAmount.toLocaleString("ar").replace('.00', '');
     });
   }

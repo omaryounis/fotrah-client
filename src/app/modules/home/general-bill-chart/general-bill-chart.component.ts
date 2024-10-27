@@ -46,6 +46,8 @@ export class GeneralBillChartComponent implements OnInit {
     if (reportType) {
       this.reportType = reportType!; 
     }
+    this.mapBill = { paidBillsCount: this.langService.getInstantTranslation('paid'), canceledBillsCount: this.langService.getInstantTranslation(this.reportType == 'PermitsBills' ? 'PermitCanceled' :'canceled'), unpaidBillsCount: this.langService.getInstantTranslation('unpaid') }
+
     this.billService.getBillsReport(this.reportType).subscribe(res => {
       this.billReportData = res.data;
       var billData = Object.entries(this.billReportData).map(([key, value]) => {
@@ -73,8 +75,8 @@ export class GeneralBillChartComponent implements OnInit {
         labels: countsData.map((a: any) => this.mapBill[a.key]),
         datasets: [
           {
-            label: this.langService.getInstantTranslation(this.reportType == ReportType.VIOLATIONS ? BillsType.VIOLATIONS : BillsType.PERMITS),
             data: countsData.map((a: any) => a.value),
+            label: this.langService.getInstantTranslation(this.reportType == ReportType.VIOLATIONS ? BillsType.VIOLATIONS : BillsType.PERMITS),
             backgroundColor: this.prepareColors(countsData , selectedBillTypes),
             borderColor: "rgba(75,192,192,1)",
             borderWidth: 0,

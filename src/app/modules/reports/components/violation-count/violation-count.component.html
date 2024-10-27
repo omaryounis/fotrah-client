@@ -21,9 +21,13 @@
         <p>{{'paid-bills-count' | translate}} </p>
         <p>{{paidBillsCount}}</p>
       </div>
-      <div class="secndary-card">
+      <div class="gredient-gray">
         <p >{{'unpaid-bills-count' | translate}}</p>
         <p>{{ unpaidBillsCount }}</p>
+      </div>
+      <div class="gredient-red">
+        <p >{{getCanceledBillsTranslated() | translate }}</p>
+        <p>{{ canceledBillsCount }}</p>
       </div>
     </div>
   </div>
