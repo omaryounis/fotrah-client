@@ -37,12 +37,13 @@ export class PaymentSuccessComponent implements OnInit {
   }
   finishProcess = () => {
     const source = localStorage.getItem("sop");
+    const redirectURL = localStorage.getItem("redirectUrl")! + '?responseType=SUCCESS&responseMessageAr=تمت عملية السداد بنجاح&responseMessageEn=Payment Successfully&reponseReferenceNumber=' + this.billRefNumber;
     const navigateUrl =
-      source === PaymentSources.PORTAL
-        ? location.origin + "/dashboard/queries"
-        : source === PaymentSources.PUBLIC
+  
+         source === PaymentSources.PUBLIC
           ? location.origin + "/public/bill-inquery"
-          : environment.tahakomUrl;
+          : redirectURL;
+          debugger
     this.document.location.href = navigateUrl;
   };
   getBillData() {
