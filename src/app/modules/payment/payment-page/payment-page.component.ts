@@ -22,6 +22,7 @@ export class PaymentPageComponent implements OnInit {
   @Input() billNumber: string = "";
   @ViewChild("payForm") form = {} as ElementRef;
   source: string = "";
+  redirectUrl: string = "";
   paymentMethods = [
     {
       image: "assets/images/icons/bank-method.png",
@@ -45,12 +46,19 @@ export class PaymentPageComponent implements OnInit {
     private langService:LanguageService
   ) {
     router.params.subscribe((res) => (this.billNumber = res["billNumber"]));
-    router.queryParamMap.subscribe((res) => (this.source = res.get("source")!));
+    router.queryParams.subscribe((res) => {
+      this.source = res["source"]!
+      this.redirectUrl = decodeURIComponent(res['redirectUrl']);
+
+    }
+      
+    );
     this.paymentMethods.forEach((element) => {
       element.routerLink += "/" + this.billNumber;
     });
     //sop returned to source of payment
     localStorage.setItem("sop", this.source);
+    localStorage.setItem("redirectUrl", this.redirectUrl);
   }
 
   ngOnInit() {}

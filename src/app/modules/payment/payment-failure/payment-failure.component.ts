@@ -27,12 +27,14 @@ export class PaymentFailureComponent implements OnInit {
     });
   }
   finishProcess = () => {
-    const source = localStorage.getItem('sop');
-
-    const navigateUrl = source === PaymentSources.PORTAL ? location.origin + '/dashboard/queries' :
-      source === PaymentSources.PUBLIC ? location.origin + '/public' : environment.tahakomUrl;
-
+    const source = localStorage.getItem("sop");
+    const redirectURL = localStorage.getItem("redirectUrl")! + '?responseType=SUCCESS&responseMessageAr=تمت عملية السداد بنجاح&responseMessageEn=Payment Successfully&reponseReferenceNumber=' + this.billRefNumber;
+    const navigateUrl =
+         source === PaymentSources.PUBLIC
+          ? location.origin + "/public/bill-inquery"
+          : redirectURL;
+          debugger
     this.document.location.href = navigateUrl;
-  }
+  };
   copyText = () => this.clipboard.copy(this.billRefNumber);
 }
