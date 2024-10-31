@@ -6,7 +6,7 @@ export interface ITask {
   objectionReason?: string;
   status?: string;
   reasons? : string[];
-  // id: number;
+  updatedVote? : boolean;
   requestTypeId?: number;
   requestType?: string;
   requestStatusId?: number;

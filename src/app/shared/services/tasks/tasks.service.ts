@@ -53,9 +53,25 @@ export class TasksService extends BaseEntityService<ITask> {
         // this.upsertBaseEntity(response.data);
       }));
   }
+  endVoteSession(Task: ITaskConfirm ): Observable<IResponse<ITaskConfirm>> {  
+      return this.http
+      .post<IResponse<ITaskConfirm>>(`${environment.proxyBase}/Missions/end-voting-session`, Task)
+      .pipe(tap((response: IResponse<ITaskConfirm>) => {
+        // Assuming setBaseEntity returns BaseEntityType<ITaskConfirm>[].
+        // this.upsertBaseEntity(response.data);
+      }));
+  }
     VoteTask(Task: ITaskConfirm ): Observable<IResponse<ITaskConfirm>> {  
       return this.http
       .post<IResponse<ITaskConfirm>>(`${environment.proxyBase}/Missions/Vote`, Task)
+      .pipe(tap((response: IResponse<ITaskConfirm>) => {
+        // Assuming setBaseEntity returns BaseEntityType<ITaskConfirm>[].
+        // this.upsertBaseEntity(response.data);
+      }));
+  }
+    updateVoteTask(Task: ITaskConfirm ): Observable<IResponse<ITaskConfirm>> {  
+      return this.http
+      .put<IResponse<ITaskConfirm>>(`${environment.proxyBase}/Missions/Vote`, Task)
       .pipe(tap((response: IResponse<ITaskConfirm>) => {
         // Assuming setBaseEntity returns BaseEntityType<ITaskConfirm>[].
         // this.upsertBaseEntity(response.data);

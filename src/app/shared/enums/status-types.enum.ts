@@ -16,5 +16,5 @@ export enum StatusEnum {
     PENDING = 1,           // Pending
     APPROVED = 2,          // Initial Approval
     COMPLETED = 3,         // Completed
-    REJECTED = 4           // Rejected
+    REJECTED = 4 ,          // Rejected
   }
