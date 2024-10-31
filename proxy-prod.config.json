@@ -1,6 +1,6 @@
 {
   "/api/**": {
-    "target": "https://fotrahbet.ripc.gov.sa/api/v1",
+    "target": "https://fotrahbe.ripc.gov.sa/api/v1",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {

@@ -43,7 +43,7 @@ export class PaymentSuccessComponent implements OnInit {
          source === PaymentSources.PUBLIC
           ? location.origin + "/public/bill-inquery"
           : redirectURL;
-          debugger
+           
     this.document.location.href = navigateUrl;
   };
   getBillData() {

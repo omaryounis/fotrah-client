@@ -156,7 +156,7 @@
       </div>
     }
   </div>
-  @if ( taskData.requestTypeId == requestTypes.OBJECTION && taskData.requestStatusId != statusTypes.PENDING) {
+  @if ( checkIsvisible()) {
     <div class="form-row !grid-cols-1 mt-2">
       <div class="form-group">
         <label for="key">{{is_voting ? ('objection-reason' | translate) :  ('proceed-reason' | translate)  }}</label>

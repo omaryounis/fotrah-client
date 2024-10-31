@@ -80,23 +80,7 @@ export class EditTaskComponent {
                 }
                 data.comment = this.taskData.objectionReason;
                 data.reasons = this.taskData.reasons;
-              this.taskService.VoteTask(data).subscribe((res) => {
-                if (res.message == MessagesResponse.SUCCESS) {
-                  this.ref?.close();
-                  this.message.add({
-                    severity: "success",
-                    summary: this.lang.getInstantTranslation("done"),
-                    detail: this.lang.getInstantTranslation("voting-succefully"),
-                  });
-                  this.fillTasks();
-                } else {
-                  this.message.add({
-                    severity: "error",
-                    summary: this.langService.getInstantTranslation("error"),
-                    detail: res.message,
-                  });
-                }
-              });
+                this.onVoting(data)
             } else {
            
                 if (this.taskData.status == "accept") {
@@ -107,12 +91,12 @@ export class EditTaskComponent {
                     requestId: parseInt(this.taskData.id!),
                     workflowType: this.taskData.requestTypeId!,
                   } as any;
+                   
                   if (
-                    this.taskData.requestTypeId == RequestTypes.OBJECTION &&
-                    this.taskData.requestStatusId == StatusEnum.REJECTED
+                    this.taskData.requestTypeId == RequestTypes.OBJECTION && this.taskData.requestStatusId == StatusEnum.REJECTED
                   ) {
                      
-                    if (!this.taskData.objectionReason || this.taskData.objectionReason == '') {
+                    if ((!this.taskData.objectionReason || this.taskData.objectionReason == '') && this.taskData.reasons?.length == 0) {
                       this.message.add({
                         severity: "error",
                         summary:
@@ -123,27 +107,8 @@ export class EditTaskComponent {
                     }
                     approve_data.objectionReason = this.taskData.objectionReason;
                   }
-                  this.taskService
-                    .ConfirmTask(approve_data, approveType)
-                    .subscribe((res) => {
-                      if (res.message == MessagesResponse.SUCCESS) {
-                        this.ref?.close();
-                        this.message.add({
-                          severity: "success",
-                          summary: this.lang.getInstantTranslation("done"),
-                          detail:
-                            this.lang.getInstantTranslation("done-process"),
-                        });
-                        this.fillTasks();
-                      } else {
-                        this.message.add({
-                          severity: "error",
-                          summary:
-                            this.langService.getInstantTranslation("error"),
-                          detail: res.message,
-                        });
-                      }
-                    });
+                  this.onConfirmTask(approve_data, approveType);
+              
                 } else {
                   this.taskService
                     .RejectTask(parseInt(this.taskData.id!))
@@ -180,6 +145,98 @@ export class EditTaskComponent {
       },
     });
   }
-  isVoting = () :boolean => this.rowData.requestStatusId == StatusEnum.APPROVED && this.rowData?.requestTypeId == RequestTypes.OBJECTION ? true : false;
+  onConfirmTask(approve_data: any, approveType: string ) {
+    if (
+      this.taskData.requestTypeId == RequestTypes.OBJECTION &&
+      this.taskData.requestStatusId == StatusEnum.APPROVED 
+    ) { 
+      this.taskService
+      .endVoteSession(approve_data)
+      .subscribe((res) => {
+        if (res.message == MessagesResponse.SUCCESS) {
+          this.ref?.close();
+          this.message.add({
+            severity: "success",
+            summary: this.lang.getInstantTranslation("done"),
+            detail:
+              this.lang.getInstantTranslation("done-process"),
+          });
+          this.fillTasks();
+        } else {
+          this.message.add({
+            severity: "error",
+            summary:
+              this.langService.getInstantTranslation("error"),
+            detail: res.message,
+          });
+        }
+      });
+      return;
+    }
+    this.taskService
+    .ConfirmTask(approve_data, approveType)
+    .subscribe((res) => {
+      if (res.message == MessagesResponse.SUCCESS) {
+        this.ref?.close();
+        this.message.add({
+          severity: "success",
+          summary: this.lang.getInstantTranslation("done"),
+          detail:
+            this.lang.getInstantTranslation("done-process"),
+        });
+        this.fillTasks();
+      } else {
+        this.message.add({
+          severity: "error",
+          summary:
+            this.langService.getInstantTranslation("error"),
+          detail: res.message,
+        });
+      }
+    });
+  }
+  onVoting(data: ITaskConfirm) {
+    if (this.taskData.updatedVote) {
+      this.taskService.updateVoteTask(data).subscribe((res) => {
+        if (res.message == MessagesResponse.SUCCESS) {
+          this.ref?.close();
+          this.message.add({
+            severity: "success",
+            summary: this.lang.getInstantTranslation("done"),
+            detail: this.lang.getInstantTranslation("update-voting-succefully"),
+          });
+          this.fillTasks();
+        } else {
+          this.message.add({
+            severity: "error",
+            summary: this.langService.getInstantTranslation("error"),
+            detail: res.message,
+          });
+        }
+      });
+      return;
+    }
+    this.taskService.VoteTask(data).subscribe((res) => {
+      if (res.message == MessagesResponse.SUCCESS) {
+        this.ref?.close();
+        this.message.add({
+          severity: "success",
+          summary: this.lang.getInstantTranslation("done"),
+          detail: this.lang.getInstantTranslation("voting-succefully"),
+        });
+        this.fillTasks();
+      } else {
+        this.message.add({
+          severity: "error",
+          summary: this.langService.getInstantTranslation("error"),
+          detail: res.message,
+        });
+      }
+    });
+  }
+  isVoting = () :boolean => this.rowData.requestStatusId == StatusEnum.APPROVED && this.rowData?.requestTypeId == RequestTypes.OBJECTION &&  this.loginService.hasPermission([
+    "Add_NotSerious_Objection_Member_Vote",
+    "Add_Objection_Member_Vote",
+  ]) ? true : false;
   fillTasks = () => this.taskService.getTasks("1", 10).subscribe();
 }

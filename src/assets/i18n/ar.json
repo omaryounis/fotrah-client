@@ -485,6 +485,7 @@
   "accept-final-vote": "الموافقة علي نتيجة التصويت",
   "voting-stage": "التصويت علي طلب اعتراض",
   "voting-succefully": "تم رفع التصويت الخاص بك بنجاح",
+  "update-voting-succefully" : "تم تعديل التصويت الخاص بك بنجاح",
   "objection-reason-required": "يجب كتابة سبب التصويت",
   "ObjectorId": "رقم المعترض",
   "ObjectionNumber": "رقم الاعتراض",
