@@ -137,4 +137,9 @@ export class ViolationCountComponent implements OnInit, OnDestroy {
   getCanceledBillsTranslated(){
     return this.reportType == 'PermitsBills' ? 'canceled-permit-bills-count' : 'canceled-bills-count';
   }
+
+  
+  getUnpaidBillsTranslated(){
+    return this.reportType == 'PermitsBills' ? 'permit-unpaid-bills-count' : 'unpaid-bills-count';
+  }
 }

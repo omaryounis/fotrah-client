@@ -46,7 +46,9 @@ export class GeneralBillChartComponent implements OnInit {
     if (reportType) {
       this.reportType = reportType!; 
     }
-    this.mapBill = { paidBillsCount: this.langService.getInstantTranslation('paid'), canceledBillsCount: this.langService.getInstantTranslation(this.reportType == 'PermitsBills' ? 'PermitCanceled' :'canceled'), unpaidBillsCount: this.langService.getInstantTranslation('unpaid') }
+    this.mapBill = { paidBillsCount: this.langService.getInstantTranslation('paid'),
+       canceledBillsCount: this.langService.getInstantTranslation(this.reportType == 'PermitsBills' ? 'PermitCanceled' : 'canceled'),
+       unpaidBillsCount: this.langService.getInstantTranslation(this.reportType == 'PermitsBills' ? 'PermitUnpaid' : 'unpaid') }
 
     this.billService.getBillsReport(this.reportType).subscribe(res => {
       this.billReportData = res.data;
