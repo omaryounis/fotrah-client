@@ -46,7 +46,6 @@ export class EditTaskComponent {
   ) {}
 
   openEditModal(event: any) {
-     
       event.stopPropagation();
     this.ref = this.dialogService.open(TaskFormComponent, {
       header: this.langService.getInstantTranslation(this.isVoting() ? "voting-stage" : "confirmation"),

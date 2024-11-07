@@ -26,6 +26,14 @@
       <span class="link-card__text">{{cardItems[2].title}}</span>
     </a>
   </app-can-list>
+  <app-can-list [roles]="['Procceed_Objection_CommitteeCoordinator' , 'Procceed_NotSerious_Objection_CommitteeCoordinator']">
+    <a [class]="['link-card']" [routerLink]="[cardItems[3].routerLink]">
+      <div class="w-12 h-12 img-card" >
+        <img [src]="cardItems[3].image" alt="copy icon" />
+      </div>
+      <span class="link-card__text">{{cardItems[3].title}}</span>
+    </a>
+  </app-can-list>
     <!-- @for (item of cardItems; track $index; let last = $last) {
       @if (item.params) {
       }@else {

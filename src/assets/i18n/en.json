@@ -458,6 +458,7 @@
   "notification-report" : "Notifications SMS Report",
   "supported-documents" : "Supported Documents",
   "violation-report" : "Violation Report",
+  "operations-documents" : "Operational Management Documents",
   "objection-reason" : "Vote Reason",
   "proceed-reason" : "Vote Approval Reason",
   "commitee-votes" : "Commitee Votes",
@@ -465,6 +466,8 @@
   "vote-accept" : "Vote Accept",
   "vote-reject" : "Vote Reject",
   "proceed" : "Proceed To Voting Committee",
+  "operations-proceed" : "Send to Objection Comittee",
+  "send-to-operations" : "Send to operatational Managemenet",
   "accept-final-vote" : "Accept Final Voting",
   "voting-stage" : "Voting Stage",
   "voting-succefully" : "Your voting added successfully",
@@ -503,8 +506,11 @@
       "4": "Accepted",
       "5": "Rejected"
     },
-    "FinCategoryName" : "Violation Category"
+    "FinCategoryName" : "Violation Category",
   
-  
-
+    "send-to-objection-committee" : "Send to Objection Commitee",
+    "upload-attachments" : "Upload Attachments",
+    "objections-missions" : "Objections Missions",
+    "coordinator-documents" : "Coordinator Attachments",
+    "objection-creation-date" : "Objection Date"
 }
