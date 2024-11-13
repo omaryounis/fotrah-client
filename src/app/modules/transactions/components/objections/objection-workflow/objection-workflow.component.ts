@@ -163,7 +163,7 @@ export class ObjectionWorkflowComponent {
                 voteRequest.comment = this.taskData.objectionReason
               }
               this.objctionService.vote(voteRequest).subscribe((res) => {
-                if (res.message == MessagesResponse.SUCCESS) {
+                if (res.message == MessagesResponse.SUCCESS && voteId === null) {
                   this.ref?.close();
                   this.message.add({
                     severity: "success",
@@ -171,7 +171,17 @@ export class ObjectionWorkflowComponent {
                     detail: this.lang.getInstantTranslation("voting-succefully"),
                   });
                   this.fillTasks();
-                } else {
+                }else if(res.message == MessagesResponse.SUCCESS && voteId !== null){
+                  this.ref?.close();
+                  this.message.add({
+                    severity: "success",
+                    summary: this.lang.getInstantTranslation("done"),
+                    detail: this.lang.getInstantTranslation("update-voting-succefully"),
+                  });
+                  this.fillTasks();
+
+                }
+                 else {
                   this.message.add({
                     severity: "error",
                     summary: this.langService.getInstantTranslation("error"),
