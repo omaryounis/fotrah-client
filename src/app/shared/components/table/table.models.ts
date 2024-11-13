@@ -6,4 +6,5 @@ export interface ITableColumn {
   tdClassList?: string[];
   showOnExpandedRow?: boolean;
   thTemplate?: "actionTemplate";
+  condition?: (item: any) => boolean;
 }

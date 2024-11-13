@@ -29,7 +29,14 @@
   }
   </div>
 <div class="table-container container max-w-full mx-auto mb-20 overflow-x-auto">
-  <app-table [dataSource]="requestsList" [columns]="columns" [actions]="actions"></app-table>
+  <app-table [dataSource]="requestsList" [columns]="columns" [actions]="actions">
+    <!-- <ng-template #checkIcon let-data="data">
+      {}
+      <td class="{{ (data.column.tdClassList || []).join(' ') }}">
+        <i *ngIf="hasVotedByUser(data.item.votes)" class="pi pi-check-circle text-green-500"></i>
+      </td>
+    </ng-template> -->
+  </app-table>
   <p-paginator 
   (onPageChange)="onPageChange($event)" 
   [first]="first"

@@ -29,7 +29,16 @@
 
           }
         </td>
-        } @else if (column.tdTemplate) {
+        } 
+        @else if (column.tdTemplate === 'checkIcon') {
+        
+          <td class="{{ (column.tdClassList || []).join(' ') }}">
+            @if (column.condition && column.condition(item)) {
+              <i class="pi pi-check-circle text-green-500"></i>
+            }  
+          </td>
+        }
+         @else if (column.tdTemplate) {
         <ng-container *ngTemplateOutlet="
                   getTemplateRef({ expandArrow, actionListTemplate }, column.tdTemplate);context: {data: {item, expanded}}
                 "></ng-container>

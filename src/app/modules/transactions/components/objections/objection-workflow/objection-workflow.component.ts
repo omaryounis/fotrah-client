@@ -30,6 +30,8 @@ standalone: true,
 export class ObjectionWorkflowComponent {
   @Input() btnIcon!: string;
   @Input() btnLabel!: string;
+  @Input() status?: number;
+
   userData: any;
   submitted:any;
 
@@ -94,7 +96,8 @@ export class ObjectionWorkflowComponent {
                     summary: this.lang.getInstantTranslation("done"),
                     detail: this.lang.getInstantTranslation("done-process"),
                   });
-                  this.fillTasks();
+                  debugger;
+                  this.fillTasks(this.status);
                 } else {
                   this.message.add({
                     severity: "error",
@@ -286,5 +289,5 @@ export class ObjectionWorkflowComponent {
    
   }
   isVoting = () :boolean => this.taskData.status == ObjectionStatusEnum.Under_Evaluation ? true : false ;
-  fillTasks = () => this.objctionService.getObjections("1", 10).subscribe();
+  fillTasks = (status?: number) => this.objctionService.getObjections("1", 10,status).subscribe();
 }

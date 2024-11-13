@@ -20,6 +20,7 @@ import { ObjectionWorkflowComponent } from "../objection-workflow/objection-work
 import { IObjectionMission, IVoteDetail } from "./objections.model";
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 import { LoginService } from "@shared/services/login/login.service";
+import { CommonModule } from "@angular/common";
 
 
 
@@ -31,7 +32,9 @@ import { LoginService } from "@shared/services/login/login.service";
     SearchBarComponent,
     PageHeaderComponent,
     TranslateModule,
-  PaginatorModule  ],
+  PaginatorModule,
+CommonModule
+],
   templateUrl: "./list-objections-tasks.component.html",
   styleUrl: "./list-objections-tasks.component.scss",
 })
@@ -66,6 +69,7 @@ export class ListObjectionsMissionsComponent implements OnInit {
       {
         label: "اظهار",
         icon: "pi pi-eye",
+        status: this.selected_status,
         component: ObjectionWorkflowComponent,
       },
      
@@ -110,6 +114,12 @@ export class ListObjectionsMissionsComponent implements OnInit {
 
       },
       {
+        text: "",
+        tdTemplate: "checkIcon",
+         showOnExpandedRow: true,
+        condition: (item) => this.hasVotedByUser(item.votes) === true
+      },
+      {
         thTemplate: "actionTemplate",
         tdTemplate: "actionListTemplate",
         showOnExpandedRow: true,
@@ -151,6 +161,7 @@ export class ListObjectionsMissionsComponent implements OnInit {
     return status ? status.text : ''; 
   }
   getObjectionList(rows: number, pageIndex: any) {
+    debugger;
     this.objectionService.getObjections(pageIndex, rows , this.selected_status , this.searchQuery()).subscribe()
   }
   hasVotedByUser(votes: IVoteDetail[]): boolean {
