@@ -1,7 +1,7 @@
 <form>
   <div class="form-row mb-0">
-    @for (item of taskDataArray; track $index) {
-      @if(item.value != null &&    !item.key.toLocaleLowerCase().includes('description') ){
+    @for (item of taskDataArray; track $index) { @if(item.value != null &&
+    !item.key.toLocaleLowerCase().includes('description') ){
     <div class="form-group">
       <label for="key">{{ item.key | translate }}</label>
       <input
@@ -13,9 +13,7 @@
         disabled
       />
     </div>
-    } }
-   
-@if(taskData.operationsReview){
+    } } @if(taskData.operationsReview){
     <div class="form-group">
       <label for="finCategoryName"> Operational Mangment Review </label>
       <input
@@ -26,11 +24,8 @@
         disabled
       />
     </div>
-  }
-
-
+    }
   </div>
- 
   @if (votes.length > 0 ) {
   <p-card class="p-2">
     <ng-template pTemplate="header">
@@ -124,7 +119,7 @@
 
           <i
             class="pi pi-download my-auto w-[23px] ms-auto cursor-pointer text-primary"
-            (click)="downloadFile(item.base64Data, item.fileName, false)"
+            (click)="downloadFile(item.filePath, item.fileName, false)"
             severity="danger"
           ></i>
         </label>
@@ -134,10 +129,35 @@
   </div>
   }
   <!-- take action -->
- 
+
   <!-- proceed request buttons -->
   @if(taskData.status ==
   ObjectionStatusTypes.Under_Review_by_Comittee_Coordinator){
+  @if(this.taskData.currentStatus !=
+  ObjectionStatusTypes.Under_Operational_Review.toString()) {
+  <div class="form-row !grid-cols-1 mt-2">
+    <div class="form-gruop">
+      <!-- <div class="form-row"> -->
+      <p-fileUpload
+        id="file-upload-input"
+        mode="advanced"
+        [chooseLabel]="'select-file' | translate"
+        chooseIcon="pi pi-upload"
+        [cancelLabel]="'cancel' | translate"
+        (onSelect)="onFileUpload($event)"
+        (onClear)="clearAllFiles()"
+        (onRemove)="onFileRemove($event)"
+        type="file"
+        [showUploadButton]="false"
+        [fileLimit]="3"
+        [files]="taskData.uploadedFiles"
+        cance
+      >
+      </p-fileUpload>
+    </div>
+  </div>
+
+  }
   <div class="flex flex-wrap form-group gap-3">
     <div class="flex align-items-center">
       <p-radioButton
@@ -151,8 +171,26 @@
         {{ "proceed" | translate }}
       </label>
     </div>
-   
-    @if(!taskData.operationsReview){
+    <!-- @for (attachment of attachments; track $index) {
+      @if(attachment.type !== AttachmentTypes.OPERATIONS_DOCUMENTS && !taskData.operationsReview ){
+        
+        <div class="flex align-items-center">
+          <p-radioButton
+            name="currentStatus"
+            [value]="ObjectionStatusTypes.Under_Operational_Review"
+            [(ngModel)]="taskData.currentStatus"
+            (ngModelChange)="updateData()"
+            inputId="ingredient3"
+          />
+          <label for="ingredient3" class="ms-2">
+            {{ "send-to-operations" | translate }}
+          </label>
+        </div>
+      }
+    } -->
+
+    @if((!hasOperationsReview))
+    {
       <div class="flex align-items-center">
         <p-radioButton
           name="currentStatus"
@@ -166,49 +204,23 @@
         </label>
       </div>
     }
-    
+    <!-- @if(!taskData.operationsReview || attachments) -->
+      <!-- {  -->
+    <!-- <div class="flex align-items-center">
+      <p-radioButton
+        name="currentStatus"
+        [value]="ObjectionStatusTypes.Under_Operational_Review"
+        [(ngModel)]="taskData.currentStatus"
+        (ngModelChange)="updateData()"
+        inputId="ingredient3"
+      />
+      <label for="ingredient3" class="ms-2">
+        {{ "send-to-operations" | translate }}
+      </label>
+    </div> -->
+    <!-- } -->
   </div>
-  <div class="form-gruop">
-    <div class="form-row">
-      <div
-        class="mt-3 border-2 flex-[!important] border-gray-300 rounded-md p-2 pb-1"
-      >
-        <label
-          class="w-full flex justify-between cursor-pointer"
-          for="file-upload-input"
-        >
-          <span> {{ "upload-attachments" | translate }} </span>
-          <i class="pi pi-upload my-auto w-[23px] ms-auto text-primary"></i>
-          <input
-            type="file"
-            id="file-upload-input"
-            (change)="onFileUpload($event)"
-            multiple
-            class="hidden-file-input"
-          />
-        </label>
-      </div>
-      </div>
-    </div>
-    <div class="form-row">
-      @for (file of taskData.uploadedFiles; track $index) {
-      <!-- <div class="form-group file"> -->
-      <div
-        class="selected-file"
-        class="mt-3 border-2 flex-[!important] border-gray-300 flex justify-between rounded-md p-2 pb-1"
-      >
-        <span> {{ file.name }}</span>
-  
-        <button class="remove-button">
-          <i
-            class="pi pi-times my-auto w-[23px] ms-auto cursor-pointer text-danger"
-            (click)="removeAttachment($index)"
-          ></i>
-        </button>
-      </div>
-  
-      }
-    </div>
+
   <!-- operational mangment -->
   } @if(taskData.status == ObjectionStatusTypes.Under_Operational_Review) {
   <div class="flex flex-wrap form-group gap-3">
@@ -219,7 +231,6 @@
         [(ngModel)]="taskData.currentStatus"
         (ngModelChange)="updateData()"
         inputId="ingredient5"
-        
       />
       <label for="ingredient5" class="ms-2">
         {{ "send-to-objection-committee" | translate }}
@@ -245,7 +256,29 @@
     </div>
   </div>
   <!-- attachment -->
-  <div class="form-gruop">
+  <div class="form-row !grid-cols-1 mt-2">
+    <div class="form-gruop">
+      <!-- <div class="form-row"> -->
+      <p-fileUpload
+        id="file-upload-input"
+        mode="advanced"
+        [chooseLabel] = "'select-file' | translate"
+        chooseIcon="pi pi-upload"
+        [cancelLabel]="'cancel' | translate"
+        (onSelect)="onFileUpload($event)"
+        (onClear)="clearAllFiles()"
+        (onRemove) = "onFileRemove($event)"
+        type="file"
+        [showUploadButton]="false"
+        [fileLimit]="3"
+        [files]="taskData.uploadedFiles"
+        cance
+        >
+      </p-fileUpload>
+
+    </div>
+  </div>
+  <!-- <div class="form-gruop">
     <div class="form-row">
       <div
         class="mt-3 border-2 flex-[!important] border-gray-300 rounded-md p-2 pb-1"
@@ -253,8 +286,8 @@
         <label
           class="w-full flex justify-between cursor-pointer"
           for="file-upload-input"
-        >
-          <span> {{ "upload-attachments" | translate }} </span>
+        > -->
+          <!-- <span> {{ "upload-attachments" | translate }} </span>
           <i class="pi pi-upload my-auto w-[23px] ms-auto text-primary"></i>
           <input
             type="file"
@@ -262,32 +295,32 @@
             (change)="onFileUpload($event)"
             multiple
             class="hidden-file-input"
-          />
-        </label>
-      </div>
+          /> -->
+        <!-- </label>
       </div>
     </div>
-  <!-- <div class="form-row selected-files mt-2" *ngIf="uploadedFiles.length>0"> -->
-  <!-- <label for="key">{{ "operations-documents" | translate }}</label> -->
-  <div class="form-row">
+    </div> -->
+      <!-- <div class="form-row selected-files mt-2" *ngIf="uploadedFiles.length>0"> -->
+      <!-- <label for="key">{{ "operations-documents" | translate }}</label> -->
+    <!-- <div class="form-row">
     @for (file of taskData.uploadedFiles; track $index) {
-    <!-- <div class="form-group file"> -->
-    <div
-      class="selected-file"
-      class="mt-3 border-2 flex-[!important] border-gray-300 flex justify-between rounded-md p-2 pb-1"
-    >
-      <span> {{ file.name }}</span>
+     <div class="form-group file"> -->
+    <!-- <div
+        class="selected-file"
+        class="mt-3 border-2 flex-[!important] border-gray-300 flex justify-between rounded-md p-2 pb-1"
+      >
+        <span> {{ file.name }}</span>
 
-      <button class="remove-button">
-        <i
-          class="pi pi-times my-auto w-[23px] ms-auto cursor-pointer text-danger"
-          (click)="removeAttachment($index)"
-        ></i>
-      </button>
-    </div>
+        <button class="remove-button">
+          <i
+            class="pi pi-times my-auto w-[23px] ms-auto cursor-pointer text-danger"
+            (click)="removeAttachment($index)"
+          ></i>
+        </button>
+      </div> -->
 
-    }
-  </div>
+  }
+  <!-- </div>  -->
 
   <!-- <div class="form-row attachments-container">
   @for (item of attachment.data; track $index) {
@@ -309,12 +342,11 @@
   </div>
   }
 </div> -->
-  }
+  
 
   <!-- voting buttons -->
   @if(taskData.status == ObjectionStatusTypes.Under_Evaluation){
   <div class="flex flex-wrap form-group gap-3">
-
     <div class="flex align-items-center">
       <p-radioButton
         name="currentStatus"
@@ -338,7 +370,6 @@
         (ngModelChange)="updateData()"
         inputId="ingredient2"
         #currentStatus="ngModel"
-
         required
       />
       <label for="ingredient2" class="ms-2">
@@ -346,28 +377,28 @@
       </label>
     </div>
     @if(isCoordinator()){
-      <div class="flex align-items-center">
-        <p-radioButton
-          name="currentStatus"
-          value="end-vote"
-          [(ngModel)]="taskData.currentStatus"
-          (ngModelChange)="updateData()"
-          #currentStatus="ngModel"
-          inputId="ingredient3"
-          required
-        />
-  
-        <label for="ingredient3" class="ms-2">
-          {{ "end-vote" | translate }}
-        </label>
-      </div>
+    <div class="flex align-items-center">
+      <p-radioButton
+        name="currentStatus"
+        value="end-vote"
+        [(ngModel)]="taskData.currentStatus"
+        (ngModelChange)="updateData()"
+        #currentStatus="ngModel"
+        inputId="ingredient3"
+        required
+      />
+
+      <label for="ingredient3" class="ms-2">
+        {{ "end-vote" | translate }}
+      </label>
+    </div>
     }
     <!-- @if (!this.taskData.currentStatus) {
     <div class="text-red-600">
       @if (objectionReason.errors?.['required']) {
       <span> {{ "this-field-required" | translate }}</span> }
     </div> -->
-  <!-- } -->
+    <!-- } -->
   </div>
   <div class="form-row !grid-cols-1 mt-2">
     <div class="form-group">

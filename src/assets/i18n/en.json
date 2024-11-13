@@ -504,7 +504,8 @@
       "2": "Under Review by Committee Coordinator",
       "3": "Under Evaluation",
       "4": "Accepted",
-      "5": "Rejected"
+      "5": "Rejected",
+      "6": "Under Operational Managament Review"
     },
     "FinCategoryName" : "Violation Category",
   
@@ -512,5 +513,10 @@
     "upload-attachments" : "Upload Attachments",
     "objections-missions" : "Objections Missions",
     "coordinator-documents" : "Coordinator Attachments",
-    "objection-creation-date" : "Objection Date"
+    "objection-creation-date" : "Objection Date",
+    "OperationalMangment_Objection_Review" : "Operational Management Member" ,
+    "done-voting-session" : "Voting Successfully Closed",
+    "max-three-attachment" : "You can only upload up to 3 files"
+
+
 }

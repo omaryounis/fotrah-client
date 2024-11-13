@@ -37,7 +37,6 @@ export class ObjectionService extends BaseEntityService<IObjectionMission> {
       .pipe(
         tap((response: IObjectionMissionResponse) => {
           // Assuming setBaseEntity returns BaseEntityType<ITask>[].
-          console.log("Response:", response);
           this.objections.set(response.data.objectionMissions);
           this.setTotalCount(response.data.totalCount);
         })

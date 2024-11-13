@@ -131,5 +131,6 @@ export class ListObjectionsComponent implements OnInit {
     {text : this.langService.getInstantTranslation('objection-statuses.3') , id : 3},
     {text : this.langService.getInstantTranslation('objection-statuses.4') , id : 4},
     {text : this.langService.getInstantTranslation('objection-statuses.5') , id : 5},
+    {text : this.langService.getInstantTranslation('objection-statuses.6') , id : 6},
   ]
 }

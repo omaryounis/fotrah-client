@@ -130,7 +130,6 @@ export class ObjectionWorkflowComponent {
             else if(this.taskData.status == ObjectionStatusEnum.Under_Evaluation
                &&(this.taskData.currentStatus == ObjectionStatusEnum.Accepted.toString()||this.taskData.currentStatus == ObjectionStatusEnum.Rejected.toString() ) ){
               var vote = this.taskData.currentStatus == ObjectionStatusEnum.Accepted.toString() ? true : false;
-              debugger;
               if ((!this.taskData.objectionReason || this.taskData.objectionReason == '') && this.taskData.reasons?.length == 0) {
                 this.message.add({
                   severity: "error",
@@ -154,9 +153,12 @@ export class ObjectionWorkflowComponent {
               var voteRequest = {
                 id:voteId,
                 vote:vote,
-                reasons:this.taskData.reasons,
                 objectionRequestLogId :this.taskData.objectionRequestLogId
               } as IVoteRequest;
+              if (this.taskData.reasons && this.taskData.reasons.length > 0) {
+                voteRequest.reasons = this.taskData.reasons;
+              }
+              
               if(this.taskData.objectionReason && this.taskData.objectionReason != ''){
                 voteRequest.comment = this.taskData.objectionReason
               }
@@ -190,7 +192,7 @@ export class ObjectionWorkflowComponent {
                   this.message.add({
                     severity: "success",
                     summary: this.lang.getInstantTranslation("done"),
-                    detail: this.lang.getInstantTranslation("done-process"),
+                    detail: this.lang.getInstantTranslation("done-voting-session"),
                   });
                   this.fillTasks();
                 } else {
@@ -205,17 +207,14 @@ export class ObjectionWorkflowComponent {
             else if(this.taskData.status == ObjectionStatusEnum.Under_Operational_Review && this.taskData.currentStatus == ObjectionStatusEnum.Under_Review_by_Comittee_Coordinator.toString()){
               const formData = new FormData();
               formData.append('objectionRequestLogId', this.taskData.objectionRequestLogId.toString());
-              formData.append('comment', this.taskData.operationsReview);
+              if(this.taskData.operationsReview)
+                formData.append('comment', this.taskData.operationsReview);
           
               if (this.taskData.uploadedFiles && this.taskData.uploadedFiles.length > 0) {
                 this.taskData.uploadedFiles.forEach(file => {
                   formData.append('attachments', file, file.name);
                 })};
-                console.log("objectionRequestLogId:", formData.get('objectionRequestLogId'));
-                console.log("comment:", formData.get('comment'));
-                
-                console.log("attachments:", formData.getAll('attachments'));
-                
+               
               this.objctionService.OperationReview(formData).subscribe((res) => {
                 if (res.message == MessagesResponse.SUCCESS) {
                   this.ref?.close();
@@ -274,9 +273,7 @@ export class ObjectionWorkflowComponent {
         footer: CrudModalFooterComponent,
       },
     });
-    console.log(`objection ${this.taskData.currentStatus}`)
-    console.log('objection Status>>', this.taskData.status);
-
+   
   }
   isVoting = () :boolean => this.taskData.status == ObjectionStatusEnum.Under_Evaluation ? true : false ;
   fillTasks = () => this.objctionService.getObjections("1", 10).subscribe();

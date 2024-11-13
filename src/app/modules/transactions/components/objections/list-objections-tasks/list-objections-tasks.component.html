@@ -8,6 +8,7 @@
   <div class="form-group">
 
   </div>
+  @if(checkIsvisible()){
     <div class="form-group mt-100">
       <label class="required-element" for="clasificationNumber">{{'status' | translate}}</label>
       <p-dropdown
@@ -25,6 +26,7 @@
         aria-label="status"
       ></p-dropdown>
     </div>
+  }
   </div>
 <div class="table-container container max-w-full mx-auto mb-20 overflow-x-auto">
   <app-table [dataSource]="requestsList" [columns]="columns" [actions]="actions"></app-table>

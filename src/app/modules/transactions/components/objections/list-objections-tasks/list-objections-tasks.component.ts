@@ -7,7 +7,6 @@ import { PageHeaderComponent } from "@shared/components/page-header/page-header.
 
 import { ScreenService } from "@shared/services/screen/screen.service";
 
-
 import { ITableColumn } from "@shared/components/table/table.models";
 
 import { TranslateModule } from "@ngx-translate/core";
@@ -18,7 +17,12 @@ import { ActivatedRoute } from "@angular/router";
 // import { IObjection } from "@shared/models/objection.model";
 import { LanguageService } from "@shared/services/language/language.service";
 import { ObjectionWorkflowComponent } from "../objection-workflow/objection-workflow.component";
-import { IObjectionMission } from "./objections.model";
+import { IObjectionMission, IVoteDetail } from "./objections.model";
+import { JwtPayload, jwtDecode } from 'jwt-decode';
+import { LoginService } from "@shared/services/login/login.service";
+
+
+
 @Component({
   selector: "list-objections-tasks",
   standalone: true,
@@ -35,13 +39,13 @@ export class ListObjectionsMissionsComponent implements OnInit {
   showTableCollapseMode: boolean = false;
   actions: any[] = [];
   // tasks: IObjection[] = [];
-  requests_type :string = 'ALL';
   first: number = 1;
   rows: number = 10;
+  userData: any;
 
   columns: ITableColumn[] = [];
 
-  constructor(private screenService: ScreenService, private router :ActivatedRoute,private langService : LanguageService, private objectionService: ObjectionService) {
+  constructor(private screenService: ScreenService, private router :ActivatedRoute,private langService : LanguageService, private objectionService: ObjectionService, private loginService: LoginService) {
     this.getObjectionList(this.rows, this.first)
   }
   get requestsList() {
@@ -71,6 +75,7 @@ export class ListObjectionsMissionsComponent implements OnInit {
         text: "ObjectorName",
         dataIndex: "objectorName",
         hidden: this.showTableCollapseMode,
+        tdClassList: ["w-[300px]"],
       },
       {
         text: "ObjectionNumber",
@@ -115,6 +120,19 @@ export class ListObjectionsMissionsComponent implements OnInit {
   get totalCount() {
     return this.objectionService.totalCount ;
   } 
+  checkIsvisible(): boolean {
+     
+    if (
+      
+      this.loginService.hasPermission([
+        "Procceed_NotSerious_Objection_CommitteeCoordinator",
+        "Procceed_Objection_CommitteeCoordinator",
+      ])
+    ) {
+      return true;
+    }
+    return false;
+  }
   onPageChange(event: any) {
     this.first = event.first;
     this.rows = event.rows;
@@ -126,6 +144,7 @@ export class ListObjectionsMissionsComponent implements OnInit {
     {text : this.langService.getInstantTranslation('objection-statuses.3') , id : 3},
     {text : this.langService.getInstantTranslation('objection-statuses.4') , id : 4},
     {text : this.langService.getInstantTranslation('objection-statuses.5') , id : 5},
+    {text : this.langService.getInstantTranslation('objection-statuses.6') , id : 6},
   ]
   getTranslatedStatus(statusId: number): string {
     const status = this.status_list.find(s => s.id === statusId);
@@ -134,4 +153,11 @@ export class ListObjectionsMissionsComponent implements OnInit {
   getObjectionList(rows: number, pageIndex: any) {
     this.objectionService.getObjections(pageIndex, rows , this.selected_status , this.searchQuery()).subscribe()
   }
+  hasVotedByUser(votes: IVoteDetail[]): boolean {
+    const token = localStorage.getItem('accessToken')!;
+    this.userData = jwtDecode(token) as JwtPayload & { sid: '' }; 
+    
+    return votes?.some(vote => vote.createdBy === this.userData.sid) || false; 
+  }
+  
 }
