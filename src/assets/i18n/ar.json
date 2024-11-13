@@ -475,6 +475,7 @@
   "notification-report": "تقرير اشعارات الرسائل",
   "supported-documents": "الملفات الداعمة للإعتراض",
   "violation-report": "تقرير المخالفة",
+  "operations-documents" : "تقرير إدارة العمليات الرقابية",
   "objection-reason": "سبب التصويت",
   "proceed-reason": "سبب اعتماد التصويت",
   "commitee-votes": "تصويت اللجنة",
@@ -482,6 +483,7 @@
   "vote-accept": "تصويت قبول",
   "vote-reject": "تصويت رفض",
   "proceed": "تمرير الطلب للجنة التصويت",
+  "operations-proceed" : "ارسال الى لجنة الاعتراضات",
   "accept-final-vote": "الموافقة علي نتيجة التصويت",
   "voting-stage": "التصويت علي طلب اعتراض",
   "voting-succefully": "تم رفع التصويت الخاص بك بنجاح",
@@ -521,9 +523,22 @@
       "2": "محال للأمين",
       "3": "قيد التدقيق",
       "4": "اعتراض مقبول",
-      "5": "اعتراض مرفوض"
+      "5": "اعتراض مرفوض",
+      "6": "قيد المراجعة من إدارة العمليات الرقابية"
+
     },
-     "FinCategoryName" : "تصنيف المخالفة"
-  
+     "FinCategoryName" : "تصنيف المخالفة",
+  "send-to-operations":"إرسال الى إدارة العمليات الرقابية",
+  "send-to-objection-committee" :"إرسال الى لجنة الإعتراضات",
+  "upload-attachments" : "إرفاق ملفات",
+  "objections-missions" : "مهام الإعتراضات",
+  "end-vote" : "إنهاء جلسة التصويت",
+  "coordinator-documents" : "ملفات مرفقة بواسطة أمين اللجنة",
+  "objection-creation-date" : "تاريخ الإعتراض",
+  "OperationalMangment_Objection_Review" : "عضو ادارة العمليات الرقابية" , 
+  "done-voting-session" : "تم إغلاق التصويت بنجاح",
+  "max-three-attachment" : "الحد الأقصى للملفات 3 ملفات فقط"
+
+
   
 }

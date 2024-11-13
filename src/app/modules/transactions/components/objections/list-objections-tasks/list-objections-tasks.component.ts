@@ -7,20 +7,24 @@ import { PageHeaderComponent } from "@shared/components/page-header/page-header.
 
 import { ScreenService } from "@shared/services/screen/screen.service";
 
-
 import { ITableColumn } from "@shared/components/table/table.models";
 
 import { TranslateModule } from "@ngx-translate/core";
-import { TasksService } from "@shared/services/tasks/tasks.service";
-import { EditTaskComponent } from "../../../tasks/components/edit-task/edit-task.component";
-import { EditOrderComponent } from "../edit-order/edit-order.component";
+import { ObjectionService } from "@shared/services/objection/objection.service";
+// import { EditOrderComponent } from "../edit-order/edit-order.component";
 import { PaginatorModule } from "primeng/paginator";
 import { ActivatedRoute } from "@angular/router";
-import { IObjection } from "@shared/models/objection.model";
+// import { IObjection } from "@shared/models/objection.model";
 import { LanguageService } from "@shared/services/language/language.service";
+import { ObjectionWorkflowComponent } from "../objection-workflow/objection-workflow.component";
+import { IObjectionMission, IVoteDetail } from "./objections.model";
+import { JwtPayload, jwtDecode } from 'jwt-decode';
+import { LoginService } from "@shared/services/login/login.service";
+
+
 
 @Component({
-  selector: "app-list-objections",
+  selector: "list-objections-tasks",
   standalone: true,
   imports: [
     TableComponent,
@@ -28,26 +32,27 @@ import { LanguageService } from "@shared/services/language/language.service";
     PageHeaderComponent,
     TranslateModule,
   PaginatorModule  ],
-  templateUrl: "./list-objections.component.html",
-  styleUrl: "./list-objections.component.scss",
+  templateUrl: "./list-objections-tasks.component.html",
+  styleUrl: "./list-objections-tasks.component.scss",
 })
-export class ListObjectionsComponent implements OnInit {
+export class ListObjectionsMissionsComponent implements OnInit {
   showTableCollapseMode: boolean = false;
   actions: any[] = [];
   // tasks: IObjection[] = [];
-  requests_type :string = 'ALL';
   first: number = 1;
   rows: number = 10;
+  userData: any;
 
   columns: ITableColumn[] = [];
 
-  constructor(private screenService: ScreenService, private router :ActivatedRoute,private langService : LanguageService, private taskService: TasksService) {
+  constructor(private screenService: ScreenService, private router :ActivatedRoute,private langService : LanguageService, private objectionService: ObjectionService, private loginService: LoginService) {
     this.getObjectionList(this.rows, this.first)
   }
-  searchQuery = signal<string>('');
   get requestsList() {
     const searchText = this.searchQuery();
-    return this.taskService.objections()  }
+    return this.objectionService.objections() }
+  searchQuery = signal<string>('');
+
   onSearchTextChange(searchValue: any) {
     this.searchQuery.set(searchValue);
     // this.getObjectionList(this.rows , 1);
@@ -57,25 +62,20 @@ export class ListObjectionsComponent implements OnInit {
   ngOnInit(): void {
 
     this.showTableCollapseMode = this.screenService.isScreenBelowThan(888);
-    this.actions = [
-      // { label: "تنزيل", icon: "pi pi-download" },
-      // { label: "حذف", icon: "pi pi-trash" },
-      // {
-      //   label: "اظهار",
-      //   icon: "pi pi-eye",
-      //   component: EditOrderComponent,
-      // },
-      // {
-      //   label: "تعديل",
-      //   icon: "pi pi-file-edit",
-      //   component: EditTaskComponent,
-      // },
+    this.actions = [ 
+      {
+        label: "اظهار",
+        icon: "pi pi-eye",
+        component: ObjectionWorkflowComponent,
+      },
+     
     ];
     this.columns = [
       {
         text: "ObjectorName",
         dataIndex: "objectorName",
         hidden: this.showTableCollapseMode,
+        tdClassList: ["w-[300px]"],
       },
       {
         text: "ObjectionNumber",
@@ -104,33 +104,60 @@ export class ListObjectionsComponent implements OnInit {
       },
       {
         text: "request-status",
-        dataIndex: "status",
+        dataIndex: "statusName",
+        tdClassList: ["w-[300px]"],
+        showOnExpandedRow: true,
+
+      },
+      {
+        thTemplate: "actionTemplate",
+        tdTemplate: "actionListTemplate",
         showOnExpandedRow: true,
       },
-      // {
-      //   thTemplate: "actionTemplate",
-      //   tdTemplate: "actionListTemplate",
-      // },
     ];
   }
 
   get totalCount() {
-    return this.taskService.totalCount ;
+    return this.objectionService.totalCount ;
   } 
+  checkIsvisible(): boolean {
+     
+    if (
+      
+      this.loginService.hasPermission([
+        "Procceed_NotSerious_Objection_CommitteeCoordinator",
+        "Procceed_Objection_CommitteeCoordinator",
+      ])
+    ) {
+      return true;
+    }
+    return false;
+  }
   onPageChange(event: any) {
     this.first = event.first;
     this.rows = event.rows;
     this.getObjectionList(this.rows, event.page + 1);
   }
-  getObjectionList(rows: number, pageIndex: any) {
-    this.taskService.getObjectionList(pageIndex, rows , this.selected_status ,this.searchQuery()).subscribe()
-  }
   status_list = [
-    {text : this.langService.getInstantTranslation('objection-statuses.1') , id : 1},
+    // {text : this.langService.getInstantTranslation('objection-statuses.1') , id : 1},
     {text : this.langService.getInstantTranslation('objection-statuses.2') , id : 2},
     {text : this.langService.getInstantTranslation('objection-statuses.3') , id : 3},
     {text : this.langService.getInstantTranslation('objection-statuses.4') , id : 4},
     {text : this.langService.getInstantTranslation('objection-statuses.5') , id : 5},
     {text : this.langService.getInstantTranslation('objection-statuses.6') , id : 6},
   ]
+  getTranslatedStatus(statusId: number): string {
+    const status = this.status_list.find(s => s.id === statusId);
+    return status ? status.text : ''; 
+  }
+  getObjectionList(rows: number, pageIndex: any) {
+    this.objectionService.getObjections(pageIndex, rows , this.selected_status , this.searchQuery()).subscribe()
+  }
+  hasVotedByUser(votes: IVoteDetail[]): boolean {
+    const token = localStorage.getItem('accessToken')!;
+    this.userData = jwtDecode(token) as JwtPayload & { sid: '' }; 
+    
+    return votes?.some(vote => vote.createdBy === this.userData.sid) || false; 
+  }
+  
 }

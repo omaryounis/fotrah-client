@@ -16,5 +16,16 @@ export enum StatusEnum {
     PENDING = 1,           // Pending
     APPROVED = 2,          // Initial Approval
     COMPLETED = 3,         // Completed
-    REJECTED = 4 ,          // Rejected
+    REJECTED = 4 ,       // Rejected
   }
+
+  export enum ObjectionStatusEnum {
+    PENDING = 1,           // Pending
+    Under_Review_by_Comittee_Coordinator = 2,          // coordinator
+    Under_Evaluation = 3,         // voting phase
+    Accepted = 4,           // accepted 
+    Rejected = 5,           // Rejected
+    Under_Operational_Review = 6          
+  }
+
+ 

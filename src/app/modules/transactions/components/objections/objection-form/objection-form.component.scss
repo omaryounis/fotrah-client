@@ -1,0 +1,45 @@
+::ng-deep {
+    .form-group.file label {
+        display: flex !important;
+    }
+
+    .p-card  {
+        padding:7px 7px;
+        margin-bottom: 15px;
+        .p-card-content , .p-card-body {
+            padding: 0px !important;
+        }
+    }
+    .w-full .p-multiselect{
+      width: 100%;
+    }
+}
+.vote-section {
+    background: #eee;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    .key {
+        color: #888;
+    }
+
+}
+.b-none {
+    border: none;
+    outline: none;
+}
+
+.hidden-file-input {
+    display: none; 
+}
+
+// .file-upload-label {
+//     display: inline-flex;
+//     align-items: center;
+//     // background-color: #007bff; /* Change the color as needed */
+//     // color: #fff;
+//     // padding: 10px 15px;
+//     // border-radius: 5px;
+//     cursor: pointer; /* Change the cursor to pointer on hover */
+//     transition: background-color 0.3s ease;
+// }  
