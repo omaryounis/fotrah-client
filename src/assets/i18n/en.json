@@ -474,6 +474,8 @@
   "voting-stage" : "Voting Stage",
   "voting-succefully" : "Your voting added successfully",
   "update-voting-succefully" : "Your voting updated successfully",
+  "end-voting" : "End voting session",
+  "end-voting-success" : "End voting session done successfully",
   "objection-reason-required" : "Vote reason must be filled",
   "ObjectorId": "Objector ID",
   "ObjectionNumber": "Objection Number",

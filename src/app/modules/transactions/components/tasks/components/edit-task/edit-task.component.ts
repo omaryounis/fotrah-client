@@ -159,7 +159,7 @@ export class EditTaskComponent {
             severity: "success",
             summary: this.lang.getInstantTranslation("done"),
             detail:
-              this.lang.getInstantTranslation("done-process"),
+              this.lang.getInstantTranslation("end-voting-success"),
           });
           this.fillTasks();
         } else {

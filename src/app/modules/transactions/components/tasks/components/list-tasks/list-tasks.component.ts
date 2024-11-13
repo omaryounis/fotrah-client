@@ -35,7 +35,7 @@ export class ListTasksComponent implements OnInit {
   showTableCollapseMode: boolean = false;
   actions: any[] = [];
   // tasks: ITask[] = [];
-
+  can_status_filter = true;
   first: number = 1;
   rows: number = 10;
 
@@ -43,7 +43,8 @@ export class ListTasksComponent implements OnInit {
   selected_status: number | undefined;
 
   constructor(private screenService: ScreenService, private loginService:LoginService, private taskService: TasksService , private langService :LanguageService) {
-    this.getTasksList(this.rows, this.first)
+    this.getTasksList(this.rows, this.first);
+  
   }
   searchQuery = signal<string>('');
   get tasks() {
@@ -56,7 +57,10 @@ export class ListTasksComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+  this.can_status_filter = !this.loginService.hasPermission([
+      "Add_NotSerious_Objection_Member_Vote",
+      "Add_Objection_Member_Vote",
+    ]) ;
     this.showTableCollapseMode = this.screenService.isScreenBelowThan(888);
     this.actions = [
       // { label: "تنزيل", icon: "pi pi-download" },

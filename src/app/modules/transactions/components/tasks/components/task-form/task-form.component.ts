@@ -111,11 +111,8 @@ export class TaskFormComponent implements OnInit {
       const blobUrl = URL.createObjectURL(blob);
       window.open(blobUrl, "_blank");
     } else {
-      const fileUrl = base64File.replace(
-        environment.filePath,
-        environment.fileUrl
-      ); //test// Convert backslashes to forward slashes for file protocol
-      window.open(fileUrl, "_blank");
+      const fileUrl = base64File.replace(environment.filePath, window.origin  + '/objections/'); // Convert backslashes to forward slashes for file protocol
+      window.open( fileUrl , '_blank');
     }
   }
 
