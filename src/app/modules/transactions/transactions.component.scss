@@ -1,7 +1,8 @@
 .link-card {
-  @apply flex flex-col cursor-pointer bg-white items-center justify-center gap-y-[34px] py-[34px] rounded-2xl min-w-full sm:min-w-[197px];
+  @apply flex flex-col cursor-pointer bg-white items-center justify-center gap-y-[34px] py-[34px] rounded-2xl min-w-[8rem] sm:min-w-[197px];
   box-shadow: 0px 0px 24.399px 0px rgba(0, 0, 0, 0.05);
   margin-inline-end: 2rem;
+  margin-bottom: 2rem;
   &__text {
     @apply font-neo text-primary font-semibold text-lg;
   }
