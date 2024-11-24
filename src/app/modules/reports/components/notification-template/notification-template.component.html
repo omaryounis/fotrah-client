@@ -1,0 +1,30 @@
+<p-card styleClass="violation-statistics p-5">
+  <ng-template pTemplate="header">
+    <div class="flex justify-between items-center">
+      <p class="chart-card__title text-primary"> {{'notification-report' | translate}}</p>
+      
+    </div>
+  </ng-template>
+<div class=" w-full">
+  <div class="form-row gap-3 !grid-cols-1">
+  <div class="form-group ">
+    <label for="billNumber">{{'bill-number' | translate}}</label>
+    <input pInputText id="billNumber" name="billNumber" aria-label="billNumber" [(ngModel)]="billNumber" 
+         class="custom-input" 
+         placeholder="{{ 'bill-number' | translate }}" />
+  </div>
+  <div class="form-group">
+    <label class="!text-primary" for="username">{{'template-type' | translate}}</label>
+    <p-dropdown [options]="template_types" id="calender-clear"  class="w-full custom-dropdown font-frutiger" [(ngModel)]="selected_type" optionLabel="name" optionValue="id"
+    [showClear]="true" [placeholder]="'choose' | translate" />
+   
+  </div>
+  <div class="form-group">
+    <!-- <label class="text-white"> {{'.' | translate}} </label> -->
+    <div class="flex justify-between items-center">
+      <p-button [label]="'export' | translate"  (onClick)="handelReportExport()" />
+    </div>
+  </div>
+  </div>
+</div>
+</p-card>

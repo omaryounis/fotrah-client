@@ -24,6 +24,7 @@ import { FilterCalender } from "@shared/enums/filter-calender.enum";
 import { NotificationReportComponent } from "./components/notification-report/notification-report.component";
 import { ObjectionReportComponent } from "./components/objection-report/objection-report.component";
 import { CanComponent } from "../../shared/components/can/can.component";
+import { NotificationTemplateComponent } from "./components/notification-template/notification-template.component";
 
 @Component({
   selector: "app-reports",
@@ -44,7 +45,8 @@ import { CanComponent } from "../../shared/components/can/can.component";
     CalenderPaymentBillChartComponent,
     NotificationReportComponent,
     ObjectionReportComponent,
-    CanComponent
+    CanComponent,
+    NotificationTemplateComponent
 ],
   templateUrl: "./reports.component.html",
   styleUrl: "./reports.component.scss",

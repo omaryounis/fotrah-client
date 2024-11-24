@@ -1,3 +1,12 @@
 node_modules
 .angular/cache
 dist/
+/.vs/Fotrah-client/v17
+/.vs/Fotrah-client/FileContentIndex
+/.vs/slnx.sqlite
+/.vs/VSWorkspaceState.json
+/src/.vs/src/v17
+/src/.vs/VSWorkspaceState.json
+/src/.vs/slnx.sqlite
+/src/.vs/src/FileContentIndex/bd6e5aa4-0d0d-453d-8325-5dc790359c6b.vsidx
+/.vs/Fotrah-client/config/applicationhost.config

@@ -169,4 +169,35 @@ export class ReportsService {
   //       tap((success) => { this.handleExportBillSuccess(success , template) }),
   //     );
   // }
+
+  
+  downloadNotificationTemplate(billnumber: any , type? : any): Observable<any> {
+    let params = new HttpParams();
+
+      params = params.set('billnumber', billnumber);
+   
+      params = params.set('tempateKey', type);
+
+     const exportBillReportUrl = `${environment.proxyBase}/Pdf`;
+ 
+     return this.http
+       .get(exportBillReportUrl , {params : params , responseType : 'blob'})
+       .pipe(
+         tap((success) => { 
+           
+           this.handleDownloadNotificationTemplateSuccess(success , 'Notification Report ' + ( type ?  '- template ' + type : '')) 
+          }),
+       );
+      
+      
+   }
+
+   private handleDownloadNotificationTemplateSuccess(response: any , exportType : string) {
+    const fileName = "نموذج طباعة الإشعارات النصية.pdf"; // Replace with desired filename
+    const blob = new Blob([response], { type: 'application/pdf' });
+    saveAs(blob, fileName);
+    var details = this.translateService.instant('exported-succeeded');
+    this.messageService.add({ severity: 'success', summary: this.translateService.instant('done'), detail:  details});
+
+  }
 }
