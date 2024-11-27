@@ -2,12 +2,20 @@
   <ng-template pTemplate="start">
     <!-- Web Logo -->
     <img
-      class="sm:inline-block hidden"
+      class="inline-block sm-hidden"
       src="assets/images/RIPC_white_logo.png"
       alt="Ripc logo"
+      
       width="212"
-    />
-    <div class="sm:inline-block lang-area align-middle ms-[20px]">
+      />
+      <!-- Mobile Logo -->
+      <img
+        class="md:hidden"
+        src="assets/images/RIPC_white_logo.png"
+        alt="Ripc logo"
+        width="135"
+      />
+    <div class="lang-area align-middle ms-[20px]">
       <p-button
         [rounded]="true"
         id="lang-icon"
@@ -22,12 +30,6 @@
       ></p-button>
     </div>
 
-    <!-- Mobile Logo -->
-    <img
-      class="sm:hidden inline-block"
-      src="assets/images/RIPC_color_logo 1.png"
-      alt="Ripc logo"
-    />
   </ng-template>
 
   <ng-template pTemplate="end">
@@ -89,7 +91,8 @@
       (onClick)="onOpenSideBar()"
     >
       <span>
-        <img src="assets/images/icons/hamburger_menu.svg" alt="" width="24px" />
+        <i class="pi pi-bars text-white size-5"></i>
+
       </span>
     </p-button>
   </ng-template>
