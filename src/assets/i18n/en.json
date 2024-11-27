@@ -524,7 +524,7 @@
     "objection-creation-date" : "Objection Date",
     "OperationalMangment_Objection_Review" : "Operational Management Member" ,
     "done-voting-session" : "Voting Successfully Closed",
-    "max-three-attachment" : "You can only upload up to 3 files"
-
+    "max-three-attachment" : "You can only upload up to 3 files",
+    "objections-full-report" : "Objections Full Report"
 
 }

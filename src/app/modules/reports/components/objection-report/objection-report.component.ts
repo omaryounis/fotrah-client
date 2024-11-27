@@ -28,4 +28,8 @@ export class ObjectionReportComponent implements OnInit {
   var dates = this.range_dates ?  { startDate : this.range_dates[0] , endDate : this.range_dates[1]} as TReportDurration : {} as TReportDurration
   this.reportService.getOjectionReport(dates ).subscribe();
  }
+ handelReportWithVotesExport() {
+  var dates = this.range_dates ?  { startDate : this.range_dates[0] , endDate : this.range_dates[1]} as TReportDurration : {} as TReportDurration
+  this.reportService.getOjectionWithVotesReport(dates ).subscribe();
+ }
 }

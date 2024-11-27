@@ -152,6 +152,31 @@ export class ReportsService {
      
      
   }
+
+  getOjectionWithVotesReport(duration: TReportDurration = null ): Observable<any> {
+    
+    // Build query parameters
+    let params = new HttpParams();
+    if (duration!.startDate) {
+      params = params.set('StartDate', duration!.startDate);
+    }
+    if (duration!.endDate) {
+      params = params.set('EndDate', duration!.endDate);
+    }
+ 
+     const exportBillReportUrl = `${environment.proxyBase}/Objection/export-objection-data`;
+ 
+     return this.http
+       .get(exportBillReportUrl , {params : params , responseType : 'blob'})
+       .pipe(
+         tap((success) => { 
+           
+           this.handleExportBillSuccess(success , 'Objection Report V-02') 
+          }),
+       );
+      
+      
+   }
   // getNotificationReport(duration: TReportDurration = null , template : string): Observable<any> {
   //   let search = '';
 

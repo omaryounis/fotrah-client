@@ -537,8 +537,7 @@
   "objection-creation-date" : "تاريخ الإعتراض",
   "OperationalMangment_Objection_Review" : "عضو ادارة العمليات الرقابية" , 
   "done-voting-session" : "تم إغلاق التصويت بنجاح",
-  "max-three-attachment" : "الحد الأقصى للملفات 3 ملفات فقط"
+  "max-three-attachment" : "الحد الأقصى للملفات 3 ملفات فقط",
+  "objections-full-report" : "تقرير تفصيلي لطلبات الإعتراض"
 
-
-  
 }
