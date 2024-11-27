@@ -105,4 +105,16 @@
       }
     }
   }
+  .p-menubar {
+  @apply bg-primary sm:flex;
+  }
+  .p-menubar-start {
+    @apply flex gap-3 items-center;
+  }
+}
+/* Hide on small screens (up to 640px width) */
+@media (max-width: 640px) {
+  .sm-hidden {
+    display: none;
+  }
 }
