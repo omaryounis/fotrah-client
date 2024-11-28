@@ -3,7 +3,7 @@
   <ul class="sidebar__menu">
    
     <li class="sidebar__menu-item">
-      <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"(click)="onSideBarHide()">
+      <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"(click)="onSideBarItemClick()">
         <img src="assets/images/icons/graph.svg" alt="" />
         <span>{{'home' | translate}}</span>
       </a>
@@ -11,7 +11,7 @@
     
     <app-can action="View" resource="Transactions">
       <li class="sidebar__menu-item">
-        <a routerLink="/dashboard/transactions" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onSideBarHide()">
+        <a routerLink="/dashboard/transactions" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onSideBarItemClick()">
           <img src="assets/images/icons/pencil.svg" alt="" />
           <span>{{'transactions' | translate}}</span>
         </a>
@@ -20,7 +20,7 @@
     <app-can action="List" resource="MainDataManagment">
       <li class="sidebar__menu-item">
         <a routerLink="/dashboard/main-data-managment" routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }" (click)="onSideBarHide()">
+          [routerLinkActiveOptions]="{ exact: true }" (click)="onSideBarItemClick()">
           <img src="assets/images/icons/database.svg" alt="" />
           <!-- <span>إدارة البيانات الرئيسية</span> -->
           <span>{{'main-data-managment' | translate}}</span>
@@ -29,7 +29,7 @@
     </app-can>
     <app-can action="List" resource="Users">
       <li class="sidebar__menu-item">
-        <a routerLink="/dashboard/user-managment" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onSideBarHide()">
+        <a routerLink="/dashboard/user-managment" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onSideBarItemClick()">
           <img src="assets/images/icons/user_gear.svg" alt="" />
           <!-- <span>إدارة المستخدمين</span> -->
           <span>{{'user-managment' | translate}}</span>
@@ -39,7 +39,7 @@
     </app-can>
     <app-can action="View" resource="Features">
     <li class="sidebar__menu-item">
-      <a routerLink="/dashboard/features" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onSideBarHide()">
+      <a routerLink="/dashboard/features" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onSideBarItemClick()">
         <img src="assets/images/icons/features.svg" alt="" />
         <span>{{'features' | translate}}</span>
       </a>
@@ -47,7 +47,7 @@
     </app-can>
     <app-can action="Read" resource="BillInquiry">
       <li class="sidebar__menu-item">
-        <a routerLink="/dashboard/queries" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onSideBarHide()">
+        <a routerLink="/dashboard/queries" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onSideBarItemClick()">
           <img src="assets/images/icons/magnifying_glass.svg" alt="" />
           <span>{{'queries' | translate}}</span>
         </a>
@@ -55,7 +55,7 @@
     </app-can>
     <app-can action="View" resource="Reports" >
     <li class="sidebar__menu-item">
-      <a routerLink="/dashboard/reports" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onSideBarHide()">
+      <a routerLink="/dashboard/reports" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onSideBarItemClick()">
         <img src="assets/images/icons/chart.svg" alt="" />
         <!-- <span>التقارير</span> -->
         <span>{{'reports' | translate}}</span>
@@ -65,7 +65,7 @@
     <app-can action="List" resource="Roles">
       <li class="sidebar__menu-item">
         <a routerLink="/dashboard/roles-management" routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }" (click)="onSideBarHide()">
+          [routerLinkActiveOptions]="{ exact: true }" (click)="onSideBarItemClick()">
           <img src="assets/images/icons/gear.svg" alt="" />
           <!-- <span>ادارة الصلاحيات</span> -->
           <span>{{'roles-management' | translate}}</span>

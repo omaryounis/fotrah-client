@@ -42,7 +42,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
   onSideBarHide() {
     this.sidebarService.toggleSideBar(false);
   }
-
+  onSideBarItemClick(): void {
+    if (window.innerWidth < 640) {
+      this.sidebarService.toggleSideBar(false);
+    }
+  }
   @HostListener("window:resize", ["$event"])
   onResize(event: Event): void {
     this.checkScreenSize();
