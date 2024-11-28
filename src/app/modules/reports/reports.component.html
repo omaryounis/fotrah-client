@@ -31,13 +31,13 @@
   @if (reportType == enumsOfReports.VIOLATIONS) {
   <div class="container max-w-full mx-auto mt-5 mb-20">
     <div class="grid gap-4">
-      <app-can action="Procceed" resource="Objection">
+      <!-- <app-can action="Procceed" resource="Objection"> -->
         <app-objection-report></app-objection-report>
-      </app-can>
+      <!-- </app-can> -->
     </div>
-
-    <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-10">
-      <app-notification-report></app-notification-report>
+      <div class="grid grid-cols-1 mt-3 xl:grid-cols-2 gap-4">
+        <app-notification-template></app-notification-template>
+        <app-notification-report></app-notification-report>
     </div>
   </div>
   }
