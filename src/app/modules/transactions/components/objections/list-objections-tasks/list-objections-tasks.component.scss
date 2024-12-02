@@ -7,3 +7,36 @@
         padding-bottom: 10px;
     }
 }
+
+.d-flex {
+    display: flex;
+    justify-content: space-between;   
+    align-items: center;   
+  }
+  
+//   .d-flex > div {
+//     margin-right: 20px;  
+//   }
+  
+ 
+  .p-dropdown {
+    min-width: 20rem;   
+  }
+  
+  ::ng-deep app-search-bar {
+    display: block;
+  }
+  
+  ::ng-deep app-search-bar .search-bar {
+    width: 100%; 
+  }
+  
+//   ::ng-deep app-search-bar .some-specific-class {
+//     width: 100%;  
+//   }
+.custom-label {
+    font-family: 'Neo Sans Arabic', sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: rgb(75, 79, 84);
+  }

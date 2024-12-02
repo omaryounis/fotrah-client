@@ -17,21 +17,42 @@ export class ObjectionService extends BaseEntityService<IObjectionMission> {
   rowData = signal<IObjectionMission>({} as IObjectionMission);
 
   objections = signal<IObjectionMission[]>([] as IObjectionMission[]);
+  private currentPageIndex: string = '1';
+  private currentPageSize: number = 10;
+  private currentStatus?: number;
+  private currentObjectionNumber?: string;
+  private currentVoteStatus?: number;
 
   getObjections(
-    pageIndex: string,
-    pageSize: number,
+    pageIndex?: string,
+    pageSize?: number,
     status?: number,
-    objectionNumber?: string
+    objectionNumber?: string,
+    voteStatus?: number
   ): Observable<IObjectionMissionResponse> {
-    var params = status ? "&status=" + status : "";
-    params += objectionNumber ? "&objectionNumber=" + objectionNumber : "";
+
+    const effectivePageIndex = pageIndex ?? this.currentPageIndex;
+    const effectivePageSize = pageSize ?? this.currentPageSize;
+    const effectiveStatus = status ?? this.currentStatus;
+    const effectiveObjectionNumber = objectionNumber ?? this.currentObjectionNumber;
+    const effectiveVoteStatus = voteStatus ?? this.currentVoteStatus;
+
+    // Update the cached values
+    this.currentPageIndex = effectivePageIndex;
+    this.currentPageSize = effectivePageSize;
+    this.currentStatus = effectiveStatus;
+    this.currentObjectionNumber = effectiveObjectionNumber;
+    this.currentVoteStatus = effectiveVoteStatus;
+
+    var params = status ? "&status=" + effectiveStatus : "";
+    params += objectionNumber ? "&objectionNumber=" + effectiveObjectionNumber : "";
+    params += voteStatus ? "&voteStatus=" + effectiveVoteStatus: "";
     return this.http
       .get<IObjectionMissionResponse>(
         `${environment.proxyBase}/Objection/missions?PageIndex=` +
-          pageIndex +
+          effectivePageIndex +
           `&PageSize=` +
-          pageSize +
+          effectivePageSize +
           params
       )
       .pipe(

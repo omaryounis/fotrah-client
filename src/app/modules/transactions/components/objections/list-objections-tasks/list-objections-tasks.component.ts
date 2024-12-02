@@ -61,6 +61,7 @@ export class ListObjectionsMissionsComponent implements OnInit {
     // this.getObjectionList(this.rows , 1);
   }
   selected_status: number | undefined;
+  selected_vote_status: number | undefined;
 
   ngOnInit(): void {
 
@@ -156,13 +157,18 @@ export class ListObjectionsMissionsComponent implements OnInit {
     {text : this.langService.getInstantTranslation('objection-statuses.5') , id : 5},
     {text : this.langService.getInstantTranslation('objection-statuses.6') , id : 6},
   ]
+  vote_status_list= [
+    {text : this.langService.getInstantTranslation('objection-vote-status.1') , id : 1},
+    {text : this.langService.getInstantTranslation('objection-vote-status.2') , id : 2},
+    {text : this.langService.getInstantTranslation('objection-vote-status.3') , id : 3},
+  ]
   getTranslatedStatus(statusId: number): string {
     const status = this.status_list.find(s => s.id === statusId);
     return status ? status.text : ''; 
   }
   getObjectionList(rows: number, pageIndex: any) {
-    debugger;
-    this.objectionService.getObjections(pageIndex, rows , this.selected_status , this.searchQuery()).subscribe()
+
+    this.objectionService.getObjections(pageIndex, rows , this.selected_status , this.searchQuery(),this.selected_vote_status).subscribe()
   }
   hasVotedByUser(votes: IVoteDetail[]): boolean {
     const token = localStorage.getItem('accessToken')!;

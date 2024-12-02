@@ -1,16 +1,57 @@
 
 <app-page-header [title]="'objections-missions' | translate"></app-page-header>
 <div class="my-4">
-  <app-search-bar [placeholder]="'search' | translate"
-    (onSearchValueChange)="onSearchTextChange($event)" (onClickSearch)="getObjectionList(rows ,1)"></app-search-bar>
-</div>
-<div class="form-row">
-  <div class="form-group">
-
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+    <div class="flex-item flex-grow"  >
+      <app-search-bar class="w-full" [placeholder]="'search' | translate"  
+      (onSearchValueChange)="onSearchTextChange($event)" (onClickSearch)="getObjectionList(rows ,1)"></app-search-bar>
+      </div>
+    @if(checkIsvisible()){ 
+    <div class="flex-item flex-grow">
+      <label class="required-element custom-label" for="clasificationNumber">{{'status' | translate}}</label>
+      <p-dropdown
+      class="dropdown"
+      styleClass="w-full"
+      [options]="status_list"
+      [(ngModel)]="selected_status"
+      optionValue="id"
+      optionLabel="text"
+      [showClear]="true"
+      appendTo="body"
+      (onChange)="getObjectionList(rows , 1)"
+      id="status"
+      name="status"
+      aria-label="status"
+      ></p-dropdown>
+    </div>
+    }
+    <div class="flex-item flex-grow" >
+    <label class="required-element custom-label" for="voteStatus">{{'vote-status' | translate}}</label>
+    <p-dropdown
+      class="dropdown"
+      styleClass="w-full"
+      [options]="vote_status_list"
+      [(ngModel)]="selected_vote_status"
+      optionValue="id"
+      optionLabel="text"
+      [showClear]="true"
+      appendTo="body"
+      (onChange)="getObjectionList(rows , 1)"
+      id="voteStatus"
+      name="voteStatus"
+      aria-label="voteStatus"
+    ></p-dropdown> 
+    </div>
+     
   </div>
-  @if(checkIsvisible()){
-    <div class="form-group mt-100">
-      <label class="required-element" for="clasificationNumber">{{'status' | translate}}</label>
+  </div>
+<!-- <div class="form-row"> -->
+  <!-- <div class="form-group"> -->
+
+  <!-- </div> -->
+    <!-- <div class="form-group mt-100"> -->
+      <!-- @if(checkIsvisible()){  -->
+      <!-- <label class="required-element" for="clasificationNumber">{{'status' | translate}}</label>
       <p-dropdown
         class="dropdown"
         styleClass="w-full"
@@ -24,10 +65,25 @@
         id="status"
         name="status"
         aria-label="status"
-      ></p-dropdown>
-    </div>
-  }
-  </div>
+      ></p-dropdown> -->
+     <!-- } -->
+      <!-- <label class="required-element" for="voteStatus">{{'vote-status' | translate}}</label>
+      <p-dropdown
+        class="dropdown"
+        styleClass="w-full"
+        [options]="vote_status_list"
+        [(ngModel)]="selected_vote_status"
+        optionValue="id"
+        optionLabel="text"
+        [showClear]="true"
+        appendTo="body"
+        (onChange)="getObjectionList(rows , 1)"
+        id="voteStatus"
+        name="voteStatus"
+        aria-label="voteStatus"
+      ></p-dropdown>  -->
+    <!-- </div> -->
+  <!-- </div> -->
 <div class="table-container container max-w-full mx-auto mb-20 overflow-x-auto">
   <app-table [dataSource]="requestsList" [columns]="columns" [actions]="actions">
     <!-- <ng-template #checkIcon let-data="data">

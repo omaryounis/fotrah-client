@@ -96,7 +96,7 @@ export class ObjectionWorkflowComponent {
                     summary: this.lang.getInstantTranslation("done"),
                     detail: this.lang.getInstantTranslation("done-process"),
                   });
-                  debugger;
+                  
                   this.fillTasks(this.status);
                 } else {
                   this.message.add({
