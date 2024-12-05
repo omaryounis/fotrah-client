@@ -30,6 +30,7 @@ export class NotificationTemplateComponent implements OnInit {
     // Define the templates array with specific keys
     const templateList = [
       { id: 1, name: 'template-1' },
+      { id: 1, name: 'template-2' },
       { id: 3, name: 'template-3' },
       { id: 4, name: 'template-4' },
       { id: 5, name: 'template-5' },
@@ -46,6 +47,6 @@ export class NotificationTemplateComponent implements OnInit {
     });
  }
  handelReportExport() {
-  this.reportService.downloadNotificationTemplate(this.billNumber , this.selected_type).subscribe();
+  this.reportService.downloadNotificationTemplate(this.billNumber , this.selected_type, false).subscribe();
  }
 }

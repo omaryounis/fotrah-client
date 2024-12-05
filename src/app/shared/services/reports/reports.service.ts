@@ -196,7 +196,7 @@ export class ReportsService {
   // }
 
   
-  downloadNotificationTemplate(billnumber: any , type? : any): Observable<any> {
+  downloadNotificationTemplate(billnumber: any , type? : any, openInNewTab? : boolean): Observable<any> {
     let params = new HttpParams();
 
       params = params.set('billnumber', billnumber);
@@ -209,12 +209,15 @@ export class ReportsService {
        .get(exportBillReportUrl , {params : params , responseType : 'blob'})
        .pipe(
          tap((success) => { 
-           
-           this.handleDownloadNotificationTemplateSuccess(success , 'Notification Report ' + ( type ?  '- template ' + type : '')) 
+           if(openInNewTab)
+            {
+              this.handleOpenNotificationTemplateSuccess(success , 'Notification Report ' + ( type ?  '- template ' + type : ''))
+           }
+           else{
+              this.handleDownloadNotificationTemplateSuccess(success , 'Notification Report ' + ( type ?  '- template ' + type : ''))
+           } 
           }),
        );
-      
-      
    }
 
    private handleDownloadNotificationTemplateSuccess(response: any , exportType : string) {
@@ -225,4 +228,24 @@ export class ReportsService {
     this.messageService.add({ severity: 'success', summary: this.translateService.instant('done'), detail:  details});
 
   }
+
+  private handleOpenNotificationTemplateSuccess(response: any, exportType: string) {
+    const fileName = "نموذج طباعة الإشعارات النصية.pdf"; 
+    const blob = new Blob([response], { type: 'application/pdf' });
+
+    // Create a URL for the Blob
+    const fileURL = URL.createObjectURL(blob);
+
+    // Open the file in the same window
+    window.location.href = fileURL;
+
+    // Display success message
+    const details = this.translateService.instant('exported-succeeded');
+    this.messageService.add({
+      severity: 'success', 
+      summary: this.translateService.instant('done'), 
+      detail: details
+    });
+  }
+  
 }
