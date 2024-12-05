@@ -68,7 +68,6 @@ export class ObjectionWorkflowComponent {
           cancelLabel: "cancel",
           onSubmit: () => {
             this.submitted = true;
-
             if(!this.taskData.currentStatus){
               this.message.add({
                 severity: "error",
@@ -76,7 +75,7 @@ export class ObjectionWorkflowComponent {
                 detail: "Please Select Option to proceed your request",
               });
             }
-            if (this.taskData.currentStatus == ObjectionStatusEnum.Under_Evaluation.toString()) {
+            if (this.taskData.status == ObjectionStatusEnum.Under_Review_by_Comittee_Coordinator && this.taskData.currentStatus == ObjectionStatusEnum.Under_Evaluation.toString()) {
               const formData = new FormData();
               formData.append('objectionRequestLogId', this.taskData.objectionRequestLogId.toString());
               
@@ -107,7 +106,7 @@ export class ObjectionWorkflowComponent {
                 }
               });
             } 
-            else if(this.taskData.currentStatus==ObjectionStatusEnum.Under_Operational_Review.toString()){
+            else if(this.taskData.status == ObjectionStatusEnum.Under_Review_by_Comittee_Coordinator && this.taskData.currentStatus==ObjectionStatusEnum.Under_Operational_Review.toString()){
               var data = {
                 objectionRequestLogId:this.taskData.objectionRequestLogId
               } as IObjectionProgressRequest;
@@ -247,6 +246,38 @@ export class ObjectionWorkflowComponent {
               });
   
             }
+            else if(this.taskData.status == ObjectionStatusEnum.Under_Operational_Review && this.taskData.currentStatus == ObjectionStatusEnum.Under_Evaluation.toString()){
+              const formData = new FormData();
+              formData.append('objectionRequestLogId', this.taskData.objectionRequestLogId.toString());
+              formData.append('IsSendToMembers', 'true');
+ 
+              if(this.taskData.operationsReview)
+                formData.append('comment', this.taskData.operationsReview);
+          
+              if (this.taskData.uploadedFiles && this.taskData.uploadedFiles.length > 0) {
+                this.taskData.uploadedFiles.forEach(file => {
+                  formData.append('attachments', file, file.name);
+                })};
+               
+              this.objctionService.OperationReview(formData).subscribe((res) => {
+                if (res.message == MessagesResponse.SUCCESS) {
+                  this.ref?.close();
+                  this.message.add({
+                    severity: "success",
+                    summary: this.lang.getInstantTranslation("done"),
+                    detail: this.lang.getInstantTranslation("done-process"),
+                  });
+                  this.fillTasks();
+                } else {
+                  this.message.add({
+                    severity: "error",
+                    summary: this.langService.getInstantTranslation("error"),
+                    detail: res.message,
+                  });
+                }
+              });
+  
+            }
             else if ((this.taskData.status.toString() == ObjectionStatusEnum.Accepted.toString()|| ObjectionStatusEnum.Rejected.toString()) && this.taskData.currentStatus == ObjectionStatusEnum.Accepted.toString())
             {
               var data = {
@@ -271,10 +302,30 @@ export class ObjectionWorkflowComponent {
                   });
                 }
               });
+            } else if((this.taskData.status.toString() == ObjectionStatusEnum.Under_Evaluation.toString()) && this.taskData.currentStatus == ObjectionStatusEnum.Under_Operational_Review.toString())
+            {
+              var data = {
+                objectionRequestLogId:this.taskData.objectionRequestLogId
+              } as IObjectionProgressRequest;
+              this.objctionService.sendtoOperations(data).subscribe((res) => {
+                if (res.message == MessagesResponse.SUCCESS) {
+                  this.ref?.close();
+                  this.message.add({
+                    severity: "success",
+                    summary: this.lang.getInstantTranslation("done"),
+                    detail: this.lang.getInstantTranslation("done-process"),
+                  });
+                  this.fillTasks();
+                } else {
+                  this.message.add({
+                    severity: "error",
+                    summary: this.langService.getInstantTranslation("error"),
+                    detail: res.message,
+                  });
+                }
+              });
+           
             }
-          
-            
-          
           },
         
           onCancel: () => {

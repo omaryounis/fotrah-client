@@ -32,6 +32,7 @@ import { LoginService } from "@shared/services/login/login.service";
 import { MessageService } from "primeng/api";
 import { LanguageService } from "@shared/services/language/language.service";
 import { FileUploadModule,FileSelectEvent } from 'primeng/fileupload';
+import { MessagesModule } from 'primeng/messages';
 
 @Component({
   selector: "app-objection-form",
@@ -78,6 +79,7 @@ export class ObjectionFormComponent implements OnInit {
     reasons: [],
     currentStatus: "",
     uploadedFiles: [],
+    lastStatus: 0
   };
   AttachmentTypes = AttachmentTypes
   requestTypes = RequestTypes;
@@ -133,12 +135,8 @@ export class ObjectionFormComponent implements OnInit {
     ) {
       this.taskData.currentStatus =
         ObjectionStatusEnum.Under_Evaluation.toString();
-    } else if (
-      this.taskData.status == ObjectionStatusEnum.Under_Operational_Review
-    ) {
-      this.taskData.currentStatus =
-        ObjectionStatusEnum.Under_Review_by_Comittee_Coordinator.toString();
-    } else if (
+    } 
+    else if (
       this.taskData.status == ObjectionStatusEnum.Accepted ||
       this.taskData.status == ObjectionStatusEnum.Rejected
     ) {
@@ -151,7 +149,7 @@ export class ObjectionFormComponent implements OnInit {
       .getAll()
       .subscribe((res) => (this.vote_reasons = res.data));
     this.mode = this.dynamicDialogConfig.data.mode || "edit";
-    this.hasOperationsReview = this.attachments.some(attachment => attachment.type === AttachmentTypes.OPERATIONS_DOCUMENTS) && !this.taskData.operationsReview;
+    this.hasOperationsReview = this.attachments.some(attachment => attachment.type === AttachmentTypes.OPERATIONS_DOCUMENTS) || this.taskData.operationsReview;
 
   }
   downloadFile(base64File: string, fileName: string, isBase64: boolean) {
@@ -167,14 +165,14 @@ export class ObjectionFormComponent implements OnInit {
       const blobUrl = URL.createObjectURL(blob);
       window.open(blobUrl, "_blank");
     } else {
-      const fileUrl = base64File.replace(environment.filePath, window.origin  + '/objections/'); // Convert backslashes to forward slashes for file protocol
-      window.open( fileUrl , '_blank');
+      // const fileUrl = base64File.replace(environment.filePath, window.origin  + '/objections/'); // Convert backslashes to forward slashes for file protocol
+      // window.open( fileUrl , '_blank');
       
-      //for testing :
-      // const fileUrl = base64File.replace(
-      //   /\\\\ripctest\.loc\\ripctestdfs\\Objections\\|C:\\inetpub\\wwwroot\\Fotrah\\objections\\/g,
-      //   window.origin + "/test/"
-      // );
+      // for testing :
+      const fileUrl = base64File.replace(
+        /\\\\ripctest\.loc\\ripctestdfs\\Objections\\|C:\\inetpub\\wwwroot\\Fotrah\\objections\\/g,
+        window.origin + "/test/"
+      );
       window.open(fileUrl, "_blank");
     }
   }

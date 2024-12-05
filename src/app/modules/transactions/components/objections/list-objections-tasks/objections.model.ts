@@ -36,6 +36,7 @@ export interface IObjectionMission {
   reasons?: string[];
   currentStatus: string;
   uploadedFiles: File[];
+  lastStatus: number;
 }
 
 export interface IObjectionMissionResponse {
