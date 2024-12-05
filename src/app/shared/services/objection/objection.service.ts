@@ -93,6 +93,20 @@ export class ObjectionService extends BaseEntityService<IObjectionMission> {
         })
       );
   }
+  sendToCoordinator(
+    Task: IObjectionProgressRequest
+  ): Observable<IResponse<IObjectionMissionResponse>> {
+    return this.http
+      .post<IResponse<IObjectionMissionResponse>>(
+        `${environment.proxyBase}/Objection/send-to-coordinator`,
+        Task
+      )
+      .pipe(
+        tap((response: IResponse<IObjectionMissionResponse>) => {
+          
+        })
+      );
+  }
 
   vote(
     Task: IObjectionProgressRequest

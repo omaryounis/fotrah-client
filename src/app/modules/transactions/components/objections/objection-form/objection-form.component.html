@@ -13,7 +13,9 @@
         disabled
       />
     </div>
-    } } @if(taskData.operationsReview){
+    } } 
+   
+    @if(taskData.operationsReview){
     <div class="form-group">
       <label for="finCategoryName"> Operational Mangment Review </label>
       <input
@@ -158,6 +160,7 @@
   </div>
 
   }
+  
   <div class="flex flex-wrap form-group gap-3">
     <div class="flex align-items-center">
       <p-radioButton
@@ -171,24 +174,18 @@
         {{ "proceed" | translate }}
       </label>
     </div>
-    <!-- @for (attachment of attachments; track $index) {
-      @if(attachment.type !== AttachmentTypes.OPERATIONS_DOCUMENTS && !taskData.operationsReview ){
-        
-        <div class="flex align-items-center">
-          <p-radioButton
-            name="currentStatus"
-            [value]="ObjectionStatusTypes.Under_Operational_Review"
-            [(ngModel)]="taskData.currentStatus"
-            (ngModelChange)="updateData()"
-            inputId="ingredient3"
-          />
-          <label for="ingredient3" class="ms-2">
-            {{ "send-to-operations" | translate }}
-          </label>
-        </div>
-      }
-    } -->
+  
+    <!-- @if(taskData.lastStatus == 3){ -->
+      <!-- <label for="finCategoryName"> Comming from the Members </label> -->
 
+      <!-- <div class="card">
+        <p-messages 
+      [value]="[{severity:'warning', detail:'Comming from the Members'}]" 
+      [enableService]="false" 
+      [closable]="false" />
+    </div> -->
+   
+<!-- } -->
     @if((!hasOperationsReview))
     {
       <div class="flex align-items-center">
@@ -204,30 +201,17 @@
         </label>
       </div>
     }
-    <!-- @if(!taskData.operationsReview || attachments) -->
-      <!-- {  -->
-    <!-- <div class="flex align-items-center">
-      <p-radioButton
-        name="currentStatus"
-        [value]="ObjectionStatusTypes.Under_Operational_Review"
-        [(ngModel)]="taskData.currentStatus"
-        (ngModelChange)="updateData()"
-        inputId="ingredient3"
-      />
-      <label for="ingredient3" class="ms-2">
-        {{ "send-to-operations" | translate }}
-      </label>
-    </div> -->
-    <!-- } -->
+   
   </div>
 
+ 
   <!-- operational mangment -->
   } @if(taskData.status == ObjectionStatusTypes.Under_Operational_Review) {
   <div class="flex flex-wrap form-group gap-3">
     <div class="flex align-items-center">
       <p-radioButton
         name="currentStatus"
-        [value]="ObjectionStatusTypes.Under_Review_by_Comittee_Coordinator"
+        [value]="taskData.lastStatus == 3 ? ObjectionStatusTypes.Under_Evaluation : ObjectionStatusTypes.Under_Review_by_Comittee_Coordinator"
         [(ngModel)]="taskData.currentStatus"
         (ngModelChange)="updateData()"
         inputId="ingredient5"
@@ -268,7 +252,7 @@
         (onSelect)="onFileUpload($event)"
         (onClear)="clearAllFiles()"
         (onRemove) = "onFileRemove($event)"
-        type="file"
+        type="file" 
         [showUploadButton]="false"
         [fileLimit]="3"
         [files]="taskData.uploadedFiles"
@@ -278,70 +262,24 @@
 
     </div>
   </div>
-  <!-- <div class="form-gruop">
-    <div class="form-row">
-      <div
-        class="mt-3 border-2 flex-[!important] border-gray-300 rounded-md p-2 pb-1"
+  @if(taskData.lastStatus == 3){
+    <div class="form-row !grid-cols-1 mt-2">
+      <p-messages 
+      [ngClass]="{'p-messages-new': true}" 
+      [value]="[{severity:'new', detail:'Comming from the Members'}]" 
+      [enableService]="false" 
+      [closable]="false"
       >
-        <label
-          class="w-full flex justify-between cursor-pointer"
-          for="file-upload-input"
-        > -->
-          <!-- <span> {{ "upload-attachments" | translate }} </span>
-          <i class="pi pi-upload my-auto w-[23px] ms-auto text-primary"></i>
-          <input
-            type="file"
-            id="file-upload-input"
-            (change)="onFileUpload($event)"
-            multiple
-            class="hidden-file-input"
-          /> -->
-        <!-- </label>
-      </div>
+        <ng-template pTemplate>
+             <i class="pi pi-exclamation-circle text-orange-500"></i>
+          <div class="custom-label">{{"returned-back-from-members"| translate}}</div>
+        </ng-template>
+    </p-messages>
     </div>
-    </div> -->
-      <!-- <div class="form-row selected-files mt-2" *ngIf="uploadedFiles.length>0"> -->
-      <!-- <label for="key">{{ "operations-documents" | translate }}</label> -->
-    <!-- <div class="form-row">
-    @for (file of taskData.uploadedFiles; track $index) {
-     <div class="form-group file"> -->
-    <!-- <div
-        class="selected-file"
-        class="mt-3 border-2 flex-[!important] border-gray-300 flex justify-between rounded-md p-2 pb-1"
-      >
-        <span> {{ file.name }}</span>
-
-        <button class="remove-button">
-          <i
-            class="pi pi-times my-auto w-[23px] ms-auto cursor-pointer text-danger"
-            (click)="removeAttachment($index)"
-          ></i>
-        </button>
-      </div> -->
-
-  }
-  <!-- </div>  -->
-
-  <!-- <div class="form-row attachments-container">
-  @for (item of attachment.data; track $index) {
-  <div class="form-group file">
-    <div class="attachment-card">
-      <label [for]="'attachment_' + $index" class="attachment-label">
-        <span class="file-name">
-          {{
-            item.fileName ? item.fileName : ("file" | translate) + ($index + 1)
-          }}
-        </span>
-        <i
-          class="pi pi-download download-icon"
-          (click)="downloadFile(item.base64Data, item.fileName, false)"
-          title="Download"
-        ></i>
-      </label>
-    </div>
-  </div>
-  }
-</div> -->
+  
+}
+  
+}
   
 
   <!-- voting buttons -->
@@ -360,8 +298,7 @@
       <label for="ingredient1" class="ms-2">
         {{ "vote-accept" | translate }}
       </label>
-    </div>
-
+    </div> 
     <div class="flex align-items-center">
       <p-radioButton
         name="currentStatus"
@@ -376,6 +313,23 @@
         {{ "vote-reject" | translate }}
       </label>
     </div>
+    <!-- sending to operations button if not sent before -->
+    <!-- @if((!hasOperationsReview)){ -->
+     <!-- <div class="flex align-items-center">
+      <p-radioButton  
+        name="currentStatus"
+        [value]="ObjectionStatusTypes.Under_Operational_Review"
+        [(ngModel)]="taskData.currentStatus"
+        (ngModelChange)="updateData()"
+        inputId="coordinatorBtn"
+        #currentStatus="ngModel"
+        required
+      />
+      <label for="coordinatorBtn" class="ms-2">
+        {{ "send-to-operations" | translate }}
+      </label>
+    </div> -->
+  <!-- } -->
     @if(isCoordinator()){
     <div class="flex align-items-center">
       <p-radioButton
@@ -392,7 +346,12 @@
         {{ "end-vote" | translate }}
       </label>
     </div>
+    
+
     }
+    
+ <!-- sending to operations button if not sent before -->
+ 
     <!-- @if (!this.taskData.currentStatus) {
     <div class="text-red-600">
       @if (objectionReason.errors?.['required']) {
@@ -400,61 +359,84 @@
     </div> -->
     <!-- } -->
   </div>
-  <div class="form-row !grid-cols-1 mt-2">
-    <div class="form-group">
-      <label for="key">{{
-        is_voting
-          ? ("objection-reason" | translate)
-          : ("proceed-reason" | translate)
-      }}</label>
-      <p-multiSelect
-        name="objection-reason"
-        class="w-full"
-        [showHeader]="false"
-        [filter]="false"
-        id="close-icon"
-        (onChange)="updateData()"
-        [(ngModel)]="taskData.reasons"
-        [showClear]="false"
-        [defaultLabel]="'choose' | translate"
-        [options]="vote_reasons"
-        [optionLabel]="'name'"
-        [optionValue]="'name'"
-        optionLabel="name"
-      ></p-multiSelect>
-    </div>
-  </div>
-  <div class="form-row !grid-cols-1 mt-2">
-    <div class="form-group">
-      <label for="key">{{ "Note" | translate }}</label>
-      <div class="rounded-md" pInputTextarea>
-        <ul style="list-style-type: circle" class="px-3">
-          @for (item of taskData.reasons; track $index) {
-          <li>{{ item }}</li>
-          }
-        </ul>
-        <textarea
-          id="description"
-          name="description"
-          aria-label="description"
-          class="b-none w-full"
-          #objectionReason="ngModel"
-          [(ngModel)]="taskData.objectionReason"
-          rows="5"
-          maxlength="255"
-          [required]="taskData.reasons?.length == 0"
-        >
-        </textarea>
+  @if((!(hasOperationsReview && isCoordinator()))){
+    <div class="form-row !grid-cols-1 mt-2">
+      <div class="form-group">
+    <div class="flex align-items-center">
+     <p-radioButton  
+       name="currentStatus"
+       [value]="ObjectionStatusTypes.Under_Operational_Review"
+       [(ngModel)]="taskData.currentStatus"
+       (ngModelChange)="updateData()"
+       inputId="coordinatorBtn"
+       #currentStatus="ngModel"
+       required
+     />
+     <label for="coordinatorBtn" class="ms-2">
+       {{ "send-to-operations" | translate }}
+     </label>
+   </div>
       </div>
-      @if (objectionReason.invalid && (objectionReason.dirty ||
-      objectionReason.touched)) {
-      <div class="text-red-600">
-        @if (objectionReason.errors?.['required']) {
-        <span> {{ "this-field-required" | translate }}</span> }
-      </div>
-      }
-    </div>
   </div>
+  }
+  @if(taskData.currentStatus != ObjectionStatusTypes.Under_Operational_Review.toString()){
+    <div class="form-row !grid-cols-1 mt-2">
+      <div class="form-group">
+        <label for="key">{{
+          is_voting
+            ? ("objection-reason" | translate)
+            : ("proceed-reason" | translate)
+        }}</label>
+        <p-multiSelect
+          name="objection-reason"
+          class="w-full"
+          [showHeader]="false"
+          [filter]="false"
+          id="close-icon"
+          (onChange)="updateData()"
+          [(ngModel)]="taskData.reasons"
+          [showClear]="false"
+          [defaultLabel]="'choose' | translate"
+          [options]="vote_reasons"
+          [optionLabel]="'name'"
+          [optionValue]="'name'"
+          optionLabel="name"
+        ></p-multiSelect>
+      </div>
+    </div>
+    <div class="form-row !grid-cols-1 mt-2">
+      <div class="form-group">
+        <label for="key">{{ "Note" | translate }}</label>
+        <div class="rounded-md" pInputTextarea>
+          <ul style="list-style-type: circle" class="px-3">
+            @for (item of taskData.reasons; track $index) {
+            <li>{{ item }}</li>
+            }
+          </ul>
+          <textarea
+            id="description"
+            name="description"
+            aria-label="description"
+            class="b-none w-full"
+            #objectionReason="ngModel"
+            [(ngModel)]="taskData.objectionReason"
+            rows="5"
+            maxlength="255"
+            [required]="taskData.reasons?.length == 0"
+          >
+          </textarea>
+        </div>
+        @if (objectionReason.invalid && (objectionReason.dirty ||
+        objectionReason.touched)) {
+        <div class="text-red-600">
+          @if (objectionReason.errors?.['required']) {
+          <span> {{ "this-field-required" | translate }}</span> }
+        </div>
+        }
+      </div>
+    </div>
+  
+  }
 
   } @if(taskData.status == ObjectionStatusTypes.Accepted){
   <div class="flex flex-wrap form-group gap-3">

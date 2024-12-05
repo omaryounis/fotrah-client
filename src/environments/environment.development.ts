@@ -7,6 +7,5 @@ export const environment = {
   responseURL: location.origin + '/public/payment-success',
   errorURL: location.origin + '/public/payment-failure',
   action: 'https://securepayments.alrajhibank.com.sa/pg/servlet/PaymentInitHTTPServlet',
-  filePath : '\\\\ripctest.loc\\ripctestdfs\\Objections\\',
-  fileUrl : window.origin + "/test/"
+  filePath : '\\\\ripctest.loc\\ripctestdfs\\Objections\\'
 }

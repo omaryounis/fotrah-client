@@ -531,6 +531,9 @@
       "2" : "Partial Votes, waiting for other members to vote",
       "3" : "Completed Votes"
     },
-    "vote-status" : "Vote Status"
+    "vote-status" : "Vote Status",
+    "send-to-coordinator" : "Send to Committee Coordinator",
+    "returned-back-from-members" : "Objection is returned back from Committee Members",
+    "end-vote" : "End Voting Session"
 
 }
