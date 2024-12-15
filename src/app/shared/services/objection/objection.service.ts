@@ -17,11 +17,7 @@ export class ObjectionService extends BaseEntityService<IObjectionMission> {
   rowData = signal<IObjectionMission>({} as IObjectionMission);
 
   objections = signal<IObjectionMission[]>([] as IObjectionMission[]);
-  private currentPageIndex: string = '1';
-  private currentPageSize: number = 10;
-  private currentStatus?: number;
-  private currentObjectionNumber?: string;
-  private currentVoteStatus?: number;
+ 
 
   getObjections(
     pageIndex?: string,
@@ -31,18 +27,13 @@ export class ObjectionService extends BaseEntityService<IObjectionMission> {
     voteStatus?: number
   ): Observable<IObjectionMissionResponse> {
 
-    const effectivePageIndex = pageIndex ?? this.currentPageIndex;
-    const effectivePageSize = pageSize ?? this.currentPageSize;
-    const effectiveStatus = status ?? this.currentStatus;
-    const effectiveObjectionNumber = objectionNumber ?? this.currentObjectionNumber;
-    const effectiveVoteStatus = voteStatus ?? this.currentVoteStatus;
+    const effectivePageIndex = pageIndex ?? '1';
+    const effectivePageSize = pageSize ?? '10';
+    const effectiveStatus = status ?? undefined;
+    const effectiveObjectionNumber = objectionNumber ?? '';
+    const effectiveVoteStatus = voteStatus ?? undefined;
 
-    // Update the cached values
-    this.currentPageIndex = effectivePageIndex;
-    this.currentPageSize = effectivePageSize;
-    this.currentStatus = effectiveStatus;
-    this.currentObjectionNumber = effectiveObjectionNumber;
-    this.currentVoteStatus = effectiveVoteStatus;
+   
 
     var params = status ? "&status=" + effectiveStatus : "";
     params += objectionNumber ? "&objectionNumber=" + effectiveObjectionNumber : "";

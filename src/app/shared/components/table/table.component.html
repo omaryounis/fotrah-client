@@ -83,10 +83,11 @@
       <td class=" lg:w-[300px]">
         <div class="flex justify-center">
           @if (showTableCollapseMode) {
-          <p-button class="navbar__profile-dropdown" type="button" icon="pi pi-ellipsis-h"
+            <!-- mobile screen -->
+          <!-- <p-button class="navbar__profile-dropdown" type="button" icon="pi pi-ellipsis-h"
             (click)="toggleActionsMenu($event)">
-          </p-button>
-          <p-menu styleClass="rtl" #menu [popup]="true" appendTo="body" [model]="actions">
+          </p-button> -->
+          <p-menubar styleClass="bg-transparent border-transparent" #menu  appendTo="body" [model]="actions">
             <ng-template pTemplate="item" let-action>
               @if(action.permission){
                 <app-can action="Edit" [resource]="action.permission">
@@ -98,6 +99,8 @@
                         rowData: data.item,
                         btnIcon: action.icon,
                         btnLabel: action.label,
+                        queryParams: action.queryParams
+
                       }
                     ">
                     </ng-template>
@@ -109,13 +112,14 @@
                   </app-can>
               }@else {
                 @if (action.component) {
-                  <div class="px-3">
+                  <div class="px-2">
                     <ng-template *ngComponentOutlet="
                       action.component;
                       inputs: {
                         rowData: data.item,
                         btnIcon: action.icon,
-                        btnLabel: action.label,
+                        btnLabel: '',
+                        queryParams: action.queryParams
                       }
                     ">
                     </ng-template>
@@ -127,7 +131,7 @@
               }
             
             </ng-template>
-          </p-menu>
+          </p-menubar>
           } @else {
           <p-menubar styleClass="bg-transparent border-transparent" [model]="actions">
             <ng-template pTemplate="item" let-action>
@@ -140,7 +144,9 @@
                     inputs: {
                       rowData: fillItem(data.item),
                       btnIcon: action.icon,
-                      btnLabel: ''
+                      btnLabel: '',
+                      queryParams: action.queryParams
+
                     }
                   ">
                 </ng-template>
@@ -151,7 +157,9 @@
                 inputs: {
                   rowData: fillItem(data.item),
                   btnIcon: action.icon,
-                  btnLabel: ''
+                  btnLabel: '',
+                  queryParams: action.queryParams
+
                 }
               ">
             </ng-template>

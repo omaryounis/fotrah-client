@@ -534,6 +534,7 @@
     "vote-status" : "Vote Status",
     "send-to-coordinator" : "Send to Committee Coordinator",
     "returned-back-from-members" : "Objection is returned back from Committee Members",
-    "end-vote" : "End Voting Session"
+    "end-vote" : "End Voting Session",
+    "operational-mangment-review" : "Operational Mangment Review"
 
 }

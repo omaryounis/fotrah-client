@@ -44,8 +44,13 @@ export class ListObjectionsMissionsComponent implements OnInit {
   // tasks: IObjection[] = [];
   first: number = 1;
   rows: number = 10;
+  index:number = 1;
   userData: any;
 
+  //previous filter value
+  previous_status: number | undefined;
+  previous_vote_status: number | undefined;
+  previous_search_query : string = '';
   columns: ITableColumn[] = [];
 
   constructor(private screenService: ScreenService, private router :ActivatedRoute,private langService : LanguageService, private objectionService: ObjectionService, private loginService: LoginService) {
@@ -64,15 +69,21 @@ export class ListObjectionsMissionsComponent implements OnInit {
   selected_vote_status: number | undefined;
 
   ngOnInit(): void {
-
     this.showTableCollapseMode = this.screenService.isScreenBelowThan(888);
     this.actions = [ 
       {
         label: "اظهار",
         icon: "pi pi-eye",
         status: this.selected_status,
-        component: ObjectionWorkflowComponent,
-      },
+         component: ObjectionWorkflowComponent,
+        queryParams: {
+          pageIndex: this.index, 
+          pageSize: this.rows, 
+          status:this.selected_status ?? undefined, 
+          objectionNumber:this.searchQuery.length == 0 ? undefined :this.searchQuery ,
+          voteStatus: this.selected_vote_status ?? undefined
+        }
+      }
      
     ];
     this.columns = [
@@ -131,6 +142,19 @@ export class ListObjectionsMissionsComponent implements OnInit {
   get totalCount() {
     return this.objectionService.totalCount ;
   } 
+  resetOnFilterChange(){
+    if(this.selected_status != this.previous_status ||
+      this.selected_vote_status != this.previous_vote_status 
+     )
+     {
+      this.first = 1;
+      this.index = 1;
+      this.rows = 10;
+      this.previous_status = this.selected_status;
+      this.previous_vote_status = this.selected_vote_status;
+ 
+    }
+  }
   checkIsvisible(): boolean {
      
     if (
@@ -146,8 +170,26 @@ export class ListObjectionsMissionsComponent implements OnInit {
   }
   onPageChange(event: any) {
     this.first = event.first;
+    this.index = event.page + 1
     this.rows = event.rows;
     this.getObjectionList(this.rows, event.page + 1);
+
+    this.actions = [ 
+      {
+        label: "اظهار",
+        icon: "pi pi-eye",
+        status: this.selected_status,
+        queryParams: {
+          pageIndex: this.index, 
+          pageSize: this.rows, 
+          status:this.selected_status ?? undefined, 
+          objectionNumber:this.searchQuery.length == 0 ? undefined :this.searchQuery ,
+          voteStatus: this.selected_vote_status ?? undefined
+        },
+        component: ObjectionWorkflowComponent,
+      }
+    ];
+  
   }
   status_list = [
     // {text : this.langService.getInstantTranslation('objection-statuses.1') , id : 1},
@@ -167,7 +209,22 @@ export class ListObjectionsMissionsComponent implements OnInit {
     return status ? status.text : ''; 
   }
   getObjectionList(rows: number, pageIndex: any) {
-
+    this.resetOnFilterChange()
+    this.actions = [ 
+      {
+        label: "اظهار",
+        icon: "pi pi-eye",
+        status: this.selected_status,
+        queryParams: {
+          pageIndex: this.index, 
+          pageSize: this.rows, 
+          status:this.selected_status ?? undefined, 
+          objectionNumber:this.searchQuery.length == 0 ? undefined :this.searchQuery ,
+          voteStatus: this.selected_vote_status ?? undefined
+        },
+        component: ObjectionWorkflowComponent,
+      }
+    ];
     this.objectionService.getObjections(pageIndex, rows , this.selected_status , this.searchQuery(),this.selected_vote_status).subscribe()
   }
   hasVotedByUser(votes: IVoteDetail[]): boolean {

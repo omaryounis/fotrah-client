@@ -17,7 +17,7 @@
    
     @if(taskData.operationsReview){
     <div class="form-group">
-      <label for="finCategoryName"> Operational Mangment Review </label>
+      <label for="operationsReview"> {{ "operational-mangment-review" | translate}} </label>
       <input
         pInputText
         id="operationsReview"
@@ -109,7 +109,7 @@
           class="w-full flex justify-between"
         >
           <span>{{
-            item.fileName ? item.fileName : ("file" | translate) + ($index + 1)
+            item.filename ?? ("file" | translate) + ($index + 1)
           }}</span>
 
           <!-- <i

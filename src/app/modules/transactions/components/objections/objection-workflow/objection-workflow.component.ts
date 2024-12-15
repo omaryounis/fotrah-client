@@ -23,7 +23,7 @@ import { takeWhile } from "rxjs";
 @Component({
   selector: 'app-objection-workflow',
 standalone: true,
-  imports: [ButtonModule, TaskFormComponent],
+  imports: [ButtonModule, ObjectionFormComponent],
   templateUrl: './objection-workflow.component.html',
   styleUrl: './objection-workflow.component.scss'
 })
@@ -31,6 +31,7 @@ export class ObjectionWorkflowComponent {
   @Input() btnIcon!: string;
   @Input() btnLabel!: string;
   @Input() status?: number;
+  @Input() queryParams?: { [key: string]: any };
 
   userData: any;
   submitted:any;
@@ -96,7 +97,7 @@ export class ObjectionWorkflowComponent {
                     detail: this.lang.getInstantTranslation("done-process"),
                   });
                   
-                  this.fillTasks(this.status);
+                  this.fillTasks();
                 } else {
                   this.message.add({
                     severity: "error",
@@ -340,5 +341,26 @@ export class ObjectionWorkflowComponent {
    
   }
   isVoting = () :boolean => this.taskData.status == ObjectionStatusEnum.Under_Evaluation ? true : false ;
-  fillTasks = (status?: number) => this.objctionService.getObjections("1", 10,status).subscribe();
+  // fillTasks = (status?: number) =>  this.objctionService.getObjections(th).subscribe();
+  fillTasks = () => {
+    const { pageIndex, pageSize, voteStatus, objectionNumber, status } = this.queryParams || {};
+    //  const pageIndex = this.queryParams ? this.queryParams['pageIndex'] : 1;
+    // const pageSize = this.queryParams ? this.queryParams['pageSize'] : 10;
+    // const voteStatus = this.queryParams ? this.queryParams['voteStatus'] : undefined;
+    // const objectionNumber = this.queryParams ? this.queryParams['objectionNumber'] : undefined;
+    const currentPageIndex = pageIndex ?? 1;
+    const currentPageSize = pageSize ?? 10;
+    const currentVoteStatus = voteStatus ?? undefined;
+    const currentObjectionNumber = objectionNumber ?? undefined;
+    const currentStatus = status ?? undefined;
+
+
+    this.objctionService.getObjections(
+    currentPageIndex.toString(),
+    currentPageSize,
+    currentStatus,
+    currentObjectionNumber,
+    currentVoteStatus
+  ).subscribe();
+}
 }
