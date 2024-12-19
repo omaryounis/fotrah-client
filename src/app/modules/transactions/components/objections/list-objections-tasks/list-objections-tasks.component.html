@@ -5,45 +5,76 @@
     <div class="flex-item flex-grow"  >
       <app-search-bar class="w-full" [placeholder]="'search' | translate"  
       (onSearchValueChange)="onSearchTextChange($event)" (onClickSearch)="getObjectionList(rows ,1)"></app-search-bar>
-      </div>
-    @if(checkIsvisible()){ 
-    <div class="flex-item flex-grow">
-      <label class="required-element custom-label" for="clasificationNumber">{{'status' | translate}}</label>
-      <p-dropdown
-      class="dropdown"
-      styleClass="w-full"
-      [options]="status_list"
-      [(ngModel)]="selected_status"
-      optionValue="id"
-      optionLabel="text"
-      [showClear]="true"
-      appendTo="body"
-      (onChange)="getObjectionList(rows , 1)"
-      id="status"
-      name="status"
-      aria-label="status"
-      ></p-dropdown>
     </div>
-    }
-    <div class="flex-item flex-grow" >
-    <label class="required-element custom-label" for="voteStatus">{{'vote-status' | translate}}</label>
-    <p-dropdown
-      class="dropdown"
-      styleClass="w-full"
-      [options]="vote_status_list"
-      [(ngModel)]="selected_vote_status"
-      optionValue="id"
-      optionLabel="text"
-      [showClear]="true"
-      appendTo="body"
-      (onChange)="getObjectionList(rows , 1)"
-      id="voteStatus"
-      name="voteStatus"
-      aria-label="voteStatus"
-    ></p-dropdown> 
+    <div class="flex-item flex-grow"  > 
+      <app-search-bar class="w-full" [placeholder]="'search-by-objector-name' | translate"  
+      (onSearchValueChange)="onSearchObjectorNameChange($event)" (onClickSearch)="getObjectionList(rows ,1)"></app-search-bar>
     </div>
-     
   </div>
+    <div class="w-full d-flex flex-wrap justify-content-between align-items-center gap-3">
+
+      <div class="flex-item flex-grow" id="outerFinItemDiv" >
+        <label class="required-element custom-label" for="finItems">{{'List_FinancialItems' | translate}}</label>        
+        <p-dropdown
+          class="dropdown"
+          styleClass="max-w-full"
+          [options]="financialItems"
+          [(ngModel)]="selected_finItem"
+          optionValue="id"
+          optionLabel="name"
+          [showClear]="true"
+          appendTo="body"
+          [filter]="true"
+          filterBy="name" 
+          (onChange)="getObjectionList(rows , 1)"
+          id="finItems"
+          name="finItems"
+          aria-label="finItems"
+          
+        >
+        <!-- <ng-template let-item pTemplate="item">
+          <div>{{ item.name }}</div> 
+        </ng-template> -->
+      </p-dropdown> 
+      </div>
+      @if(checkIsvisible()){ 
+      <div class="flex-item flex-grow">
+        <label class="required-element custom-label" for="clasificationNumber">{{'status' | translate}}</label>
+        <p-dropdown
+        class="dropdown"
+        styleClass="w-full"
+        [options]="status_list"
+        [(ngModel)]="selected_status"
+        optionValue="id"
+        optionLabel="text"
+        [showClear]="true"
+        appendTo="body"
+        (onChange)="getObjectionList(rows , 1)"
+        id="status"
+        name="status"
+        aria-label="status"
+        ></p-dropdown>
+      </div>
+      }
+      <div class="flex-item flex-grow" >
+        <label class="required-element custom-label" for="voteStatus">{{'vote-status' | translate}}</label>
+        <p-dropdown
+          class="dropdown"
+          styleClass="w-full"
+          [options]="vote_status_list"
+          [(ngModel)]="selected_vote_status"
+          optionValue="id"
+          optionLabel="text"
+          [showClear]="true"
+          appendTo="body"
+          (onChange)="getObjectionList(rows , 1)"
+          id="voteStatus"
+          name="voteStatus"
+          aria-label="voteStatus"
+        ></p-dropdown> 
+      </div>
+      
+    </div>
   </div>
 <!-- <div class="form-row"> -->
   <!-- <div class="form-group"> -->

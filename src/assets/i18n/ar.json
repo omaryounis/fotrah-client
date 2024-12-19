@@ -547,5 +547,6 @@
   "vote-status" : "حالة التصويت",
   "send-to-coordinator" : "إرسال الى أمين اللجنة",
   "returned-back-from-members" : "تم إرسال الاعتراض بواسطة عضو من أعضاء لجنة الإعتراضات",
-  "operational-mangment-review" : "ملاحظات إدارة العمليات الرقابية"
+  "operational-mangment-review" : "ملاحظات إدارة العمليات الرقابية",
+  "search-by-objector-name" : "اسم المعترض"
 }

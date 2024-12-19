@@ -286,7 +286,6 @@ export class ObjectionFormComponent implements OnInit {
     
     if (fileIndex !== -1) {
       this.taskData.uploadedFiles.splice(fileIndex, 1);
-      console.log(`File removed: ${event.file.name}`);
     }
   }
   isCoordinator(): boolean {

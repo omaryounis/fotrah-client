@@ -21,6 +21,9 @@ import { IObjectionMission, IVoteDetail } from "./objections.model";
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 import { LoginService } from "@shared/services/login/login.service";
 import { CommonModule } from "@angular/common";
+import { single } from "rxjs";
+import { FinancialItemsService } from "@shared/services/main-data-management/financial-items/financial-items.service";
+import { IFinancial } from "@root/src/app/modules/financials/financials.model";
 
 
 
@@ -52,40 +55,44 @@ export class ListObjectionsMissionsComponent implements OnInit {
   previous_vote_status: number | undefined;
   previous_search_query : string = '';
   columns: ITableColumn[] = [];
+  financialItems: { id: number; name: string }[] = []
+  selected_finItem: number | undefined;
 
-  constructor(private screenService: ScreenService, private router :ActivatedRoute,private langService : LanguageService, private objectionService: ObjectionService, private loginService: LoginService) {
+  constructor(private screenService: ScreenService,
+     private router :ActivatedRoute,
+     private langService : LanguageService, 
+     private objectionService: ObjectionService, 
+     private loginService: LoginService,
+     private finItemService:FinancialItemsService,
+
+    ) {
     this.getObjectionList(this.rows, this.first)
   }
   get requestsList() {
     const searchText = this.searchQuery();
     return this.objectionService.objections() }
   searchQuery = signal<string>('');
+  searchObjectorName = signal<string>('');
 
   onSearchTextChange(searchValue: any) {
     this.searchQuery.set(searchValue);
     // this.getObjectionList(this.rows , 1);
   }
+  onSearchObjectorNameChange(searchValue:any){
+    if(searchValue.length >= 3){
+      this.searchObjectorName.set(searchValue)
+    }else{
+      this.searchObjectorName.set("")
+    }
+  }
+
   selected_status: number | undefined;
   selected_vote_status: number | undefined;
 
   ngOnInit(): void {
     this.showTableCollapseMode = this.screenService.isScreenBelowThan(888);
-    this.actions = [ 
-      {
-        label: "اظهار",
-        icon: "pi pi-eye",
-        status: this.selected_status,
-         component: ObjectionWorkflowComponent,
-        queryParams: {
-          pageIndex: this.index, 
-          pageSize: this.rows, 
-          status:this.selected_status ?? undefined, 
-          objectionNumber:this.searchQuery.length == 0 ? undefined :this.searchQuery ,
-          voteStatus: this.selected_vote_status ?? undefined
-        }
-      }
-     
-    ];
+    this.actions = this.getActions()
+   
     this.columns = [
       {
         text: "ObjectorName",
@@ -137,6 +144,20 @@ export class ListObjectionsMissionsComponent implements OnInit {
         showOnExpandedRow: true,
       },
     ];
+
+    this.finItemService.getFinancials(1000,1)
+    .subscribe((res)=>{
+      this.financialItems = res.data.financialItems.map((finItem:IFinancial)=>({
+        id : finItem.id,  
+        name: this.langService.getInstantTranslation(
+          this.langService.browserLang ==="ar" ? finItem.nameAr ||"" : finItem.nameEn ||""
+        )
+      }))
+    }
+  )
+
+
+  
   }
 
   get totalCount() {
@@ -173,23 +194,7 @@ export class ListObjectionsMissionsComponent implements OnInit {
     this.index = event.page + 1
     this.rows = event.rows;
     this.getObjectionList(this.rows, event.page + 1);
-
-    this.actions = [ 
-      {
-        label: "اظهار",
-        icon: "pi pi-eye",
-        status: this.selected_status,
-        queryParams: {
-          pageIndex: this.index, 
-          pageSize: this.rows, 
-          status:this.selected_status ?? undefined, 
-          objectionNumber:this.searchQuery.length == 0 ? undefined :this.searchQuery ,
-          voteStatus: this.selected_vote_status ?? undefined
-        },
-        component: ObjectionWorkflowComponent,
-      }
-    ];
-  
+    this.actions = this.getActions()
   }
   status_list = [
     // {text : this.langService.getInstantTranslation('objection-statuses.1') , id : 1},
@@ -210,7 +215,11 @@ export class ListObjectionsMissionsComponent implements OnInit {
   }
   getObjectionList(rows: number, pageIndex: any) {
     this.resetOnFilterChange()
-    this.actions = [ 
+    this.actions = this.getActions()
+    this.objectionService.getObjections(pageIndex, rows , this.selected_status , this.searchQuery(),this.selected_vote_status,this.searchObjectorName(),this.selected_finItem).subscribe()
+  }
+  getActions():any[]{
+    return[
       {
         label: "اظهار",
         icon: "pi pi-eye",
@@ -224,8 +233,7 @@ export class ListObjectionsMissionsComponent implements OnInit {
         },
         component: ObjectionWorkflowComponent,
       }
-    ];
-    this.objectionService.getObjections(pageIndex, rows , this.selected_status , this.searchQuery(),this.selected_vote_status).subscribe()
+    ]
   }
   hasVotedByUser(votes: IVoteDetail[]): boolean {
     const token = localStorage.getItem('accessToken')!;

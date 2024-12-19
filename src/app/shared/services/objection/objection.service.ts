@@ -9,6 +9,7 @@ import {
   IObjectionMissionResponse,
   IObjectionProgressRequest,
 } from "@root/src/app/modules/transactions/components/objections/list-objections-tasks/objections.model";
+import { IFinancialResponse } from "@root/src/app/modules/financials/financials.model";
 
 @Injectable({
   providedIn: "root",
@@ -24,7 +25,9 @@ export class ObjectionService extends BaseEntityService<IObjectionMission> {
     pageSize?: number,
     status?: number,
     objectionNumber?: string,
-    voteStatus?: number
+    voteStatus?: number,
+    objectorName?:string,
+    finItemId?:number
   ): Observable<IObjectionMissionResponse> {
 
     const effectivePageIndex = pageIndex ?? '1';
@@ -33,12 +36,15 @@ export class ObjectionService extends BaseEntityService<IObjectionMission> {
     const effectiveObjectionNumber = objectionNumber ?? '';
     const effectiveVoteStatus = voteStatus ?? undefined;
 
-   
+    const effectiveObjectorName = objectorName ?? '';
+    const effectivefinItemId = finItemId ?? undefined;
 
     var params = status ? "&status=" + effectiveStatus : "";
     params += objectionNumber ? "&objectionNumber=" + effectiveObjectionNumber : "";
     params += voteStatus ? "&voteStatus=" + effectiveVoteStatus: "";
-    return this.http
+    params += objectorName ? "&objectorName=" + effectiveObjectorName: "";
+    params+= finItemId? "&financialItemId=" + effectivefinItemId:""
+     return this.http
       .get<IObjectionMissionResponse>(
         `${environment.proxyBase}/Objection/missions?PageIndex=` +
           effectivePageIndex +
@@ -145,6 +151,21 @@ export class ObjectionService extends BaseEntityService<IObjectionMission> {
           // this.upsertBaseEntity(response.data);s
         })
       );
+  }
+
+  
+  getFinancials(pageSize?: number, pageIndex?: number , searchQuery? :string): Observable<IFinancialResponse> {
+    pageIndex = pageIndex || 1;
+    pageSize = pageSize || 50;
+    searchQuery = searchQuery || '';
+    var addtionUrl = '/FinancialItems?PageIndex=' + pageIndex + '&PageSize=' + pageSize + '&KeyWord=' + searchQuery;
+    return this.http
+      .get<IFinancialResponse>(`${environment.proxyBase}${addtionUrl}`)
+      .pipe(tap((response: IFinancialResponse) => {
+        // Assuming setBaseEntity returns BaseEntityType<IFinancial>[].
+        this.setBaseEntity(response.data.financialItems);
+        this.setTotalCount(response.data.totalCount);
+      }));
   }
 
 }

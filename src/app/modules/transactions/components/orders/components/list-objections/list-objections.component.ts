@@ -18,6 +18,8 @@ import { PaginatorModule } from "primeng/paginator";
 import { ActivatedRoute } from "@angular/router";
 import { IObjection } from "@shared/models/objection.model";
 import { LanguageService } from "@shared/services/language/language.service";
+import { FinancialItemsService } from "@shared/services/main-data-management/financial-items/financial-items.service";
+import { IFinancial } from "@root/src/app/modules/financials/financials.model";
 
 @Component({
   selector: "app-list-objections",
@@ -40,8 +42,16 @@ export class ListObjectionsComponent implements OnInit {
   rows: number = 10;
 
   columns: ITableColumn[] = [];
+  financialItems: { id: number; name: string }[] = []
+  selected_finItem: number | undefined;
 
-  constructor(private screenService: ScreenService, private router :ActivatedRoute,private langService : LanguageService, private taskService: TasksService) {
+  constructor(
+    private screenService: ScreenService,
+     private router :ActivatedRoute,
+     private langService : LanguageService,
+     private taskService: TasksService,
+     private finItemService:FinancialItemsService,
+    ) {
     this.getObjectionList(this.rows, this.first)
   }
   searchQuery = signal<string>('');
@@ -112,7 +122,25 @@ export class ListObjectionsComponent implements OnInit {
       //   tdTemplate: "actionListTemplate",
       // },
     ];
+
+    this.finItemService.getFinancials(1,1000)
+    .subscribe((res)=>{
+      this.financialItems = res.data.financialItems.map((finItem:IFinancial)=>({
+        id : finItem.id,  
+        name: this.langService.getInstantTranslation(
+          this.langService.browserLang ==="ar" ? finItem.nameAr ||"" : finItem.nameEn ||""
+        )
+      }))
+    }
+  
+  
+  )
+
+
+  
+  
   }
+  
 
   get totalCount() {
     return this.taskService.totalCount ;
