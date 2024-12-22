@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { Injectable } from '@angular/core';
 
 import { Observable } from "rxjs";
-import { tap } from "rxjs/operators";
+import { catchError, tap } from "rxjs/operators";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { toObservable } from '@angular/core/rxjs-interop';
 
@@ -153,9 +153,8 @@ export class ReportsService {
      
   }
 
-  getOjectionWithVotesReport(duration: TReportDurration = null ): Observable<any> {
+  getOjectionWithVotesReport(duration: TReportDurration = null, objectionNumber?:string): Observable<any> {
     
-    // Build query parameters
     let params = new HttpParams();
     if (duration!.startDate) {
       params = params.set('StartDate', duration!.startDate);
@@ -163,16 +162,18 @@ export class ReportsService {
     if (duration!.endDate) {
       params = params.set('EndDate', duration!.endDate);
     }
- 
+    if(objectionNumber && objectionNumber.trim()){
+      params = params.set('ObjectionNumber',objectionNumber)
+    }
+
      const exportBillReportUrl = `${environment.proxyBase}/Objection/export-objection-data`;
- 
      return this.http
        .get(exportBillReportUrl , {params : params , responseType : 'blob'})
        .pipe(
          tap((success) => { 
            
            this.handleExportBillSuccess(success , 'Objection Report V-02') 
-          }),
+          })  
        );
       
       

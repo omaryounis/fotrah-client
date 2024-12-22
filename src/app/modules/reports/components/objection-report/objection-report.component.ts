@@ -2,11 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MessagesResponse } from "@shared/enums/messages-response.enum";
 import { TReportDurration } from '@shared/models/reports.model';
 import { ReportsService } from '@shared/services/reports/reports.service';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
+import { MessageService } from "primeng/api";
+import { LanguageService } from "@shared/services/language/language.service";
 
 @Component({
   selector: 'app-objection-report',
@@ -18,7 +21,10 @@ import { CardModule } from 'primeng/card';
 export class ObjectionReportComponent implements OnInit {
 
   range_dates!: (string | null)[] ;
-   constructor(private translateService :TranslateService , private reportService:ReportsService) {
+  range_dates2!: (string | null)[] ;
+  objectionNumber: (string | undefined) = '';
+
+   constructor(private translateService :TranslateService , private reportService:ReportsService, private message:MessageService, private langService:LanguageService) {
    }
 
   ngOnInit() {
@@ -29,7 +35,17 @@ export class ObjectionReportComponent implements OnInit {
   this.reportService.getOjectionReport(dates ).subscribe();
  }
  handelReportWithVotesExport() {
-  var dates = this.range_dates ?  { startDate : this.range_dates[0] , endDate : this.range_dates[1]} as TReportDurration : {} as TReportDurration
-  this.reportService.getOjectionWithVotesReport(dates ).subscribe();
+  var dates = this.range_dates2 ?  { startDate : this.range_dates2[0] , endDate : this.range_dates2[1]} as TReportDurration : {} as TReportDurration
+  this.reportService.getOjectionWithVotesReport(dates, this.objectionNumber).subscribe({
+    next: (res) => {
+     },
+    error: (error) => {
+       this.message.add({
+        severity: "error",
+        summary: this.langService.getInstantTranslation("error"),
+        detail: error.message || 'Objection Request is not exist !',
+      });
+    }
+  });
  }
 }

@@ -1,5 +1,5 @@
 <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
-<p-card styleClass="violation-statistics p-5">
+<p-card styleClass="p-5 custom-card-height">
     <ng-template pTemplate="header">
       <div class="flex justify-between items-center">
         <p class="chart-card__title text-primary"> {{'objections-report' | translate}}</p>
@@ -9,7 +9,7 @@
   <div class=" w-full">
     <div class="form-row gap-3 !grid-cols-1">
     <div class="form-group ">
-      <label class="!text-primary" for="username">{{'period' | translate}}</label>
+      <label class="!text-primary" for="calender-clear">{{'period' | translate}}</label>
       <p-calendar styleClass="w-full" id="calender-clear" [(ngModel)]="range_dates" selectionMode="range" [readonlyInput]="true"
         [showIcon]="true"  [showClear]="true"    dateFormat="yy/mm/dd" dataType="string">
       </p-calendar>
@@ -24,21 +24,27 @@
     </div>
   </div>
 </p-card>
-<p-card styleClass="violation-statistics p-5">
+<p-card styleClass="p-5 custom-card-height">
   <ng-template pTemplate="header">
     <div class="flex justify-between items-center">
       <p class="chart-card__title text-primary"> {{'objections-full-report' | translate}}</p>
       
     </div>
   </ng-template>
-<div class=" w-full">
-  <div class="form-row gap-3 !grid-cols-1">
-  <div class="form-group ">
-    <label class="!text-primary" for="username">{{'period' | translate}}</label>
-    <p-calendar styleClass="w-full" id="calender-clear" [(ngModel)]="range_dates" selectionMode="range" [readonlyInput]="true"
-      [showIcon]="true"  [showClear]="true"    dateFormat="yy/mm/dd" dataType="string">
-    </p-calendar>
+<div class="w-full">
+  <div class="form-row gap-3 grid grid-cols-1 sm:grid-cols-2 items-center">
+    <div class="form-group">
+      <label class="!text-primary" for="objectionNumber">{{'ObjectionNumber' | translate}}</label>
+      <input  styleClass="w-full" class="custom-input" pInputText  id="objectionNumber" name="objectionNumber" aria-label="objectionNumber" [(ngModel)]="objectionNumber" 
+          placeholder="{{ 'ObjectionNumber' | translate }}" />
+    </div>
+    <div class="form-group">
+    <label class="!text-primary" for="calender-clear2">{{'period' | translate}}</label>
+    <p-calendar styleClass="w-full" id="calender-clear2" [(ngModel)]="range_dates2" selectionMode="range" [readonlyInput]="true"
+      [showIcon]="true"  [showClear]="true" dateFormat="yy/mm/dd" dataType="string">
+    </p-calendar> 
   </div>
+    
 <div class="form-group">
     <!-- <label class="text-white"> {{'.' | translate}} </label> -->
     <div class="flex justify-between items-center">
