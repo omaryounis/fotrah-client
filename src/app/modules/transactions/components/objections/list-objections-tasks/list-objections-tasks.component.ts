@@ -219,6 +219,7 @@ export class ListObjectionsMissionsComponent implements OnInit {
     this.objectionService.getObjections(pageIndex, rows , this.selected_status , this.searchQuery(),this.selected_vote_status,this.searchObjectorName(),this.selected_finItem).subscribe()
   }
   getActions():any[]{
+    const searchObjectorNameValue = this.searchObjectorName()
     return[
       {
         label: "اظهار",
@@ -228,8 +229,10 @@ export class ListObjectionsMissionsComponent implements OnInit {
           pageIndex: this.index, 
           pageSize: this.rows, 
           status:this.selected_status ?? undefined, 
-          objectionNumber:this.searchQuery.length == 0 ? undefined :this.searchQuery ,
-          voteStatus: this.selected_vote_status ?? undefined
+          objectionNumber:this.searchQuery().length == 0 ? undefined :this.searchQuery() ,
+          voteStatus: this.selected_vote_status ?? undefined,
+          objectorName:(this.searchObjectorName()).length == 0 ? undefined :this.searchObjectorName(),
+          finItemId: this.selected_finItem ??undefined
         },
         component: ObjectionWorkflowComponent,
       }

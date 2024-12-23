@@ -343,24 +343,24 @@ export class ObjectionWorkflowComponent {
   isVoting = () :boolean => this.taskData.status == ObjectionStatusEnum.Under_Evaluation ? true : false ;
   // fillTasks = (status?: number) =>  this.objctionService.getObjections(th).subscribe();
   fillTasks = () => {
-    const { pageIndex, pageSize, voteStatus, objectionNumber, status } = this.queryParams || {};
-    //  const pageIndex = this.queryParams ? this.queryParams['pageIndex'] : 1;
-    // const pageSize = this.queryParams ? this.queryParams['pageSize'] : 10;
-    // const voteStatus = this.queryParams ? this.queryParams['voteStatus'] : undefined;
-    // const objectionNumber = this.queryParams ? this.queryParams['objectionNumber'] : undefined;
+    const { pageIndex, pageSize, voteStatus, objectionNumber, status, objectorName, finItemId } = this.queryParams || {};
+     
     const currentPageIndex = pageIndex ?? 1;
     const currentPageSize = pageSize ?? 10;
     const currentVoteStatus = voteStatus ?? undefined;
     const currentObjectionNumber = objectionNumber ?? undefined;
     const currentStatus = status ?? undefined;
-
+    const currentObjectorName = objectorName ?? undefined;
+    const currentFinItemId = finItemId ?? undefined;
 
     this.objctionService.getObjections(
     currentPageIndex.toString(),
     currentPageSize,
     currentStatus,
     currentObjectionNumber,
-    currentVoteStatus
+    currentVoteStatus,
+    currentObjectorName,
+    currentFinItemId
   ).subscribe();
 }
 }
