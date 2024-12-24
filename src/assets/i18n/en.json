@@ -536,7 +536,9 @@
     "returned-back-from-members" : "Objection is returned back from Committee Members",
     "end-vote" : "End Voting Session",
     "operational-mangment-review" : "Operational Mangment Review",
-    "search-by-objector-name" : "Search by Objector Name"
+    "search-by-objector-name" : "Search by Objector Name",
+    "Field-visit-date" : "Field Visit Date",
+    "FinancialItem" : "Financial Item"
 
 
 }

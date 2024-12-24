@@ -79,7 +79,9 @@ export class ObjectionFormComponent implements OnInit {
     reasons: [],
     currentStatus: "",
     uploadedFiles: [],
-    lastStatus: 0
+    lastStatus: 0,
+    fieldVisitDate:"",
+    financialItem:""
   };
   AttachmentTypes = AttachmentTypes
   requestTypes = RequestTypes;
@@ -113,6 +115,7 @@ export class ObjectionFormComponent implements OnInit {
       key,
       value,
     }));
+    const dateLang = this.langService.getDateFormat();
     this.taskDataArray = [
       { key: "ObjectionNumber", value: this.taskData.objectionNumber },
       { key: "ObjectorId", value: this.taskData.objectorId.toString() },
@@ -123,8 +126,29 @@ export class ObjectionFormComponent implements OnInit {
         value: this.taskData.objectorMobileNumber,
       },
       { key: "note", value: this.taskData.note },
-      { key: "objection-creation-date", value: this.taskData.createdAt },
+      { key: "objection-creation-date" ,value: new Date(this.taskData.createdAt).toLocaleDateString(
+        dateLang, { 
+          weekday: 'short', 
+          year: 'numeric', 
+          month: 'short', 
+          day: 'numeric',
+          hour: '2-digit', 
+          minute: '2-digit', 
+          hour12: true  
+        })  
+       },
+      { key: "FinancialItem", value: this.taskData.financialItem },
+
       { key: "FinCategoryName", value: this.taskData.finCategoryName },
+      { key:"Field-visit-date", value: new Date(this.taskData.fieldVisitDate).toLocaleDateString(dateLang, { 
+        weekday: 'short', 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit', 
+        minute: '2-digit', 
+        hour12: true  
+      })  }
     ];
     this.attachments = this.groupingAttachments(this.taskData.attachments);
 

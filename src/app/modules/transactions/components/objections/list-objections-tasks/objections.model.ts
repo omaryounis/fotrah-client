@@ -37,6 +37,8 @@ export interface IObjectionMission {
   currentStatus: string;
   uploadedFiles: File[];
   lastStatus: number;
+  fieldVisitDate: string;
+  financialItem:string
 }
 
 export interface IObjectionMissionResponse {

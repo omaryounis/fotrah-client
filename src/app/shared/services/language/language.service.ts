@@ -57,4 +57,8 @@ export class LanguageService {
    return  key + (this.browserLang == 'en' ? 'NameEn' : 'NameAr')
   }
   getStringFormat = (key :string) : string => key + (this.browserLang == 'en' ? '' : 'Ar')
+  
+  getDateFormat():string{
+    return this.browserLang =='en'? 'en-US' : 'ar-EG';
+  }
 }
