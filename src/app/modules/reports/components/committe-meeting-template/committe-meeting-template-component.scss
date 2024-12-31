@@ -1,0 +1,18 @@
+.custom-input {
+    border-radius: 4px; /* Make sure the input has rounded corners */
+    border: 1px solid #ccc; /* Define a default border color */
+    padding: 10px; /* Add some padding inside the input */
+    width: 100%; /* Ensure it takes up the full width of the container */
+    font-size: 14px; /* Adjust font size */
+  }
+  
+  /* Optional: You can add a hover effect */
+  .custom-input:hover {
+    border-color: #007bff; /* Change border color on hover */
+  }
+  
+  /* Optional: Adjust focus state */
+  .custom-input:focus {
+    border-color: #0056b3;
+    outline: none; /* Remove outline for better focus style */
+  }

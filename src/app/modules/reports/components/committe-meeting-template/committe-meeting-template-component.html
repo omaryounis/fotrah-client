@@ -1,0 +1,24 @@
+<p-card styleClass="violation-statistics p-5">
+  <ng-template pTemplate="header">
+    <div class="flex justify-between items-center">
+      <p class="chart-card__title text-primary"> {{'notification-report' | translate}}</p>
+      
+    </div>
+  </ng-template>
+<div class=" w-full">
+  <div class="form-row gap-3 !grid-cols-1">
+  <div class="form-group ">
+    <label class="!text-primary" for="objectionNumber">{{'objection-number' | translate}}</label>
+    <input pInputText id="objectionNumber" name="objectionNumber" aria-label="objectionNumber" [(ngModel)]="objectionNumber" 
+         class="custom-input" 
+         placeholder="{{ 'objection-number' | translate }}" />
+  </div>
+  <div class="form-group">
+    <!-- <label class="text-white"> {{'.' | translate}} </label> -->
+    <div class="flex justify-between items-center">
+      <p-button [label]="'export' | translate"  (onClick)="handelReportExport()" />
+    </div>
+  </div>
+  </div>
+</div>
+</p-card>

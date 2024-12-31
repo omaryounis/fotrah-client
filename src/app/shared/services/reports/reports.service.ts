@@ -221,6 +221,22 @@ export class ReportsService {
        );
    }
 
+   downloadCommitteMeetingTemplate(objectionnumber: any): Observable<any> {
+    let params = new HttpParams();
+
+      params = params.set('objectionNumber', objectionnumber);
+
+     const exportBillReportUrl = `${environment.proxyBase}/Pdf/CommitteeMeetingTemplate`;
+ 
+     return this.http
+       .get(exportBillReportUrl , {params : params , responseType : 'blob'})
+       .pipe(
+         tap((success) => { 
+              this.handleDownloadCommitteMeetingTemplateSuccess(success)
+          }),
+       );
+   }
+
    private handleDownloadNotificationTemplateSuccess(response: any , exportType : string) {
     const fileName = "نموذج طباعة الإشعارات النصية.pdf"; // Replace with desired filename
     const blob = new Blob([response], { type: 'application/pdf' });
@@ -247,6 +263,15 @@ export class ReportsService {
       summary: this.translateService.instant('done'), 
       detail: details
     });
+  }
+
+  private handleDownloadCommitteMeetingTemplateSuccess(response: any) {
+    const fileName = "مسودة محضر اجتماع لجنة.docx"; // Replace with desired filename
+    const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+    saveAs(blob, fileName);
+    var details = this.translateService.instant('exported-succeeded');
+    this.messageService.add({ severity: 'success', summary: this.translateService.instant('done'), detail:  details});
+
   }
   
 }

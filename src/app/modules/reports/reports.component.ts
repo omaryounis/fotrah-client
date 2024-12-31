@@ -25,6 +25,7 @@ import { NotificationReportComponent } from "./components/notification-report/no
 import { ObjectionReportComponent } from "./components/objection-report/objection-report.component";
 import { CanComponent } from "../../shared/components/can/can.component";
 import { NotificationTemplateComponent } from "./components/notification-template/notification-template.component";
+import { CommitteMeetingTemplateComponent } from "./components/committe-meeting-template/committe-meeting-template-component";
 
 @Component({
   selector: "app-reports",
@@ -46,7 +47,8 @@ import { NotificationTemplateComponent } from "./components/notification-templat
     NotificationReportComponent,
     ObjectionReportComponent,
     CanComponent,
-    NotificationTemplateComponent
+    NotificationTemplateComponent,
+    CommitteMeetingTemplateComponent
 ],
   templateUrl: "./reports.component.html",
   styleUrl: "./reports.component.scss",
