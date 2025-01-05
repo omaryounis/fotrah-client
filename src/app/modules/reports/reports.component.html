@@ -40,13 +40,19 @@
         <app-notification-report></app-notification-report>
       </div>
   </div>
-  }
-  <div class="container max-w-full mx-auto mt-5 mb-20">
-    <div class="grid gap-4">
-      <app-committe-meeting-template></app-committe-meeting-template>
+    }
+    <app-can-list
+    [roles]="[
+      'Procceed_Objection_CommitteeCoordinator',
+      'Procceed_NotSerious_Objection_CommitteeCoordinator'
+    ]">
+      <div class="container max-w-full mx-auto mt-5 mb-20">
+        <div class="grid gap-4">
+          <app-committe-meeting-template></app-committe-meeting-template>
 
-    </div>
-</div>
+        </div>
+      </div>
+    </app-can-list>
 <div class="container max-w-full mx-auto mt-5 mb-20">
 
   <!-- <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
