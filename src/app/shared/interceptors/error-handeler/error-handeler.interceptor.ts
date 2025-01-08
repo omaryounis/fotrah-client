@@ -22,17 +22,18 @@ export const errorHandelerInterceptor: HttpInterceptorFn = (req, next) => {
   loginService = inject(LoginService);
   messageService = inject(MessageService);
   langService = inject(TranslateService);
-
   return next(req).pipe(
     catchError(async (error: HttpErrorResponse): Promise<any> => {
       if (error?.status === 401) {
-        
-        // return handel401(req, next, error ,langService.instant('error'));
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        window.location.href = window.origin + '/auth/login';
-      return throwError(() => error);
+        if(req.url.includes('/RefreshToken')){
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
+          window.location.href = window.origin + '/auth/login';
+          return throwError(() => error);
+        }
+        return handel401(req, next, error ,langService.instant('error'));
       }
+      
       if (error?.status === 403) {
         return handel403(req, next, error ,langService.instant('error'));
       }
