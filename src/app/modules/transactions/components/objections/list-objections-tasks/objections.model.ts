@@ -3,6 +3,7 @@ export interface IAttachmentDetail {
   contentType: string;
   filePath: string;
   attachmentTypeId: number;
+  version?: number
 }
 
 export interface IVoteDetail {
@@ -38,7 +39,8 @@ export interface IObjectionMission {
   uploadedFiles: File[];
   lastStatus: number;
   fieldVisitDate: string;
-  financialItem:string
+  financialItem:string;
+  returnDetails:IReturnDetail[];
 }
 
 export interface IObjectionMissionResponse {
@@ -57,4 +59,16 @@ export interface IVoteRequest {
   vote: boolean;
   reasons?: string[];
   comment?: string;
+}
+export interface IReturnDetail {
+	returnReason: string;
+	objectorResponse: string;
+	createdAt: string;
+	createdBy: string;
+	version: number;
+}
+
+export interface IReturnRequest {
+	objectionNumber: string;
+	returnReason: string;
 }

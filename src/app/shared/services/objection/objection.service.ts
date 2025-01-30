@@ -8,6 +8,7 @@ import {
   IObjectionMission,
   IObjectionMissionResponse,
   IObjectionProgressRequest,
+  IReturnRequest,
 } from "@root/src/app/modules/transactions/components/objections/list-objections-tasks/objections.model";
 import { IFinancialResponse } from "@root/src/app/modules/financials/financials.model";
 
@@ -168,5 +169,19 @@ export class ObjectionService extends BaseEntityService<IObjectionMission> {
       }));
   }
 
+  sendBackToObjector(Task:IReturnRequest): Observable<IResponse<IObjectionMissionResponse>>{
+    return this.http
+      .post<IResponse<IObjectionMissionResponse>>(
+        `${environment.proxyBase}/Objection/return-objection`,
+        Task
+      )
+      .pipe(
+        tap((response: IResponse<IObjectionMissionResponse>) => {
+          // Assuming setBaseEntity returns BaseEntityType<ITaskConfirm>[].
+          // this.upsertBaseEntity(response.data);s
+        })
+      );
+  }
+  
 }
 

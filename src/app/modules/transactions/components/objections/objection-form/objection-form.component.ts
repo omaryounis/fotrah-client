@@ -22,6 +22,7 @@ import {
 } from "@shared/enums/status-types.enum";
 import { CommonModule } from "@angular/common";
 import { ButtonModule } from "primeng/button";
+
 import { CardModule } from "primeng/card";
 import { environment } from "@root/src/environments/environment";
 import { MultiSelectModule } from "primeng/multiselect";
@@ -33,6 +34,7 @@ import { MessageService } from "primeng/api";
 import { LanguageService } from "@shared/services/language/language.service";
 import { FileUploadModule,FileSelectEvent } from 'primeng/fileupload';
 import { MessagesModule } from 'primeng/messages';
+import { StepperModule } from 'primeng/stepper';
 
 @Component({
   selector: "app-objection-form",
@@ -48,7 +50,8 @@ import { MessagesModule } from 'primeng/messages';
     TranslateModule,
     InputTextareaModule,
     CardModule,
-    FileUploadModule
+    FileUploadModule,
+    StepperModule
   ],
   templateUrl: "./objection-form.component.html",
   styleUrl: "./objection-form.component.scss",
@@ -81,7 +84,8 @@ export class ObjectionFormComponent implements OnInit {
     uploadedFiles: [],
     lastStatus: 0,
     fieldVisitDate:"",
-    financialItem:""
+    financialItem:"",
+    returnDetails:[]
   };
   AttachmentTypes = AttachmentTypes
   requestTypes = RequestTypes;
@@ -151,7 +155,7 @@ export class ObjectionFormComponent implements OnInit {
       })  }
     ];
     this.attachments = this.groupingAttachments(this.taskData.attachments);
-
+    this.taskData.returnDetails
     this.updateData();
     if (
       this.taskData.status ==
@@ -317,6 +321,16 @@ export class ObjectionFormComponent implements OnInit {
       "Procceed_NotSerious_Objection_CommitteeCoordinator",
       "Procceed_Objection_CommitteeCoordinator",
     ]);
+  }
+  //check if the return request has supported attachment
+  isVersionHasAttachments(version: number | null): boolean {
+    if (!this.attachments || this.attachments.length === 0) {
+      return false;
+    }
+  
+    return this.attachments.some((a: { data?: { version: number | null }[] }) =>
+      a.data?.some((d: { version: number | null }) => d.version === version)
+    );
   }
   getAttachmnetTitle = (type: number): string =>
     type === AttachmentTypes.VIOLATION_REPORT

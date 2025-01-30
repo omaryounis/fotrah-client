@@ -25,7 +25,8 @@ export enum StatusEnum {
     Under_Evaluation = 3,         // voting phase
     Accepted = 4,           // accepted 
     Rejected = 5,           // Rejected
-    Under_Operational_Review = 6          
+    Under_Operational_Review = 6, 
+    Returned_Back_To_Objector = 7 //Returned         
   }
 
  

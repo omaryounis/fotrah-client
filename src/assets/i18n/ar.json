@@ -552,6 +552,8 @@
   "operational-mangment-review" : "ملاحظات إدارة العمليات الرقابية",
   "search-by-objector-name" : "اسم المعترض",
   "Field-visit-date" : "تاريخ الزيارة الميدانية",
-  "FinancialItem" : "البند المالي للمخالفة"
+  "FinancialItem" : "البند المالي للمخالفة",
+  "back-to-objector" : "ارسال الى المعترض"
+
 
 }

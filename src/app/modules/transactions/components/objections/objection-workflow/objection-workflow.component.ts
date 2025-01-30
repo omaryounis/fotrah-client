@@ -16,7 +16,7 @@ import { ObjectionStatusEnum, StatusEnum, StatusTypes } from "@shared/enums/stat
 import { LoginService } from "@shared/services/login/login.service";
 import { ObjectionFormComponent } from "../objection-form/objection-form.component";
 import { ObjectionService } from "@shared/services/objection/objection.service";
-import { IObjectionMission,IAttachmentDetail, IObjectionProgressRequest, IVoteDetail ,IVoteRequest} from "../list-objections-tasks/objections.model";
+import { IObjectionMission,IAttachmentDetail, IObjectionProgressRequest, IVoteDetail ,IVoteRequest, IReturnRequest} from "../list-objections-tasks/objections.model";
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 import { takeWhile } from "rxjs";
 
@@ -129,6 +129,31 @@ export class ObjectionWorkflowComponent {
                 }
               });
            
+            }
+            else if(this.taskData.status == ObjectionStatusEnum.Under_Review_by_Comittee_Coordinator && this.taskData.currentStatus == ObjectionStatusEnum.Returned_Back_To_Objector.toString()){
+              debugger;
+              const data: IReturnRequest = {
+                objectionNumber: this.taskData.objectionNumber,
+                returnReason: this.taskData.objectionReason
+              };
+
+              this.objctionService.sendBackToObjector(data).subscribe((res) => {
+                if (res.message == MessagesResponse.SUCCESS) {
+                  this.ref?.close();
+                  this.message.add({
+                    severity: "success",
+                    summary: this.lang.getInstantTranslation("done"),
+                    detail: this.lang.getInstantTranslation("done-process"),
+                  });
+                  this.fillTasks();
+                } else {
+                  this.message.add({
+                    severity: "error",
+                    summary: this.langService.getInstantTranslation("error"),
+                    detail: res.message,
+                  });
+                }
+              });
             }
             else if(this.taskData.status == ObjectionStatusEnum.Under_Evaluation
                &&(this.taskData.currentStatus == ObjectionStatusEnum.Accepted.toString()||this.taskData.currentStatus == ObjectionStatusEnum.Rejected.toString() ) ){
