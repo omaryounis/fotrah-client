@@ -193,15 +193,18 @@ export class ObjectionFormComponent implements OnInit {
       const blobUrl = URL.createObjectURL(blob);
       window.open(blobUrl, "_blank");
     } else {
-      const fileUrl = base64File.replace(environment.filePath, window.origin  + '/objections/'); // Convert backslashes to forward slashes for file protocol
-      window.open( fileUrl , '_blank');
+
+      const fileUrl = base64File.replace(environment.filePath, window.origin + '/objections/'); // Convert backslashes to forward slashes for file protocol
+      const encodedFileUrl = fileUrl.replace(/#/g, '%23'); // Replace # with %23 to avoid propblem
+      window.open(encodedFileUrl, '_blank');
+
       
       // for testing :
       // const fileUrl = base64File.replace(
       //   /\\\\ripctest\.loc\\ripctestdfs\\Objections\\|C:\\inetpub\\wwwroot\\Fotrah\\objections\\/g,
       //   window.origin + "/test/"
       // );
-      window.open(fileUrl, "_blank");
+      // window.open(fileUrl, "_blank");
     }
   }
 
