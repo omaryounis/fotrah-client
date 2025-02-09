@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 
 import { DropdownModule } from "primeng/dropdown";
@@ -34,7 +34,6 @@ import { MessageService } from "primeng/api";
 import { LanguageService } from "@shared/services/language/language.service";
 import { FileUploadModule,FileSelectEvent } from 'primeng/fileupload';
 import { MessagesModule } from 'primeng/messages';
-import { StepperModule } from 'primeng/stepper';
 
 @Component({
   selector: "app-objection-form",
@@ -51,7 +50,6 @@ import { StepperModule } from 'primeng/stepper';
     InputTextareaModule,
     CardModule,
     FileUploadModule,
-    StepperModule
   ],
   templateUrl: "./objection-form.component.html",
   styleUrl: "./objection-form.component.scss",
@@ -97,6 +95,7 @@ export class ObjectionFormComponent implements OnInit {
   selectedRegions: IRegion | undefined;
   is_valid_reject: boolean = true;
   is_collapsed: boolean = false;
+  is_return_collapsed: boolean = false;
   is_voting: boolean = false;
   hasOperationsReview: boolean = false;
 
@@ -195,7 +194,7 @@ export class ObjectionFormComponent implements OnInit {
     } else {
 
       const fileUrl = base64File.replace(environment.filePath, window.origin + '/objections/'); // Convert backslashes to forward slashes for file protocol
-      const encodedFileUrl = fileUrl.replace(/#/g, '%23'); // Replace # with %23 to avoid propblem
+      const encodedFileUrl = fileUrl.replace(/#/g, '%23'); // Replace # with %23 to avoid problem of not automatic converting
       window.open(encodedFileUrl, '_blank');
 
       
@@ -346,7 +345,14 @@ export class ObjectionFormComponent implements OnInit {
       ? "coordinator-documents"
       : "";
   // checkHasDescription = () :boolean =>  this.details.some(a => a.key.toLocaleLowerCase().includes('description'))
+
+  getAttachmentsByVersion(version: string) :any{
+    debugger;
+    return this.attachments.flatMap(a => a.data).filter(file => file.version == version);
+  
+  }
 }
+
 export enum RequestTypes {
   OBJECTION = 28,
 }

@@ -54,7 +54,6 @@ export class ObjectionWorkflowComponent {
   ) {}
 
   openEditModal(event: any) {
-    
       event.stopPropagation();
     this.ref = this.dialogService.open(ObjectionFormComponent, {
       header: this.langService.getInstantTranslation(this.isVoting() ? "voting-stage" : "confirmation"),
@@ -132,6 +131,15 @@ export class ObjectionWorkflowComponent {
             }
             else if(this.taskData.status == ObjectionStatusEnum.Under_Review_by_Comittee_Coordinator && this.taskData.currentStatus == ObjectionStatusEnum.Returned_Back_To_Objector.toString()){
               debugger;
+              if ((!this.taskData.objectionReason || this.taskData.objectionReason == '')) {
+                this.message.add({
+                  severity: "error",
+                  summary:
+                    this.langService.getInstantTranslation("error"),
+                  detail: this.langService.getInstantTranslation("return-reason-required"),
+                });
+                return;
+              }
               const data: IReturnRequest = {
                 objectionNumber: this.taskData.objectionNumber,
                 returnReason: this.taskData.objectionReason

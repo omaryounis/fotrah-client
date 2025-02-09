@@ -132,118 +132,53 @@
     }
   </div>
   }
-  @if(taskData.returnDetails){
-    <div class="form-row">
-    <label for="key">{{ "Return data" | translate }}</label>
-      @for (item of taskData.returnDetails; track $index) {
-        <label for="key">{{"Version" + (item.version)}}</label>
-
-        <div class="form-group">
-          <label for="key">{{ "return reason" | translate }}</label>
-          <input
-            pInputText
-            id="key"
-            name="key"
-            aria-label="key"
-            [value]="item.returnReason"
-            disabled
-          />
-        </div>
-        <div class="form-group">
-          <label for="key">{{ "Objector response" | translate }}</label>
-          <input
-            pInputText
-            id="key"
-            name="key"
-            aria-label="key"
-            [value]="item.objectorResponse"
-            disabled
-          />
-        </div>
-        <!-- supported attachment -->
-        @if (isVersionHasAttachments(item.version)) {
-          <label for="key">{{ "Attachments for Version " + item.version }}</label>
-          <div class="form-row">
-            @for (attachment of attachments; track $index) {
-                @for (file of attachment.data; track $index) {
-                  @if (file.version === item.version) {
-                <div class="form-group file">
-                  <div class="mt-3 border-2 flex-[!important] border-gray-300 rounded-md p-2 pb-1">
-                    <label
-                      [for]="'attachment_' + $index"
-                      class="w-full flex justify-between"
-                    >
-                      <span>{{ file.filename ?? ("file" | translate) + ($index + 1) }}</span>
-                      <i
-                        class="pi pi-download my-auto w-[23px] ms-auto cursor-pointer text-primary"
-                        (click)="downloadFile(file.filePath, file.fileName, false)"
-                        severity="danger"
-                      ></i>
-                    </label>
-                  </div>
-                </div>
-              }
-            }
-          }
-          </div>
-      
-        }
-      }
-  </div>
-
-
-  }
-<!-- test -->
- 
-@if (taskData.returnDetails) {
+<!-- return section  -->
+@if (taskData.returnDetails.length > 0 ) {
   <p-card class="p-2">
     <ng-template pTemplate="header">
       <div
         class="flex text-primary my-3 cursor-pointer"
-        (click)="is_collapsed = !is_collapsed"
+        (click)="is_return_collapsed = !is_return_collapsed"
       >
         <label for="commitee" class="me-auto">{{
-          "return-details" | translate
+          "return-history" | translate
         }}</label>
         <i
           class="pi my-auto"
           [ngClass]="{
-            'pi-angle-double-down': !is_collapsed,
-            'pi-angle-double-up': is_collapsed
+            'pi-angle-double-down': !is_return_collapsed,
+            'pi-angle-double-up': is_return_collapsed
           }"
         ></i>
       </div>
     </ng-template>
 
-    @if (is_collapsed) { 
+    @if (is_return_collapsed) { 
       @for (item of taskData.returnDetails; track $index) {
-    <div class="grid flex grid-cols-4 gap-2 vote-section">
+    <div class="grid grid-cols-1 md:grid-cols-[1fr_1fr_0.5fr_1.5fr] gap-2 vote-section">
       <!-- <div class="form-group">
              <label for="key">{{ 'role' | translate }}</label>
              <label for="key">{{ item.roleName }}</label>
            </div> -->
-      <div class="form-group flex-grow">
+      <div class="form-group flex-grow min-w-[150px]">
         <label class="key">{{ "return-reason" | translate }}</label>
         <label for="key">{{ item.returnReason }} </label>
       </div>
-      <div class="form-group flex-grow">
+      <div class="form-group flex-grow min-w-[150px]">
         <label class="key">{{ "objector-response" | translate }}</label>
         <label for="key">{{ item.objectorResponse }} </label>
       </div>
-      <div class="form-group flex-shrink">
+      <div class="form-group flex-shrink min-w-[20px]">
         <label class="key">{{ "version" | translate }}</label>
         <label for="key">{{ item.version }}</label>
       </div>
-      <div class="form-group flex-1">
+      <div class="form-group flex-1 min-w-[200px] md:min-w-[300px]">
         @if (isVersionHasAttachments(item.version)) {
           <label class="key">{{ "attachments" | translate }}</label>
-
-          <div class="form-row flex flex-wrap gap-2">
-            @for (attachment of attachments; track $index) {
-                @for (file of attachment.data; track $index) {
-                  @if (file.version === item.version) {
-                  <div class="form-group file">
-                    <!-- <div class="mt-3 border-2 flex-[!important] border-gray-300 rounded-md p-2 pb-1"> -->
+            <div class="form-row w-full grid grid-cols-2 md:grid-cols-3 !gap-x-4"> 
+                @for (file of getAttachmentsByVersion(item.version.toString()); track $index;) {
+                    <div class="form-group file flex-1 min-w-[100px]"> 
+                      <!-- <div class="mt-3 border-2 flex-[!important] border-gray-300 rounded-md p-2 pb-1"> -->
                     <div class="mt-3 border-2 flex border-gray-300 rounded-md p-2 pb-1">
                       <label
                         [for]="'attachment_' + $index"
@@ -255,19 +190,13 @@
                           (click)="downloadFile(file.filePath, file.fileName, false)"
                           severity="danger"
                         ></i>
+                      
                       </label>
                       
 
                     </div>
-                    <!-- <div class="card flex justify-content-center flex-wrap gap-3 align-items-center">
-
-                      <p-button label="Normal" icon="pi pi-download" />
-                    </div> -->
-
                   </div>
               }
-            }
-          }
           </div>
         }
       </div>
@@ -275,17 +204,21 @@
     } }
   </p-card>
   }
-<!-- test -->
   <!-- take action -->
   <!-- proceed request buttons -->
   @if(taskData.status ==
   ObjectionStatusTypes.Under_Review_by_Comittee_Coordinator){
   @if(this.taskData.currentStatus !=
-  ObjectionStatusTypes.Under_Operational_Review.toString()) {
+  ObjectionStatusTypes.Under_Operational_Review.toString()
+  && 
+  this.taskData.currentStatus != ObjectionStatusTypes.Returned_Back_To_Objector.toString()
+
+  ) {
   <div class="form-row !grid-cols-1 mt-2">
     <div class="form-gruop">
       <!-- <div class="form-row"> -->
       <p-fileUpload
+        [auto]="false"
         id="file-upload-input"
         mode="advanced"
         [chooseLabel]="'select-file' | translate"
@@ -298,8 +231,7 @@
         [showUploadButton]="false"
         [fileLimit]="3"
         [files]="taskData.uploadedFiles"
-        cance
-      >
+        >
       </p-fileUpload>
     </div>
   </div>
