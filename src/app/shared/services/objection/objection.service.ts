@@ -8,6 +8,7 @@ import {
   IObjectionMission,
   IObjectionMissionResponse,
   IObjectionProgressRequest,
+  IOperationRequest,
   IReturnRequest,
 } from "@root/src/app/modules/transactions/components/objections/list-objections-tasks/objections.model";
 import { IFinancialResponse } from "@root/src/app/modules/financials/financials.model";
@@ -78,7 +79,7 @@ export class ObjectionService extends BaseEntityService<IObjectionMission> {
       );
   }
   sendtoOperations(
-    Task: IObjectionProgressRequest
+    Task: IOperationRequest
   ): Observable<IResponse<IObjectionMissionResponse>> {
     return this.http
       .post<IResponse<IObjectionMissionResponse>>(

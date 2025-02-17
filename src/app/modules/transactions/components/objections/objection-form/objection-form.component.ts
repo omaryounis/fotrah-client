@@ -83,7 +83,8 @@ export class ObjectionFormComponent implements OnInit {
     lastStatus: 0,
     fieldVisitDate:"",
     financialItem:"",
-    returnDetails:[]
+    returnDetails:[],
+    objectionCommunications:[],
   };
   AttachmentTypes = AttachmentTypes
   requestTypes = RequestTypes;
@@ -96,6 +97,8 @@ export class ObjectionFormComponent implements OnInit {
   is_valid_reject: boolean = true;
   is_collapsed: boolean = false;
   is_return_collapsed: boolean = false;
+  is_objectionCommunication_collapsed: boolean = false;
+
   is_voting: boolean = false;
   hasOperationsReview: boolean = false;
 
@@ -176,7 +179,7 @@ export class ObjectionFormComponent implements OnInit {
       .getAll()
       .subscribe((res) => (this.vote_reasons = res.data));
     this.mode = this.dynamicDialogConfig.data.mode || "edit";
-    this.hasOperationsReview = this.attachments.some(attachment => attachment.type === AttachmentTypes.OPERATIONS_DOCUMENTS) || this.taskData.operationsReview;
+    // this.hasOperationsReview = this.attachments.some(attachment => attachment.type === AttachmentTypes.OPERATIONS_DOCUMENTS) || this.taskData.operationsReview;
 
   }
   downloadFile(base64File: string, fileName: string, isBase64: boolean) {
@@ -198,12 +201,14 @@ export class ObjectionFormComponent implements OnInit {
       window.open(encodedFileUrl, '_blank');
 
       
-      // for testing :
+      // // for testing :
       // const fileUrl = base64File.replace(
       //   /\\\\ripctest\.loc\\ripctestdfs\\Objections\\|C:\\inetpub\\wwwroot\\Fotrah\\objections\\/g,
       //   window.origin + "/test/"
       // );
-      // window.open(fileUrl, "_blank");
+      // const encodedFileUrl = fileUrl.replace(/#/g, '%23'); // Replace # with %23 to avoid problem of not automatic converting
+      // window.open(encodedFileUrl, '_blank');
+
     }
   }
 
@@ -334,6 +339,28 @@ export class ObjectionFormComponent implements OnInit {
       a.data?.some((d: { version: number | null }) => d.version === version)
     );
   }
+
+  //check if the operation has attachment
+  isVersionHasOperationsAttachment(version: number | null): boolean {
+    if (!this.attachments || this.attachments.length === 0) {
+      return false;
+    }
+  
+    return this.attachments.some((a: { 
+      data?: { 
+        version: number | null, 
+        attachmentTypeId?: number 
+      }[] 
+    }) =>
+      a.data?.some((d: { 
+        version: number | null, 
+        attachmentTypeId?: number 
+      }) => 
+        d.version === version && d.attachmentTypeId === AttachmentTypes.OPERATIONS_DOCUMENTS
+      )
+    );
+  }
+
   getAttachmnetTitle = (type: number): string =>
     type === AttachmentTypes.VIOLATION_REPORT
       ? "violation-report"
@@ -347,9 +374,21 @@ export class ObjectionFormComponent implements OnInit {
   // checkHasDescription = () :boolean =>  this.details.some(a => a.key.toLocaleLowerCase().includes('description'))
 
   getAttachmentsByVersion(version: string) :any{
-    debugger;
-    return this.attachments.flatMap(a => a.data).filter(file => file.version == version);
+    return this.attachments.flatMap(a => a.data).filter(file => file.version == version && file.attachmentTypeId == AttachmentTypes.SUPPORTED_DOCUMNETS );
+  }
   
+  getOperationsAttachmentByVersion(version: string) :any{
+    return this.attachments.flatMap(a => a.data).filter(file => file.version == version && file.attachmentTypeId == AttachmentTypes.OPERATIONS_DOCUMENTS );
+  }
+
+
+  getAttachmentsWithoutVersions(): any[] {
+   return this.attachments.map((attachment: any) => {
+      return {
+        ...attachment,
+        data: attachment.data.filter((item: any) => item.version === null) // Filter the data array
+      };
+    }).filter(attachment=>attachment.data.length > 0 );
   }
 }
 

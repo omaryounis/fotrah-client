@@ -41,6 +41,7 @@ export interface IObjectionMission {
   fieldVisitDate: string;
   financialItem:string;
   returnDetails:IReturnDetail[];
+  objectionCommunications: IObjectionCommunications[];
 }
 
 export interface IObjectionMissionResponse {
@@ -52,7 +53,10 @@ export interface IObjectionProgressRequest {
   isEndVotingSession?: boolean;
   objectionReason?: string;
 }
-
+export interface IOperationRequest {
+  objectionRequestLogId: number;
+  notes: string;
+}
 export interface IVoteRequest {
   id?: number | null; //not null in case of update the vote
   objectionRequestLogId: number;
@@ -66,6 +70,16 @@ export interface IReturnDetail {
 	createdAt: string;
 	createdBy: string;
 	version: number;
+}
+export interface IObjectionCommunications{
+  objectionCommunicationId: number;
+  memberNotes?: string;
+  operationsNotes?: string;
+  senderId?: string;
+  responderId?: string;
+  sendDate?: string;
+  responseDate?: string;
+  version: number;
 }
 
 export interface IReturnRequest {

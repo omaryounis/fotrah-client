@@ -558,5 +558,6 @@
   "objector-response" : "رد المُعترض",
   "version" : "إصدار رقم",
   "return-history" : "ردود الاعتراضات",
-  "return-reason-required": "يجب كتابة سبب رد الاعتراض"
+  "return-reason-required": "يجب كتابة سبب رد الاعتراض",
+  "operations-responses": "ردود ادارة العمليات الرقابية"
 }

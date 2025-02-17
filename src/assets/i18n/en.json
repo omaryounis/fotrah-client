@@ -546,8 +546,6 @@
     "objector-response" : "Objector Response",
     "version" : "Version",
     "return-history" : "Objeciton Return History",
-    "return-reason-required": "Return Reason must be filled"
-
-
-
+    "return-reason-required": "Return Reason must be filled",
+    "operations-responses": "Operational Management Responses"
 }
