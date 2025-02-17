@@ -237,6 +237,22 @@ export class ReportsService {
        );
    }
 
+   downloadCourtPleading(objectionnumber: any): Observable<any> {
+    let params = new HttpParams();
+
+      params = params.set('objectionNumber', objectionnumber);
+
+     const exportBillReportUrl = `${environment.proxyBase}/Pdf/objection-court-pleading`;
+ 
+     return this.http
+       .get(exportBillReportUrl , {params : params , responseType : 'blob'})
+       .pipe(
+         tap((success) => { 
+              this.handleDownloadCourtPleadingDocument(success)
+          }),
+       );
+   }
+   
    private handleDownloadNotificationTemplateSuccess(response: any , exportType : string) {
     const fileName = "نموذج طباعة الإشعارات النصية.pdf"; // Replace with desired filename
     const blob = new Blob([response], { type: 'application/pdf' });
@@ -271,6 +287,16 @@ export class ReportsService {
     saveAs(blob, fileName);
     var details = this.translateService.instant('exported-succeeded');
     this.messageService.add({ severity: 'success', summary: this.translateService.instant('done'), detail:  details});
+
+  }
+
+  private handleDownloadCourtPleadingDocument(response:any){
+    const fileName = " محضر الترافع القضائي.docx";
+    const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+    saveAs(blob, fileName);
+    var details = this.translateService.instant('exported-succeeded');
+    this.messageService.add({ severity: 'success', summary: this.translateService.instant('done'), detail:  details});
+
 
   }
   

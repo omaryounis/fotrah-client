@@ -27,6 +27,7 @@ import { CanComponent } from "../../shared/components/can/can.component";
 import { NotificationTemplateComponent } from "./components/notification-template/notification-template.component";
 import { CommitteMeetingTemplateComponent } from "./components/committe-meeting-template/committe-meeting-template-component";
 import { CanListComponent } from "../../shared/components/can-list/can.component";
+import { CourtPleadingTemplateComponent } from "./components/court-pleading-template/court-pleading-template.component";
 
 @Component({
   selector: "app-reports",
@@ -50,7 +51,8 @@ import { CanListComponent } from "../../shared/components/can-list/can.component
     CanComponent,
     NotificationTemplateComponent,
     CommitteMeetingTemplateComponent,
-    CanListComponent
+    CanListComponent,
+    CourtPleadingTemplateComponent
 ],
   templateUrl: "./reports.component.html",
   styleUrl: "./reports.component.scss",
