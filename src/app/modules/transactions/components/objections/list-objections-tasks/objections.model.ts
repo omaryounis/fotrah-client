@@ -55,7 +55,7 @@ export interface IObjectionProgressRequest {
 }
 export interface IOperationRequest {
   objectionRequestLogId: number;
-  notes: string;
+  notes?: string;
 }
 export interface IVoteRequest {
   id?: number | null; //not null in case of update the vote

@@ -107,9 +107,13 @@ export class ObjectionWorkflowComponent {
               });
             } 
             else if(this.taskData.status == ObjectionStatusEnum.Under_Review_by_Comittee_Coordinator && this.taskData.currentStatus==ObjectionStatusEnum.Under_Operational_Review.toString()){
-              var operationRequest = {
-                objectionRequestLogId:this.taskData.objectionRequestLogId
-              } as IOperationRequest;
+              var operationRequest: IOperationRequest = {
+                objectionRequestLogId: this.taskData.objectionRequestLogId
+              };
+              
+              if (this.taskData.objectionReason) {
+                operationRequest.notes = this.taskData.objectionReason;
+              }
               this.objctionService.sendtoOperations(operationRequest).subscribe((res) => {
                 if (res.message == MessagesResponse.SUCCESS) {
                   this.ref?.close();

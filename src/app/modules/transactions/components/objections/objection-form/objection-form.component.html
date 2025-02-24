@@ -160,7 +160,7 @@
       @for (item of taskData.objectionCommunications; track $index) {
     <div class="grid grid-cols-1 md:grid-cols-[1fr_1fr_0.5fr_1.5fr] gap-2 vote-section">
       <div class="form-group flex-grow min-w-[150px]">
-        <label class="key">{{ "Member Note" | translate }}</label>
+        <label class="key">{{ "member-notes" | translate }}</label>
         <label for="key">{{ item.memberNotes }} </label>
       </div>
       <div class="form-group flex-grow min-w-[150px]">
@@ -321,7 +321,7 @@
       </label>
     </div>
 
-    <div class="flex align-items-center">
+    <!-- <div class="flex align-items-center">
       <p-radioButton
         name="currentStatus"
         [value]="ObjectionStatusTypes.Returned_Back_To_Objector"
@@ -332,7 +332,7 @@
       <label for="ingredient8" class="ms-2">
         {{ "back-to-objector" | translate }}
       </label>
-    </div>
+    </div> -->
 
     <!-- @if(taskData.lastStatus == 3){ -->
       <!-- <label for="finCategoryName"> Comming from the Members </label> -->
@@ -345,8 +345,8 @@
     </div> -->
 
     <!-- } -->
-    @if((!hasOperationsReview))
-    {
+    <!-- @if((!hasOperationsReview))
+    { -->
       <div class="flex align-items-center">
         <p-radioButton
           name="currentStatus"
@@ -359,8 +359,30 @@
           {{ "send-to-operations" | translate }}
         </label>
       </div>
-    }
+    <!-- } -->
   </div>
+
+  @if(taskData.currentStatus == ObjectionStatusTypes.Under_Operational_Review.toString()){
+    <div class="form-row !grid-cols-1 mt-2">
+      <div class="form-group">
+        <label for="key">{{ "Note" | translate }}</label>
+        <div class="rounded-md" pInputTextarea>
+          <textarea
+            id="description"
+            name="description"
+            aria-label="description"
+            class="b-none w-full"
+            #objectionReason="ngModel"
+            [(ngModel)]="taskData.objectionReason"
+            rows="5"
+            maxlength="255"
+           >
+          </textarea>
+        </div>
+      </div>
+    </div>
+  }
+
   @if(taskData.currentStatus == ObjectionStatusTypes.Returned_Back_To_Objector.toString()){
     <!-- <div class="form-row !grid-cols-1 mt-2">
       
@@ -472,9 +494,9 @@
     </p-messages>
     </div>
 
-}
+ }
 
-}
+  }
 
 
   <!-- voting buttons -->
@@ -580,11 +602,6 @@
       <div class="form-group">
         <label for="key">{{ "Note" | translate }}</label>
         <div class="rounded-md" pInputTextarea>
-          <ul style="list-style-type: circle" class="px-3">
-            @for (item of taskData.reasons; track $index) {
-            <li>{{ item }}</li>
-            }
-          </ul>
           <textarea
             id="description"
             name="description"
@@ -594,17 +611,16 @@
             [(ngModel)]="taskData.objectionReason"
             rows="5"
             maxlength="255"
-            [required]="taskData.reasons?.length == 0"
           >
           </textarea>
         </div>
-        @if (objectionReason.invalid && (objectionReason.dirty ||
+        <!-- @if (objectionReason.invalid && (objectionReason.dirty ||
         objectionReason.touched)) {
         <div class="text-red-600">
           @if (objectionReason.errors?.['required']) {
           <span> {{ "this-field-required" | translate }}</span> }
         </div>
-        }
+        } -->
       </div>
     </div>
   }

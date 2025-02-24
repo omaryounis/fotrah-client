@@ -547,5 +547,7 @@
     "version" : "Version",
     "return-history" : "Objeciton Return History",
     "return-reason-required": "Return Reason must be filled",
-    "operations-responses": "Operational Management Responses"
+    "operations-responses": "Operational Management Responses",
+    "member-notes" : "Member Notes",
+    "operation-member-response": "Operations Member response"
 }
