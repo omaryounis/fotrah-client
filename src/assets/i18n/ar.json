@@ -553,5 +553,15 @@
   "search-by-objector-name" : "اسم المعترض",
   "Field-visit-date" : "تاريخ الزيارة الميدانية",
   "FinancialItem" : "البند المالي للمخالفة",
+  "back-to-objector" : "إسال الى المعترض",
+  "return-reason" : "سبب رد الإعتراض",
+  "objector-response" : "رد المُعترض",
+  "version" : "إصدار رقم",
+  "return-history" : "ردود الاعتراضات",
+  "return-reason-required": "يجب كتابة سبب رد الاعتراض",
+  "operations-responses": "ردود ادارة العمليات الرقابية",
+  "member-notes": "ملاحظات عضو اللجنة",
+  "operation-member-response": "رد عضو إداة العمليات الرقابية",
+
   "court-pleading-template" : "محضر الترافع القضائي"
 }

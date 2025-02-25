@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 
 import { DropdownModule } from "primeng/dropdown";
@@ -22,6 +22,7 @@ import {
 } from "@shared/enums/status-types.enum";
 import { CommonModule } from "@angular/common";
 import { ButtonModule } from "primeng/button";
+
 import { CardModule } from "primeng/card";
 import { environment } from "@root/src/environments/environment";
 import { MultiSelectModule } from "primeng/multiselect";
@@ -48,7 +49,7 @@ import { MessagesModule } from 'primeng/messages';
     TranslateModule,
     InputTextareaModule,
     CardModule,
-    FileUploadModule
+    FileUploadModule,
   ],
   templateUrl: "./objection-form.component.html",
   styleUrl: "./objection-form.component.scss",
@@ -81,7 +82,9 @@ export class ObjectionFormComponent implements OnInit {
     uploadedFiles: [],
     lastStatus: 0,
     fieldVisitDate:"",
-    financialItem:""
+    financialItem:"",
+    returnDetails:[],
+    objectionCommunications:[],
   };
   AttachmentTypes = AttachmentTypes
   requestTypes = RequestTypes;
@@ -93,6 +96,9 @@ export class ObjectionFormComponent implements OnInit {
   selectedRegions: IRegion | undefined;
   is_valid_reject: boolean = true;
   is_collapsed: boolean = false;
+  is_return_collapsed: boolean = false;
+  is_objectionCommunication_collapsed: boolean = false;
+
   is_voting: boolean = false;
   hasOperationsReview: boolean = false;
 
@@ -151,7 +157,7 @@ export class ObjectionFormComponent implements OnInit {
       })  }
     ];
     this.attachments = this.groupingAttachments(this.taskData.attachments);
-
+    this.taskData.returnDetails
     this.updateData();
     if (
       this.taskData.status ==
@@ -173,7 +179,7 @@ export class ObjectionFormComponent implements OnInit {
       .getAll()
       .subscribe((res) => (this.vote_reasons = res.data));
     this.mode = this.dynamicDialogConfig.data.mode || "edit";
-    this.hasOperationsReview = this.attachments.some(attachment => attachment.type === AttachmentTypes.OPERATIONS_DOCUMENTS) || this.taskData.operationsReview;
+    // this.hasOperationsReview = this.attachments.some(attachment => attachment.type === AttachmentTypes.OPERATIONS_DOCUMENTS) || this.taskData.operationsReview;
 
   }
   downloadFile(base64File: string, fileName: string, isBase64: boolean) {
@@ -191,16 +197,18 @@ export class ObjectionFormComponent implements OnInit {
     } else {
 
       const fileUrl = base64File.replace(environment.filePath, window.origin + '/objections/'); // Convert backslashes to forward slashes for file protocol
-      const encodedFileUrl = fileUrl.replace(/#/g, '%23'); // Replace # with %23 to avoid propblem
+      const encodedFileUrl = fileUrl.replace(/#/g, '%23'); // Replace # with %23 to avoid problem of not automatic converting
       window.open(encodedFileUrl, '_blank');
 
       
-      // for testing :
+      // // for testing :
       // const fileUrl = base64File.replace(
       //   /\\\\ripctest\.loc\\ripctestdfs\\Objections\\|C:\\inetpub\\wwwroot\\Fotrah\\objections\\/g,
       //   window.origin + "/test/"
       // );
-      // window.open(fileUrl, "_blank");
+      // const encodedFileUrl = fileUrl.replace(/#/g, '%23'); // Replace # with %23 to avoid problem of not automatic converting
+      // window.open(encodedFileUrl, '_blank');
+
     }
   }
 
@@ -321,6 +329,38 @@ export class ObjectionFormComponent implements OnInit {
       "Procceed_Objection_CommitteeCoordinator",
     ]);
   }
+  //check if the return request has supported attachment
+  isVersionHasAttachments(version: number | null): boolean {
+    if (!this.attachments || this.attachments.length === 0) {
+      return false;
+    }
+  
+    return this.attachments.some((a: { data?: { version: number | null }[] }) =>
+      a.data?.some((d: { version: number | null }) => d.version === version)
+    );
+  }
+
+  //check if the operation has attachment
+  isVersionHasOperationsAttachment(version: number | null): boolean {
+    if (!this.attachments || this.attachments.length === 0) {
+      return false;
+    }
+  
+    return this.attachments.some((a: { 
+      data?: { 
+        version: number | null, 
+        attachmentTypeId?: number 
+      }[] 
+    }) =>
+      a.data?.some((d: { 
+        version: number | null, 
+        attachmentTypeId?: number 
+      }) => 
+        d.version === version && d.attachmentTypeId === AttachmentTypes.OPERATIONS_DOCUMENTS
+      )
+    );
+  }
+
   getAttachmnetTitle = (type: number): string =>
     type === AttachmentTypes.VIOLATION_REPORT
       ? "violation-report"
@@ -332,7 +372,26 @@ export class ObjectionFormComponent implements OnInit {
       ? "coordinator-documents"
       : "";
   // checkHasDescription = () :boolean =>  this.details.some(a => a.key.toLocaleLowerCase().includes('description'))
+
+  getAttachmentsByVersion(version: string) :any{
+    return this.attachments.flatMap(a => a.data).filter(file => file.version == version && file.attachmentTypeId == AttachmentTypes.SUPPORTED_DOCUMNETS );
+  }
+  
+  getOperationsAttachmentByVersion(version: string) :any{
+    return this.attachments.flatMap(a => a.data).filter(file => file.version == version && file.attachmentTypeId == AttachmentTypes.OPERATIONS_DOCUMENTS );
+  }
+
+
+  getAttachmentsWithoutVersions(): any[] {
+   return this.attachments.map((attachment: any) => {
+      return {
+        ...attachment,
+        data: attachment.data.filter((item: any) => item.version === null) // Filter the data array
+      };
+    }).filter(attachment=>attachment.data.length > 0 );
+  }
 }
+
 export enum RequestTypes {
   OBJECTION = 28,
 }

@@ -3,6 +3,7 @@ export interface IAttachmentDetail {
   contentType: string;
   filePath: string;
   attachmentTypeId: number;
+  version?: number
 }
 
 export interface IVoteDetail {
@@ -38,7 +39,9 @@ export interface IObjectionMission {
   uploadedFiles: File[];
   lastStatus: number;
   fieldVisitDate: string;
-  financialItem:string
+  financialItem:string;
+  returnDetails:IReturnDetail[];
+  objectionCommunications: IObjectionCommunications[];
 }
 
 export interface IObjectionMissionResponse {
@@ -50,11 +53,36 @@ export interface IObjectionProgressRequest {
   isEndVotingSession?: boolean;
   objectionReason?: string;
 }
-
+export interface IOperationRequest {
+  objectionRequestLogId: number;
+  notes?: string;
+}
 export interface IVoteRequest {
   id?: number | null; //not null in case of update the vote
   objectionRequestLogId: number;
   vote: boolean;
   reasons?: string[];
   comment?: string;
+}
+export interface IReturnDetail {
+	returnReason: string;
+	objectorResponse: string;
+	createdAt: string;
+	createdBy: string;
+	version: number;
+}
+export interface IObjectionCommunications{
+  objectionCommunicationId: number;
+  memberNotes?: string;
+  operationsNotes?: string;
+  senderId?: string;
+  responderId?: string;
+  sendDate?: string;
+  responseDate?: string;
+  version: number;
+}
+
+export interface IReturnRequest {
+	objectionNumber: string;
+	returnReason: string;
 }

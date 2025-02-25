@@ -16,7 +16,7 @@ import { ObjectionStatusEnum, StatusEnum, StatusTypes } from "@shared/enums/stat
 import { LoginService } from "@shared/services/login/login.service";
 import { ObjectionFormComponent } from "../objection-form/objection-form.component";
 import { ObjectionService } from "@shared/services/objection/objection.service";
-import { IObjectionMission,IAttachmentDetail, IObjectionProgressRequest, IVoteDetail ,IVoteRequest} from "../list-objections-tasks/objections.model";
+import { IObjectionMission,IAttachmentDetail, IObjectionProgressRequest, IVoteDetail ,IVoteRequest, IReturnRequest, IOperationRequest} from "../list-objections-tasks/objections.model";
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 import { takeWhile } from "rxjs";
 
@@ -54,7 +54,6 @@ export class ObjectionWorkflowComponent {
   ) {}
 
   openEditModal(event: any) {
-    
       event.stopPropagation();
     this.ref = this.dialogService.open(ObjectionFormComponent, {
       header: this.langService.getInstantTranslation(this.isVoting() ? "voting-stage" : "confirmation"),
@@ -108,10 +107,14 @@ export class ObjectionWorkflowComponent {
               });
             } 
             else if(this.taskData.status == ObjectionStatusEnum.Under_Review_by_Comittee_Coordinator && this.taskData.currentStatus==ObjectionStatusEnum.Under_Operational_Review.toString()){
-              var data = {
-                objectionRequestLogId:this.taskData.objectionRequestLogId
-              } as IObjectionProgressRequest;
-              this.objctionService.sendtoOperations(data).subscribe((res) => {
+              var operationRequest: IOperationRequest = {
+                objectionRequestLogId: this.taskData.objectionRequestLogId
+              };
+              
+              if (this.taskData.objectionReason) {
+                operationRequest.notes = this.taskData.objectionReason;
+              }
+              this.objctionService.sendtoOperations(operationRequest).subscribe((res) => {
                 if (res.message == MessagesResponse.SUCCESS) {
                   this.ref?.close();
                   this.message.add({
@@ -129,6 +132,39 @@ export class ObjectionWorkflowComponent {
                 }
               });
            
+            }
+            else if(this.taskData.status == ObjectionStatusEnum.Under_Review_by_Comittee_Coordinator && this.taskData.currentStatus == ObjectionStatusEnum.Returned_Back_To_Objector.toString()){
+              if ((!this.taskData.objectionReason || this.taskData.objectionReason == '')) {
+                this.message.add({
+                  severity: "error",
+                  summary:
+                    this.langService.getInstantTranslation("error"),
+                  detail: this.langService.getInstantTranslation("return-reason-required"),
+                });
+                return;
+              }
+              const data: IReturnRequest = {
+                objectionNumber: this.taskData.objectionNumber,
+                returnReason: this.taskData.objectionReason
+              };
+
+              this.objctionService.sendBackToObjector(data).subscribe((res) => {
+                if (res.message == MessagesResponse.SUCCESS) {
+                  this.ref?.close();
+                  this.message.add({
+                    severity: "success",
+                    summary: this.lang.getInstantTranslation("done"),
+                    detail: this.lang.getInstantTranslation("done-process"),
+                  });
+                  this.fillTasks();
+                } else {
+                  this.message.add({
+                    severity: "error",
+                    summary: this.langService.getInstantTranslation("error"),
+                    detail: res.message,
+                  });
+                }
+              });
             }
             else if(this.taskData.status == ObjectionStatusEnum.Under_Evaluation
                &&(this.taskData.currentStatus == ObjectionStatusEnum.Accepted.toString()||this.taskData.currentStatus == ObjectionStatusEnum.Rejected.toString() ) ){
@@ -303,12 +339,14 @@ export class ObjectionWorkflowComponent {
                   });
                 }
               });
-            } else if((this.taskData.status.toString() == ObjectionStatusEnum.Under_Evaluation.toString()) && this.taskData.currentStatus == ObjectionStatusEnum.Under_Operational_Review.toString())
+            } 
+            else if((this.taskData.status.toString() == ObjectionStatusEnum.Under_Evaluation.toString()) && this.taskData.currentStatus == ObjectionStatusEnum.Under_Operational_Review.toString())
             {
-              var data = {
-                objectionRequestLogId:this.taskData.objectionRequestLogId
-              } as IObjectionProgressRequest;
-              this.objctionService.sendtoOperations(data).subscribe((res) => {
+              var operationRequest = {
+                objectionRequestLogId:this.taskData.objectionRequestLogId,
+                notes : this.taskData.objectionReason
+              } as IOperationRequest;
+              this.objctionService.sendtoOperations(operationRequest).subscribe((res) => {
                 if (res.message == MessagesResponse.SUCCESS) {
                   this.ref?.close();
                   this.message.add({
