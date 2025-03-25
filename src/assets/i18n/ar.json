@@ -563,5 +563,27 @@
   "member-notes": "ملاحظات عضو اللجنة",
   "operation-member-response": "رد عضو إداة العمليات الرقابية",
 
-  "court-pleading-template" : "محضر الترافع القضائي"
+  "court-pleading-template" : "محضر الترافع القضائي",
+  "quality-reason": {
+    "1": "خطأ تقني",
+    "2": "خطأ فني",
+    "3": "خطأ تجريبي"
+  },
+  "quality-department" :{
+    "1": "لجنة التجويد",
+    "2": "إدارة العمليات الرقابية",
+    "3": "لجنة الاعتراضات",
+    "4": "موافقة لجنة الاعتراضات"
+   
+  },
+  "quality-document" : "نموذج طلب التجويد",
+  "quality-missions" : "مهام لجنة التجويد",
+  "quality-mission-number" : "رقم طلب التجويد",
+  "quality-request" : "طلب الغاء فاتورة الى لجنة التجويد",
+  "the-sector" : "القطاع", 
+  "request-reason" : "مبرر الطلب",
+  
+  "quality-attachment": "مرفق طلب التجويد",
+  "quality-supported-attachment": "المرفقات الداعمة لطلب التجويد"
+ 
 }

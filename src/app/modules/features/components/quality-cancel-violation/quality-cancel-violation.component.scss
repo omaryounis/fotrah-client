@@ -1,0 +1,134 @@
+:host ::ng-deep {
+    .p-button {
+      @apply font-neo font-semibold text-xs rounded-sm;
+    }
+  
+    .search-label {
+      @apply text-primary sm:text-lg text-base font-neo font-semibold mb-3;
+    }
+  
+    .search-bar {
+      @apply w-full;
+    }
+    .p-message {
+      .p-message-summary , .p-message-detail {
+        margin-inline-start: 10px;
+    }
+    }
+   
+    .bill-info {
+      @apply flex justify-between items-center;
+  
+      &__title {
+        @apply text-primary sm:text-lg text-base font-neo font-semibold mb-7 mt-8;
+      }
+  
+      &__print-btn {
+        @apply bg-transparent border-transparent text-[#874E9F];
+      }
+  
+      .p-button {
+        .p-button-icon {
+          @apply sm:text-2xl text-lg;
+        }
+      }
+    }
+  
+    .cancel-bill .p-button {
+      @apply bg-purple-800;
+  
+  
+    }
+  
+  
+    .bill-table {
+      @apply border-2 rounded-lg border-[#DFE4EA] pe-4;
+  
+      &__item {
+        @apply flex;
+  
+        &:not(:last-of-type) {
+          @apply border-b-2 border-[#DFE4EA];
+        }
+  
+        &:first-of-type {
+          .bill-table__item-label {
+            @apply rounded-ss-lg;
+          }
+        }
+  
+        &:last-of-type {
+          .bill-table__item-label {
+            @apply rounded-es-lg;
+          }
+        }
+      }
+  
+      &__item-label {
+        @apply sm:min-w-[217px] min-w-[100px] leading-[44px] text-center inline-block bg-primary text-white font-neo font-semibold;
+      }
+  
+      &__item-info {
+        @apply ms-4 leading-[44px] font-frutiger text-[#4B4F54];
+      }
+    }
+  
+//   .custom .p-dialog-content {
+//     min-height: 300px;
+//   }
+    .p-dialog {
+      box-shadow: 8px 8px 20px 0px rgba(100, 130, 158, 0.2);
+      //  height: 300px;
+      .p-dialog-header {
+        @apply border-0 p-6 rounded-t-lg;
+  
+        .p-dialog-title {
+          @apply text-primary text-base font-neo;
+        }
+  
+        .p-dialog-header-icon {
+          @apply text-red-500 border border-solid border-primary rounded-none w-6 h-6;
+  
+          .p-icon {
+            @apply stroke-[red] w-2.5 h-7;
+          }
+        }
+      }
+  
+      .p-dropdown,
+      .p-component {
+        @apply w-full;
+  
+      }
+  
+      .p-dialog-footer {
+        @apply border-0 rounded-b-lg;
+  
+        .p-button {
+          @apply font-neo font-semibold text-base py-3.5 px-7 leading-4 rounded-lg;
+        }
+  
+        .p-button.p-button-secondary.p-button-outlined {
+          border: 1px solid #eff0f2;
+        }
+      }
+  
+      input[type=file]::file-selector-button {
+        display: none;
+      }
+    }
+  
+    @keyframes modal-overlay-enter {
+      0% {
+        @apply bg-transparent;
+      }
+  
+      100% {
+        background-color: rgba($color: #000000, $alpha: 0.1);
+      }
+    }
+    .p-fileupload-choose.p-button {
+         flex-grow: 0 !important;  /*prevent from expand*/
+        width: auto !important;
+    }
+  }

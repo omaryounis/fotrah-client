@@ -53,6 +53,15 @@
         <span class="link-card__text">{{cardItems[3].title}}</span>
       </a>
     </app-can-list> 
+    
+    <app-can-list [roles]="['Add_Quality_Member_Vote','Add_Quality_Chairman_Vote', 'Procceed_Quality_CommitteeCoordinator']">
+      <a [class]="['link-card']" [routerLink]="[cardItems[4].routerLink]">
+        <div class="w-12 h-12 img-card" >
+          <img [src]="cardItems[4].image" alt="copy icon" />
+        </div>
+        <span class="link-card__text">{{cardItems[4].title}}</span>
+      </a>
+    </app-can-list>
     <!-- @for (item of cardItems; track $index; let last = $last) {
       @if (item.params) {
       }@else {

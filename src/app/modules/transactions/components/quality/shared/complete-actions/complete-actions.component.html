@@ -1,0 +1,50 @@
+<form>
+@if(taskData.status == ObjectionStatusTypes.Accepted){
+    <div class="flex flex-wrap form-group gap-3">
+      <div class="flex align-items-center">
+        <p-radioButton
+          name="currentStatus"
+          [value]="ObjectionStatusTypes.Accepted"
+          [(ngModel)]="taskData.currentStatus"
+          (ngModelChange)="updateData()"
+          inputId="ingredient1"
+        />
+        <label for="ingredient1" class="ms-2">
+          {{ "accept-final-vote" | translate }}
+        </label>
+      </div>
+    </div>
+    }
+  
+    <!-- final approve -->
+    @if ( taskData.status == ObjectionStatusTypes.Rejected) {
+   
+    <div class="form-row !grid-cols-1 mt-2">
+      <div class="form-group">
+        <label for="key">{{ "Note" | translate }}</label>
+        <div class="rounded-md" pInputTextarea>
+          
+          <textarea
+            id="description"
+            name="description"
+            aria-label="description"
+            class="b-none w-full"
+            #objectionReason="ngModel"
+            [(ngModel)]="taskData.objectionReason"
+            rows="5"
+            maxlength="255"
+           >
+          </textarea>
+        </div>
+        @if (objectionReason.invalid && (objectionReason.dirty ||
+        objectionReason.touched)) {
+        <div class="text-red-600">
+          @if (objectionReason.errors?.['required']) {
+          <span> {{ "this-field-required" | translate }}</span> }
+        </div>
+        }
+      </div>
+    </div>
+    }
+
+</form>

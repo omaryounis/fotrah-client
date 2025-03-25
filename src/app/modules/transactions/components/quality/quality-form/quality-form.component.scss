@@ -1,0 +1,49 @@
+::ng-deep {
+    .form-group.file label {
+        display: flex !important;
+    }
+
+    .p-card  {
+        padding:7px 7px;
+        margin-bottom: 15px;
+        .p-card-content , .p-card-body {
+            padding: 0px !important;
+        }
+    }
+    .w-full .p-multiselect{
+      width: 100%;
+    }
+}
+.vote-section {
+    background: #eee;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    .key {
+        color: #888;
+    }
+}
+
+.b-none {
+    border: none;
+    outline: none;
+}
+
+.hidden-file-input {
+    display: none; 
+} 
+.p-messages-new {
+    background-color: #f8f9fa!important;  
+    // border: 1px solid #00acc1 !important;  
+    color: rgb(75, 79, 84) !important;  
+    border-radius: 4px;
+    font-family: 'Neo Sans Arabic', sans-serif;
+   
+}
+ 
+.custom-label{
+    background-color: #f8f9fa!important;  
+    color: rgb(230, 66, 11) !important;  
+    font-family: 'Neo Sans Arabic', sans-serif !important;
+    margin-inline-start: 0.5rem;
+}

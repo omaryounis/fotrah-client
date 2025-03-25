@@ -1,0 +1,149 @@
+<div class="quires">
+    <app-page-header [title]="cancelType | translate" [showButton]="false" headerStyleClass="mb-4"></app-page-header>
+
+
+    <section class="quires__search-bar">
+        <p class="search-label">{{'bill-number' | translate}} </p>
+
+        <app-search-bar [placeholder]="'search-bill' | translate" [showSearchAvtions]="true" (onClickSearch)="search()"
+            (onSearchValueChange)="changeSearchValue($event)" [searchValue]="billNumber"
+            (onResetSearchValue)="resetSearchResults()"></app-search-bar>
+    </section>
+
+    @if (showBill()) {
+
+    @if (
+    (((billInformation.status == billStatus.UPPAID_AR && checkBillType()) || (billInformation.status ==
+    billStatus.UPPAID_EN && checkBillType())))) {
+    <section class="quires__bill">
+        <div class="bill-info">
+            <p class="bill-info__title"> {{'bill-information' | translate}} </p>
+            <app-bill-print [rowData]="billInformation"></app-bill-print>
+        </div>
+
+        <div class="bill-table">
+            <div class="bill-table__item">
+                <label class="bill-table__item-label">{{'bill-number' | translate}}</label>
+                <p class="bill-table__item-info">{{ billInformation.billNumber }}</p>
+            </div>
+            <div class="bill-table__item">
+                <label class="bill-table__item-label">{{'bill-date' | translate}}</label>
+                <p class="bill-table__item-info">{{ billInformation.billDate | date:'dd/MM/yyyy' }}</p>
+            </div>
+            <div class="bill-table__item">
+                <label class="bill-table__item-label">{{'bill-amount' | translate}}</label>
+                <p class="bill-table__item-info">{{ billInformation.totalAmount }} {{'sar' | translate}}</p>
+            </div>
+            <div class="bill-table__item">
+                <label class="bill-table__item-label">{{'bill-status' | translate}}</label>
+                <p class="bill-table__item-info">{{ billInformation.status }}</p>
+            </div>
+            <div class="bill-table__item">
+
+                <label class="bill-table__item-label"> {{'company-name' | translate }}</label>
+                <p class="bill-table__item-info">{{ billInformation.entityName }}</p>
+            </div>
+            <div class="bill-table__item">
+                <label class="bill-table__item-label">{{'id-no' | translate}}</label>
+                <p class="bill-table__item-info">{{ billInformation.identityNumber }}</p>
+            </div>
+        </div>
+
+        <div class="flex justify-end w-full mt-3">
+            <p-button pAutoFocus class="cancel-bill" severity="secondary" [label]="'cancel-bill-request' | translate"
+                [autofocus]="true" (click)="toggleModal()"></p-button>
+        </div>
+
+
+    </section>
+    }@else {
+    <p-messages [(value)]="messages" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'"
+        [closable]="false" [enableService]="false" />
+    }
+
+    }
+    <p-dialog [header]="cancelType | translate" [modal]="true" class="custom" [dismissableMask]="true"
+        [closeOnEscape]="true" [responsive]="true" [closable]="true" [(visible)]="visible" [style]="{ width: '35rem' }">
+
+        <div class="grid align-items-center gap-3 mb-3">
+            <label for="reason" class="required-element font-frutiger"> {{'cancel-reason' | translate}} </label>
+            <p-dropdown [options]="reasonsList" #cancelREson="ngModel" [(ngModel)]="selectedReason" optionLabel="name"
+                [required]="true" [placeholder]="'choose-cancel-reason' | translate" />
+
+            @if (cancelREson.invalid && (cancelREson.dirty || cancelREson.touched)) {
+            <div class="text-red-600">
+                @if (cancelREson.errors?.['required']) { <span> {{'this-field-required' | translate}}</span> }
+            </div>
+            }
+
+            <label for="reason" class="required-element font-frutiger"> {{'the-department-that-requested-it' | translate}} </label>
+            <p-dropdown [options]="departmentList" #cancelREson="ngModel" [(ngModel)]="selectedDepartment"
+                optionLabel="name" [required]="true" [placeholder]="'choose-department' | translate" />
+        </div>
+        <!-- <div class="card grid justify-content-center"> -->
+
+        <label for="quality-report" class="font-frutiger"> {{ 'quality-document' | translate }} <span
+                class="text-red-500">*</span>
+        </label>
+        <div class="form-row !grid-cols-1 mt-2">
+            <div class="form-gruop">
+                <!-- <  div class="form-row"> -->
+                <p-fileUpload [auto]="false" #attachmentUploader id="quality-report" mode="advanced"
+                    [chooseLabel]="'select-file' | translate" chooseIcon="pi pi-upload"
+                    [cancelLabel]="'cancel' | translate" (onSelect)="onFileUpload($event)" (onClear)="onFileRemove()"
+                    (onRemove)="onFileRemove()" type="file" [showUploadButton]="false" [fileLimit]="1"
+                    [files]="attachment">
+                </p-fileUpload>
+            </div>
+        </div>
+
+        <label for="attachment" class="font-frutiger">{{'supported-documents' | translate}} </label>
+        <div class="form-row !grid-cols-1 mt-2">
+            <div class="form-gruop">
+                <!-- <  div class="form-row"> -->
+                <p-fileUpload [auto]="false" id="file-upload-input" mode="advanced"
+                    [chooseLabel]="'select-file' | translate" chooseIcon="pi pi-upload"
+                    [cancelLabel]="'cancel' | translate" (onSelect)="onSupportedFileUpload($event)"
+                    (onClear)="clearAllFiles()" (onRemove)="onSupportedFileRemove($event)" type="file"
+                    [showUploadButton]="false" [fileLimit]="3" [files]="this.supportedAttachments">
+                </p-fileUpload>
+            </div>
+        </div>
+        <!-- @for (item of attachments; track $index) { -->
+        <!-- <div class="mt-3 border-2 flex border-gray-300 rounded-md p-2">
+            <!-- <label [for]="'attachment_' + $index" class="w-full flex justify-between"> -->
+        <!-- <span>{{attachments[$index].name == '' ? ('select-file' | translate) : attachments[$index].name}}</span> -->
+        <!-- <img src="/assets/images/icons/pencil.svg" alt="" class="col-span-5"> -->
+        <!-- <input pInputText accept=".pdf" [id]="'attachment_' + $index" hidden #attachment type="file"
+              (change)="fileUpoaded(attachment.files , $index)"> -->
+        <!-- <div class="flex">
+                <i class="pi pi-upload my-auto w-[23px] cursor-pointer text-primary " severity="danger"></i>
+            </div> -->
+        <!-- </label> -->
+        <!-- <i (click)="removeAttachment($index)" class="pi pi-trash my-auto ms-2 w-[23px] cursor-pointer text-red-700"
+            severity="danger"></i> -->
+        <!-- </div> -->
+
+        <!-- @if(attachments_validations[$index].size){ -->
+        <!-- <div class="text-red-600"> {{'invalid-file-size' | translate}} </div> -->
+        <!-- } -->
+        <!-- @if(attachments_validations[$index].type){ -->
+        <!-- <div class="text-red-600"> {{'invalid-file-type' | translate}}</div> -->
+        <!-- } -->
+        <!-- } -->
+        <!-- <p-button icon="pi pi-plus" (onClick)="addOrInitializeAttachment()" class="w-[35px] mt-3" [raised]="true" -->
+        <!-- severity="success" /> -->
+
+
+
+        <ng-template pTemplate="footer">
+            <div class="flex justify-end gap-2 mt-auto py-3">
+                <p-button [label]="'back' | translate" severity="secondary" (click)="visible = false"
+                    (onClick)="resetForm()" />
+                <p-button [label]="'confirm' | translate" severity="danger" (onClick)="handleBillRequest()" />
+            </div>
+        </ng-template>
+    </p-dialog>
+
+    <!-- <p-confirmDialog /> -->
+</div>

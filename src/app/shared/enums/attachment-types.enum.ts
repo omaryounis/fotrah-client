@@ -3,5 +3,8 @@ export enum AttachmentTypes {
     SUPPORTED_DOCUMNETS = 2,
     OPERATIONS_DOCUMENTS =3,
     COORDINATOR_DOCUMENTS = 4,
-    OTHER_DOCUMNETS = 5
+    Quality_Attachment = 5,
+    Internal_Quality_Supported_Attachment = 6,
+    OTHER_DOCUMNETS = 7,
+
 }
