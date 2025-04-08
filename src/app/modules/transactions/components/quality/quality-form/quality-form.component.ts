@@ -64,7 +64,7 @@ export class QualityFormComponent {
     finCategoryName: "",
     attachments: [],
     votes: [],
-    currentStatus: "",
+    currentStatus: null,
     uploadedFiles: [],
     lastStatus: "0",
     fieldVisitDate: "",
@@ -155,6 +155,7 @@ export class QualityFormComponent {
     this.attachments = this.groupingAttachments(this.taskData.attachments);
     this.taskData.returnDetails;
     this.updateData();
+    debugger;
     if (
       this.taskData.status ==
       ObjectionStatusEnum.Under_Review_by_Comittee_Coordinator

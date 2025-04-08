@@ -20,7 +20,7 @@ export interface IQualityMission {
     fieldVisitDate: string;  
     financialItem: string;
     objectionCommunications: IObjectionCommunications[]; 
-    currentStatus: string;
+    currentStatus: string | null;
     uploadedFiles: File[];
     department:string;
     reason:string
