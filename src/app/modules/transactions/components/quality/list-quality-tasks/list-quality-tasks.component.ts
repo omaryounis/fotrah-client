@@ -70,7 +70,6 @@ export class ListQualityTasksComponent {
   }
   ngOnInit(): void {
     this.showTableCollapseMode = this.screenService.isScreenBelowThan(888);
-    debugger;
     this.getQualityList(this.rows, this.first)
 
     this.actions = this.getActions();

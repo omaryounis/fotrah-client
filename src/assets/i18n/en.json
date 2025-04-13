@@ -557,9 +557,9 @@
     "3": "Experimental Error"
     },
     "quality-department" :{
-      "1": "Quality Committee",
-      "2": "Operations Department",
-      "3": "Objection Committee"   
+      "1": "Quality Committee Sector",
+      "2": "Digitalization Sector",
+      "3": "Operations Sector"   
     },
     "quality-document" : "Quality Document",
     "quality-missions" : "Quality Commitee Missions",
@@ -569,6 +569,6 @@
     "the-sector" : "Sector",
     
   "quality-attachment": "Quality Attachment",
-  "quality-supported-attachment": "Quality Supported Attachment" 
-
+  "quality-supported-attachment": "Quality Supported Attachment",
+  "choose-sector": "Choose the Sector"
   }

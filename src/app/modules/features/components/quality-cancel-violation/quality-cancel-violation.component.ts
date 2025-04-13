@@ -112,8 +112,7 @@ export class QualityCancelViolationComponent {
   }
 
   handleBillRequest() {
-    debugger;
-    if (!this.selectedReason.value || !this.selectedDepartment) {
+     if (!this.selectedReason.value || !this.selectedDepartment) {
       this.messageService.add({
         severity: "error",
         summary: this.langService.getInstantTranslation("sorry"),
@@ -205,8 +204,7 @@ export class QualityCancelViolationComponent {
   onFileUpload(event: FileSelectEvent): void {
     const selectedFiles = Array.from(event.files);
     const maxFiles = 1;
-    debugger;
-    // Check if the total number of files (existing + new) exceeds the limit
+     // Check if the total number of files (existing + new) exceeds the limit
     if (selectedFiles.length > 1) {
       // Show an error message
       this.messageService.add({
@@ -243,13 +241,10 @@ export class QualityCancelViolationComponent {
   onSupportedFileUpload(event: FileSelectEvent): void {
     const selectedFiles = Array.from(event.files);
     const maxFiles = 3;
-
-    debugger;
+ 
     // Check if the total number of files (existing + new) exceeds the limit
     if (this.supportedAttachments.length + selectedFiles.length > maxFiles) {
       // Show an error message
-      debugger;
-
       this.messageService.add({
         severity: "error",
         summary: "File Limit Exceeded",

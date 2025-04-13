@@ -27,7 +27,6 @@ export class ProceedActionsComponent {
     
   }
   submitAction() {
-    debugger;
     if (!this.taskData.currentStatus) {
       alert("Please select a decision!");
       return;

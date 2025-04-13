@@ -56,7 +56,6 @@ export class QualityWorkflowComponent {
           submitLabel: "confirm",
           cancelLabel: "cancel",
           onSubmit: () => {
-            debugger;
             this.submitted = true;
             if(!this.taskData.currentStatus){
               this.message.add({
@@ -114,11 +113,11 @@ export class QualityWorkflowComponent {
              var token = localStorage.getItem('accessToken')!;
              this.userData = jwtDecode(token) as JwtPayload & {sid : ''};
              let voteId: number | null = null;
-            //  this.taskData.votes?.forEach(vote => {
-            //    if (vote.createdBy === this.userData.sid) {
-            //      voteId = vote.id; 
-            //    }
-            //  });
+             this.taskData.votes?.forEach(vote => {
+               if (vote.createdBy === this.userData.sid) {
+                 voteId = vote.id; 
+               }
+             });
 
              var voteRequest = {
                id:voteId,
