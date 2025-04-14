@@ -14,7 +14,10 @@
 
     @if (
     (((billInformation.status == billStatus.UPPAID_AR && checkBillType()) || (billInformation.status ==
-    billStatus.UPPAID_EN && checkBillType())))) {
+    billStatus.UPPAID_EN && checkBillType())
+    || (billInformation.status == billStatus.PAID_AR && checkBillType()) || (billInformation.status == billStatus.PAID_EN && checkBillType())
+    ))
+    ) {
     <section class="quires__bill">
         <div class="bill-info">
             <p class="bill-info__title"> {{'bill-information' | translate}} </p>

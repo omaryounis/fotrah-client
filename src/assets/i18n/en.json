@@ -570,5 +570,8 @@
     
   "quality-attachment": "Quality Attachment",
   "quality-supported-attachment": "Quality Supported Attachment",
-  "choose-sector": "Choose the Sector"
+  "choose-sector": "Choose the Sector",
+  "Add_Quality_Member_Vote": "Quality Comittee Member",
+  "Add_Quality_Chairman_Vote" : "Quality Commitee Chairman",
+  "Procceed_Quality_CommitteeCoordinator" : "Quality Comittee Coordinator"
   }
