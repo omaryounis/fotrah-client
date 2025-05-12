@@ -391,11 +391,11 @@
       <div class="form-group">
         <label for="key">{{ "Note" | translate }}</label>
         <div class="rounded-md" pInputTextarea>
-          <ul style="list-style-type: circle" class="px-3">
+          <!-- <ul style="list-style-type: circle" class="px-3">
             @for (item of taskData.reasons; track $index) {
             <li>{{ item }}</li>
             }
-          </ul>
+          </ul> -->
           <textarea
             id="description"
             name="description"
@@ -405,7 +405,7 @@
             [(ngModel)]="taskData.objectionReason"
             rows="5"
             maxlength="255"
-            [required]="taskData.reasons?.length == 0"
+            [required]="true"
           >
           </textarea>
         </div>
@@ -624,15 +624,17 @@
       </div>
     </div>
   }
-  @else if(taskData.currentStatus != ObjectionStatusTypes.Under_Operational_Review.toString()){
+  @else if(taskData.currentStatus != ObjectionStatusTypes.Under_Operational_Review.toString()
+  && taskData.currentStatus != "end-vote"
+  ){
     <div class="form-row !grid-cols-1 mt-2">
       <div class="form-group">
-        <label for="key">{{
+        <!-- <label for="key">{{
           is_voting
             ? ("objection-reason" | translate)
             : ("proceed-reason" | translate)
-        }}</label>
-        <p-multiSelect
+        }}</label> -->
+        <!-- <p-multiSelect
           name="objection-reason"
           class="w-full"
           [showHeader]="false"
@@ -646,18 +648,18 @@
           [optionLabel]="'name'"
           [optionValue]="'name'"
           optionLabel="name"
-        ></p-multiSelect>
+        ></p-multiSelect> -->
       </div>
     </div>
     <div class="form-row !grid-cols-1 mt-2">
       <div class="form-group">
         <label for="key">{{ "Note" | translate }}</label>
         <div class="rounded-md" pInputTextarea>
-          <ul style="list-style-type: circle" class="px-3">
+          <!-- <ul style="list-style-type: circle" class="px-3">
             @for (item of taskData.reasons; track $index) {
             <li>{{ item }}</li>
             }
-          </ul>
+          </ul> -->
           <textarea
             id="description"
             name="description"
@@ -667,7 +669,7 @@
             [(ngModel)]="taskData.objectionReason"
             rows="5"
             maxlength="255"
-            [required]="taskData.reasons?.length == 0"
+            [required]="true"
           >
           </textarea>
         </div>
@@ -698,18 +700,14 @@
       </label>
     </div>
   </div>
-  }
-
-  <!-- final approve -->
-  @if ( taskData.status == ObjectionStatusTypes.Rejected) {
   <div class="form-row !grid-cols-1 mt-2">
     <div class="form-group">
-      <label for="key">{{
+      <!-- <label for="key">{{
         is_voting
           ? ("objection-reason" | translate)
           : ("proceed-reason" | translate)
-      }}</label>
-      <p-multiSelect
+      }}</label> -->
+      <!-- <p-multiSelect
         name="objection-reason"
         class="w-full"
         [showHeader]="false"
@@ -723,18 +721,18 @@
         [optionLabel]="'name'"
         [optionValue]="'name'"
         optionLabel="name"
-      ></p-multiSelect>
+      ></p-multiSelect> -->
     </div>
   </div>
   <div class="form-row !grid-cols-1 mt-2">
     <div class="form-group">
       <label for="key">{{ "Note" | translate }}</label>
       <div class="rounded-md" pInputTextarea>
-        <ul style="list-style-type: circle" class="px-3">
+        <!-- <ul style="list-style-type: circle" class="px-3">
           @for (item of taskData.reasons; track $index) {
           <li>{{ item }}</li>
           }
-        </ul>
+        </ul> -->
         <textarea
           id="description"
           name="description"
@@ -744,7 +742,66 @@
           [(ngModel)]="taskData.objectionReason"
           rows="5"
           maxlength="255"
-          [required]="taskData.reasons?.length == 0"
+          [required]="true"
+        >
+        </textarea>
+      </div>
+      @if (objectionReason.invalid && (objectionReason.dirty ||
+      objectionReason.touched)) {
+      <div class="text-red-600">
+        @if (objectionReason.errors?.['required']) {
+        <span> {{ "this-field-required" | translate }}</span> }
+      </div>
+      }
+    </div>
+  </div>
+  }
+
+  <!-- final approve -->
+  @if ( taskData.status == ObjectionStatusTypes.Rejected) {
+  <div class="form-row !grid-cols-1 mt-2">
+    <div class="form-group">
+      <!-- <label for="key">{{
+        is_voting
+          ? ("objection-reason" | translate)
+          : ("proceed-reason" | translate)
+      }}</label> -->
+      <!-- <p-multiSelect
+        name="objection-reason"
+        class="w-full"
+        [showHeader]="false"
+        [filter]="false"
+        id="close-icon"
+        (onChange)="updateData()"
+        [(ngModel)]="taskData.reasons"
+        [showClear]="false"
+        [defaultLabel]="'choose' | translate"
+        [options]="vote_reasons"
+        [optionLabel]="'name'"
+        [optionValue]="'name'"
+        optionLabel="name"
+      ></p-multiSelect> -->
+    </div>
+  </div>
+  <div class="form-row !grid-cols-1 mt-2">
+    <div class="form-group">
+      <label for="key">{{ "Note" | translate }}</label>
+      <div class="rounded-md" pInputTextarea>
+        <!-- <ul style="list-style-type: circle" class="px-3">
+          @for (item of taskData.reasons; track $index) {
+          <li>{{ item }}</li>
+          }
+        </ul> -->
+        <textarea
+          id="description"
+          name="description"
+          aria-label="description"
+          class="b-none w-full"
+          #objectionReason="ngModel"
+          [(ngModel)]="taskData.objectionReason"
+          rows="5"
+          maxlength="255"
+          [required]="true"
         >
         </textarea>
       </div>
