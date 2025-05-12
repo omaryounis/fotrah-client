@@ -1,0 +1,28 @@
+<!-- <form #proceedForm="ngForm"> -->
+<!-- <div class="form-group">
+      <label for="decision">{{ 'decision' | translate }}</label>
+      <select id="decision" [(ngModel)]="taskData.currentStatus" name="decision" required>
+        <option [value]="ObjectionStatusTypes.Under_Evaluation">{{ 'send-to-evaluation' | translate }}</option>
+        <option [value]="ObjectionStatusTypes.Returned_Back_To_Objector">{{ 'return-to-objector' | translate }}</option>
+      </select>
+      <div *ngIf="proceedForm.submitted && !proceedForm.valid" class="error">
+        {{ 'decision-required' | translate }}
+      </div>
+    </div>
+   -->
+    <form #proceedForm="ngForm">
+        @if(taskData.status ===
+        ObjectionStatusTypes.Under_Review_by_Comittee_Coordinator){
+        <div class="flex flex-wrap form-group gap-3">
+            <div class="flex align-items-center">
+                <p-radioButton name="currentStatus" [value]="ObjectionStatusTypes.Under_Evaluation"
+                    [(ngModel)]="taskData.currentStatus" inputId="ingredient1" 
+                    ngModelChange="updateData()" 
+                    />
+                <label for="ingredient1" class="ms-2">
+                    {{ "proceed" | translate }}
+                </label>
+            </div>
+        </div>
+    }
+    </form>

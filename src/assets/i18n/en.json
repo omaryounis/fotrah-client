@@ -550,6 +550,28 @@
     "operations-responses": "Operational Management Responses",
     "member-notes" : "Member Notes",
     "operation-member-response": "Operations Member response",
-    "court-pleading-template": "Court Pleading Document"
-
-}
+    "court-pleading-template": "Court Pleading Document",
+    "quality-reason": {
+    "1": "Technical Error",
+    "2": "Operational Error",
+    "3": "Experimental Error"
+    },
+    "quality-department" :{
+      "1": "Quality Committee",
+      "2": "Digitization and Business Intelligence Sector",
+      "3": "Operations Sector"   
+    },
+    "quality-document" : "Quality Document",
+    "quality-missions" : "Quality Commitee Missions",
+    "quality-mission-number" : "Quality Mission Number",
+    "quality-request" : "Cancell Bill Request to Quality Committee",
+    "request-reason" : "Request Reason",
+    "the-sector" : "Sector",
+    
+  "quality-attachment": "Quality Attachment",
+  "quality-supported-attachment": "Quality Supported Attachment",
+  "choose-sector": "Choose the Sector",
+  "Add_Quality_Member_Vote": "Quality Comittee Member",
+  "Add_Quality_Chairman_Vote" : "Quality Commitee Chairman",
+  "Procceed_Quality_CommitteeCoordinator" : "Quality Comittee Coordinator"
+  }

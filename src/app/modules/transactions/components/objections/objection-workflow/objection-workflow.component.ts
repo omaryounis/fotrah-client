@@ -379,7 +379,6 @@ export class ObjectionWorkflowComponent {
    
   }
   isVoting = () :boolean => this.taskData.status == ObjectionStatusEnum.Under_Evaluation ? true : false ;
-  // fillTasks = (status?: number) =>  this.objctionService.getObjections(th).subscribe();
   fillTasks = () => {
     const { pageIndex, pageSize, voteStatus, objectionNumber, status, objectorName, finItemId } = this.queryParams || {};
      

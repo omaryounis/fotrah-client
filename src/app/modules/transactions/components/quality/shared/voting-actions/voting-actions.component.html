@@ -1,0 +1,104 @@
+<form #votingForm="ngForm">
+    @if(taskData.status == ObjectionStatusTypes.Under_Evaluation){
+        <div class="flex flex-wrap form-group gap-3">
+          <div class="flex align-items-center">
+            <p-radioButton
+              name="currentStatus"
+              [value]="ObjectionStatusTypes.Accepted"
+              [(ngModel)]="taskData.currentStatus"
+              (ngModelChange)="updateData()"
+              #currentStatus="ngModel"
+              inputId="ingredient1"
+              required
+            />
+            <label for="ingredient1" class="ms-2">
+              {{ "vote-accept" | translate }}
+            </label>
+          </div>
+          <div class="flex align-items-center">
+            <p-radioButton
+              name="currentStatus"
+              [value]="ObjectionStatusTypes.Rejected"
+              [(ngModel)]="taskData.currentStatus"
+              (ngModelChange)="updateData()"
+              inputId="ingredient2"
+              #currentStatus="ngModel"
+              required
+            />
+            <label for="ingredient2" class="ms-2">
+              {{ "vote-reject" | translate }}
+            </label>
+          </div>
+          <!-- sending to operations button if not sent before -->
+          <!-- @if((!hasOperationsReview)){ -->
+           <!-- <div class="flex align-items-center">
+            <p-radioButton
+              name="currentStatus"
+              [value]="ObjectionStatusTypes.Under_Operational_Review"
+              [(ngModel)]="taskData.currentStatus"
+              (ngModelChange)="updateData()"
+              inputId="coordinatorBtn"
+              #currentStatus="ngModel"
+              required
+            />
+            <label for="coordinatorBtn" class="ms-2">
+              {{ "send-to-operations" | translate }}
+            </label>
+          </div> -->
+            <!-- } -->
+          @if(isCoordinator){
+          <div class="flex align-items-center">
+            <p-radioButton
+              name="currentStatus"
+              value="end-vote"
+              [(ngModel)]="taskData.currentStatus"
+              (ngModelChange)="updateData()"
+              #currentStatus="ngModel"
+              inputId="ingredient3"
+              required
+            />
+      
+            <label for="ingredient3" class="ms-2">
+              {{ "end-vote" | translate }}
+            </label>
+          </div>
+      
+      
+          }
+            </div>
+        
+        
+            <div class="form-row !grid-cols-1 mt-2">
+               
+              </div>
+              <div class="form-row !grid-cols-1 mt-2">
+                <div class="form-group">
+                  <label for="key">{{ "Note" | translate }}</label>
+                  <div class="rounded-md" pInputTextarea>
+                   
+                    <textarea
+                      id="description"
+                      name="description"
+                      aria-label="description"
+                      class="b-none w-full"
+                      #objectionReason="ngModel"
+                      [(ngModel)]="taskData.objectionReason"
+                      rows="5"
+                      maxlength="255"
+                    >
+                    </textarea>
+                  </div>
+                  @if (objectionReason.invalid && (objectionReason.dirty ||
+                  objectionReason.touched)) {
+                  <div class="text-red-600">
+                    @if (objectionReason.errors?.['required']) {
+                    <span> {{ "this-field-required" | translate }}</span> }
+                  </div>
+                  }
+                </div>
+              </div>
+      
+        }
+      
+
+</form>
