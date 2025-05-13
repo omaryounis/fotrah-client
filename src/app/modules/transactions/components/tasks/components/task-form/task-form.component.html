@@ -133,7 +133,7 @@
         name="status"
         value="accept"
         [(ngModel)]="taskData.status"
-        (ngModelChange)="updateData()"
+        (ngModelChange)="onStatusChange()"
         inputId="ingredient1"
       />
       <label for="ingredient1" class="ms-2">
@@ -141,13 +141,12 @@
       </label>
     </div>
     @if (is_valid_reject) {
-
       <div class="flex align-items-center">
         <p-radioButton
           name="status"
           value="reject"
           [(ngModel)]="taskData.status"
-          (ngModelChange)="updateData()"
+          (ngModelChange)="onStatusChange()"
           inputId="ingredient2"
         />
         <label for="ingredient2" class="ms-2">
@@ -160,8 +159,20 @@
     <div class="form-row !grid-cols-1 mt-2">
       <div class="form-group">
         <label for="key">{{is_voting ? ('objection-reason' | translate) :  ('proceed-reason' | translate)  }}</label>
-        <p-multiSelect name="objection-reason" class="w-full" [showHeader]="false" [filter]="false" id="close-icon" (onChange)="updateData()"  [(ngModel)]="taskData.reasons" [showClear]="false" [defaultLabel]="'choose' | translate"  [options]="vote_reasons" [optionLabel]="'name'" [optionValue]="'name'"
-        optionLabel="name"></p-multiSelect>
+        <p-multiSelect
+          name="objection-reason"
+          class="w-full"
+          [showHeader]="false"
+          [filter]="false"
+          id="close-icon"
+          (onChange)="onReasonSelect($event)"
+          [(ngModel)]="taskData.reasons"
+          [showClear]="false"
+          [defaultLabel]="'choose' | translate"
+          [options]="vote_reasons"
+          [optionLabel]="'nameAr'"
+          [optionValue]="'id'"
+        ></p-multiSelect>
       </div>
     </div>
     <div class="form-row !grid-cols-1 mt-2">

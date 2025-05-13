@@ -116,6 +116,7 @@ export class ObjectionFormComponent implements OnInit {
     this.taskData = this.dynamicDialogConfig.data.taskData;
 
     this.taskData.reasons = [];
+    this.taskData.objectionReason = '';
     this.taskData.uploadedFiles = [];
     this.taskDataArray = Object.entries(this.taskData).map(([key, value]) => ({
       key,
@@ -175,9 +176,40 @@ export class ObjectionFormComponent implements OnInit {
 
     // this.attachments = this.groupingAttachments(this.taskData.attachments)
     this.votes = this.taskData.votes || [];
-    this.reasonService
-      .getAll()
-      .subscribe((res) => (this.vote_reasons = res.data));
+    
+    // Only call getReasons if status is Accepted or Rejected
+    if (this.taskData.status == ObjectionStatusEnum.Accepted) {
+      this.reasonService
+        .getReasons(true, this.taskData.objectionNumber)
+        .subscribe({
+          next: (res) => {
+            this.vote_reasons = res.data;
+          },
+          error: (err) => {
+            this.message.add({
+              severity: "error",
+              summary: this.langService.getInstantTranslation("error"),
+              detail: err.message || this.langService.getInstantTranslation("error-loading-reasons"),
+            });
+          }
+        });
+    } else if (this.taskData.status == ObjectionStatusEnum.Rejected) {
+      this.reasonService
+        .getReasons(false, this.taskData.objectionNumber)
+        .subscribe({
+          next: (res) => {
+            this.vote_reasons = res.data;
+          },
+          error: (err) => {
+            this.message.add({
+              severity: "error",
+              summary: this.langService.getInstantTranslation("error"),
+              detail: err.message || this.langService.getInstantTranslation("error-loading-reasons"),
+            });
+          }
+        });
+    }
+    
     this.mode = this.dynamicDialogConfig.data.mode || "edit";
     // this.hasOperationsReview = this.attachments.some(attachment => attachment.type === AttachmentTypes.OPERATIONS_DOCUMENTS) || this.taskData.operationsReview;
 
@@ -389,6 +421,51 @@ export class ObjectionFormComponent implements OnInit {
         data: attachment.data.filter((item: any) => item.version === null) // Filter the data array
       };
     }).filter(attachment=>attachment.data.length > 0 );
+  }
+
+  onStatusChange() {
+    // Reset form values
+    this.taskData.reasons = [];
+    this.taskData.objectionReason = '';
+
+    // Get vote value from currentStatus
+    console.log(this.taskData.currentStatus)
+    console.log(ObjectionStatusEnum.Accepted.toString())
+    let vote = false;
+    if (this.taskData.currentStatus == ObjectionStatusEnum.Accepted.toString()) {
+      vote = true;
+    }
+
+    // Reload vote reasons when status changes
+    this.reasonService
+      .getReasons(vote, this.taskData.objectionNumber)
+      .subscribe({
+        next: (res) => {
+          this.vote_reasons = res.data;
+        },
+        error: (err) => {
+          this.message.add({
+            severity: "error",
+            summary: this.langService.getInstantTranslation("error"),
+            detail: err.message || this.langService.getInstantTranslation("error-loading-reasons"),
+          });
+        }
+      });
+  }
+
+  onReasonSelect(event: any) {
+    // When reasons are selected, update the description with all selected reasons' nameAr
+    if (event.value && event.value.length > 0) {
+      // Get all selected reasons and their Arabic text
+      const selectedReasons = this.vote_reasons
+        .filter(r => event.value.includes(r.id))
+        .map(r => `\u2022 ${r.nameAr}`); // \u2022 is the Unicode for •
+      // Join all reasons with new lines
+      this.taskData.objectionReason = selectedReasons.join('\n');
+    } else {
+      // If no reasons selected, clear the description
+      this.taskData.objectionReason = '';
+    }
   }
 }
 

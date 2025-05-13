@@ -507,8 +507,7 @@
         name="currentStatus"
         [value]="ObjectionStatusTypes.Accepted"
         [(ngModel)]="taskData.currentStatus"
-        (ngModelChange)="updateData()"
-        #currentStatus="ngModel"
+        (ngModelChange)="onStatusChange()"
         inputId="ingredient1"
         required
       />
@@ -521,9 +520,8 @@
         name="currentStatus"
         [value]="ObjectionStatusTypes.Rejected"
         [(ngModel)]="taskData.currentStatus"
-        (ngModelChange)="updateData()"
+        (ngModelChange)="onStatusChange()"
         inputId="ingredient2"
-        #currentStatus="ngModel"
         required
       />
       <label for="ingredient2" class="ms-2">
@@ -554,7 +552,6 @@
         value="end-vote"
         [(ngModel)]="taskData.currentStatus"
         (ngModelChange)="updateData()"
-        #currentStatus="ngModel"
         inputId="ingredient3"
         required
       />
@@ -627,30 +624,34 @@
   @else if(taskData.currentStatus != ObjectionStatusTypes.Under_Operational_Review.toString()
   && taskData.currentStatus != "end-vote"
   ){
+
+<!-- vote reason -->
     <div class="form-row !grid-cols-1 mt-2">
       <div class="form-group">
-        <!-- <label for="key">{{
+        <label for="key">{{
           is_voting
             ? ("objection-reason" | translate)
             : ("proceed-reason" | translate)
-        }}</label> -->
-        <!-- <p-multiSelect
+        }}</label>
+        <p-multiSelect
           name="objection-reason"
-          class="w-full"
+          class="w-full wrap-multiselect"
           [showHeader]="false"
           [filter]="false"
           id="close-icon"
-          (onChange)="updateData()"
+          (onChange)="onReasonSelect($event)"
           [(ngModel)]="taskData.reasons"
           [showClear]="false"
           [defaultLabel]="'choose' | translate"
           [options]="vote_reasons"
-          [optionLabel]="'name'"
-          [optionValue]="'name'"
-          optionLabel="name"
-        ></p-multiSelect> -->
+          [optionLabel]="'nameAr'"
+          [optionValue]="'id'"
+        ></p-multiSelect>
       </div>
     </div>
+   
+   
+   
     <div class="form-row !grid-cols-1 mt-2">
       <div class="form-group">
         <label for="key">{{ "Note" | translate }}</label>
@@ -661,79 +662,6 @@
             }
           </ul> -->
           <textarea
-            id="description"
-            name="description"
-            aria-label="description"
-            class="b-none w-full"
-            #objectionReason="ngModel"
-            [(ngModel)]="taskData.objectionReason"
-            rows="5"
-            maxlength="255"
-            [required]="true"
-          >
-          </textarea>
-        </div>
-        @if (objectionReason.invalid && (objectionReason.dirty ||
-        objectionReason.touched)) {
-        <div class="text-red-600">
-          @if (objectionReason.errors?.['required']) {
-          <span> {{ "this-field-required" | translate }}</span> }
-        </div>
-        }
-      </div>
-    </div>
-
-  }
-
-  } @if(taskData.status == ObjectionStatusTypes.Accepted){
-  <div class="flex flex-wrap form-group gap-3">
-    <div class="flex align-items-center">
-      <p-radioButton
-        name="currentStatus"
-        [value]="ObjectionStatusTypes.Accepted"
-        [(ngModel)]="taskData.currentStatus"
-        (ngModelChange)="updateData()"
-        inputId="ingredient1"
-      />
-      <label for="ingredient1" class="ms-2">
-        {{ "accept-final-vote" | translate }}
-      </label>
-    </div>
-  </div>
-  <div class="form-row !grid-cols-1 mt-2">
-    <div class="form-group">
-      <!-- <label for="key">{{
-        is_voting
-          ? ("objection-reason" | translate)
-          : ("proceed-reason" | translate)
-      }}</label> -->
-      <!-- <p-multiSelect
-        name="objection-reason"
-        class="w-full"
-        [showHeader]="false"
-        [filter]="false"
-        id="close-icon"
-        (onChange)="updateData()"
-        [(ngModel)]="taskData.reasons"
-        [showClear]="false"
-        [defaultLabel]="'choose' | translate"
-        [options]="vote_reasons"
-        [optionLabel]="'name'"
-        [optionValue]="'name'"
-        optionLabel="name"
-      ></p-multiSelect> -->
-    </div>
-  </div>
-  <div class="form-row !grid-cols-1 mt-2">
-    <div class="form-group">
-      <label for="key">{{ "Note" | translate }}</label>
-      <div class="rounded-md" pInputTextarea>
-        <!-- <ul style="list-style-type: circle" class="px-3">
-          @for (item of taskData.reasons; track $index) {
-          <li>{{ item }}</li>
-          }
-        </ul> -->
-        <textarea
           id="description"
           name="description"
           aria-label="description"
@@ -745,14 +673,54 @@
           [required]="true"
         >
         </textarea>
+        </div>
       </div>
-      @if (objectionReason.invalid && (objectionReason.dirty ||
-      objectionReason.touched)) {
-      <div class="text-red-600">
-        @if (objectionReason.errors?.['required']) {
-        <span> {{ "this-field-required" | translate }}</span> }
+    </div>
+
+  }
+
+  } @if(taskData.status == ObjectionStatusTypes.Accepted){
+  <div class="form-row !grid-cols-1 mt-2">
+    <div class="form-group">
+      <label for="key">{{
+        is_voting
+          ? ("objection-reason" | translate)
+          : ("proceed-reason" | translate)
+      }}</label>
+      <p-multiSelect
+       name="objection-reason"
+       class="w-full wrap-multiselect"
+       [showHeader]="false"
+       [filter]="false"
+       id="close-icon"
+       (onChange)="onReasonSelect($event)"
+       [(ngModel)]="taskData.reasons"
+       [showClear]="false"
+       [defaultLabel]="'choose' | translate"
+       [options]="vote_reasons"
+       [optionLabel]="'nameAr'"
+       [optionValue]="'id'"
+     ></p-multiSelect>
+    </div>
+  </div>
+  <div class="form-row !grid-cols-1 mt-2">
+    <div class="form-group">
+      <label for="key">{{ "Note" | translate }}</label>
+      <div class="rounded-md" pInputTextarea>
+        <textarea
+            id="description"
+            name="description"
+            aria-label="description"
+            class="b-none w-full"
+            #objectionReason="ngModel"
+            [(ngModel)]="taskData.objectionReason"
+            rows="5"
+            readonly="true"
+            maxlength="255"
+            [required]="true"
+          >
+          </textarea>
       </div>
-      }
     </div>
   </div>
   }
@@ -761,26 +729,25 @@
   @if ( taskData.status == ObjectionStatusTypes.Rejected) {
   <div class="form-row !grid-cols-1 mt-2">
     <div class="form-group">
-      <!-- <label for="key">{{
+      <label for="key">{{
         is_voting
           ? ("objection-reason" | translate)
           : ("proceed-reason" | translate)
-      }}</label> -->
-      <!-- <p-multiSelect
-        name="objection-reason"
-        class="w-full"
-        [showHeader]="false"
-        [filter]="false"
-        id="close-icon"
-        (onChange)="updateData()"
-        [(ngModel)]="taskData.reasons"
-        [showClear]="false"
-        [defaultLabel]="'choose' | translate"
-        [options]="vote_reasons"
-        [optionLabel]="'name'"
-        [optionValue]="'name'"
-        optionLabel="name"
-      ></p-multiSelect> -->
+      }}</label>
+      <p-multiSelect
+      name="objection-reason"
+      class="w-full wrap-multiselect"
+      [showHeader]="false"
+      [filter]="false"
+      id="close-icon"
+      (onChange)="onReasonSelect($event)"
+      [(ngModel)]="taskData.reasons"
+      [showClear]="false"
+      [defaultLabel]="'choose' | translate"
+      [options]="vote_reasons"
+      [optionLabel]="'nameAr'"
+      [optionValue]="'id'"
+    ></p-multiSelect>
     </div>
   </div>
   <div class="form-row !grid-cols-1 mt-2">
@@ -793,25 +760,19 @@
           }
         </ul> -->
         <textarea
-          id="description"
-          name="description"
-          aria-label="description"
-          class="b-none w-full"
-          #objectionReason="ngModel"
-          [(ngModel)]="taskData.objectionReason"
-          rows="5"
-          maxlength="255"
-          [required]="true"
-        >
-        </textarea>
+            id="description"
+            name="description"
+            aria-label="description"
+            class="b-none w-full"
+            #objectionReason="ngModel"
+            [(ngModel)]="taskData.objectionReason"
+            rows="5"
+            readonly="true"
+            maxlength="255"
+            [required]="true"
+          >
+          </textarea>
       </div>
-      @if (objectionReason.invalid && (objectionReason.dirty ||
-      objectionReason.touched)) {
-      <div class="text-red-600">
-        @if (objectionReason.errors?.['required']) {
-        <span> {{ "this-field-required" | translate }}</span> }
-      </div>
-      }
     </div>
   </div>
   }

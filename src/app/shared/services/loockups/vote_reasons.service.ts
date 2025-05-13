@@ -8,12 +8,13 @@ import { Observable, tap } from 'rxjs';
 })
 export class VoteReasonsService extends BaseEntityService<any> {
 
-getAll(): Observable<any> {
-  return this.http
-    .get<any>(`${environment.proxyBase}/Lookups/ObjectionVoteReason`)
-    .pipe(tap((response: any) => {
-      // Assuming setBaseEntity returns BaseEntityType<IActivity>[].
-      // this.setBaseEntity(response.data.activities);
-    }));
-}
+  getReasons(vote: boolean, objectionNumber: string): Observable<any> {
+    const params = `?vote=${vote}&objectionNumber=${objectionNumber}`;
+    return this.http
+      .get<any>(`${environment.proxyBase}/Objection/vote-reasons${params}`)
+      .pipe(tap((response: any) => {
+        // Assuming setBaseEntity returns BaseEntityType<IActivity>[].
+        // this.setBaseEntity(response.data.activities);
+      }));
+  }
 }

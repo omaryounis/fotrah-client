@@ -79,22 +79,45 @@ export class TaskFormComponent implements OnInit {
     this.taskData.reasons = [];
     this.taskService
       .getTaskDetails(parseInt(this.taskData.id!))
-      .subscribe((res) => {
-        this.details = res.data.details;
-        this.votes = res.data.votes || [];
-        if (
-          this.votes.some(
-            (a) => a.voterName === this.loginService.getUserInfo()?.userName
-          )
-        ) {
-          this.taskData.updatedVote = true;
+      .subscribe({
+        next: (res) => {
+          this.details = res.data.details;
+          this.votes = res.data.votes || [];
+          if (
+            this.votes.some(
+              (a) => a.voterName === this.loginService.getUserInfo()?.userName
+            )
+          ) {
+            this.taskData.updatedVote = true;
+          }
+          this.attachments = this.groupingAttachments(res.data.attachments);
+
+          // Get vote value from status
+          const vote = this.taskData.status === 'accept';
+          
+          // Get objection number from details
+          const objectionNumberDetail = this.details.find(d => d.key === 'ObjectionNumber');
+          const objectionNumber = objectionNumberDetail?.value || '';
+
+          // Load vote reasons after we have the details
+          this.reasonService
+            .getReasons(vote, objectionNumber)
+            .subscribe({
+              next: (res) => {
+                this.vote_reasons = res.data;
+              },
+              error: (err) => {
+                console.error('Error loading vote reasons:', err);
+                this.vote_reasons = [];
+              }
+            });
+        },
+        error: (err) => {
+          console.error('Error loading task details:', err);
         }
-        this.attachments = this.groupingAttachments(res.data.attachments);
       });
+
     this.updateData();
-    this.reasonService
-      .getAll()
-      .subscribe((res) => (this.vote_reasons = res.data));
     this.taskData.status = "accept";
     this.mode = this.dynamicDialogConfig.data.mode || "edit";
   }
@@ -222,6 +245,48 @@ export class TaskFormComponent implements OnInit {
     } 
     
     return true;
+  }
+
+  onStatusChange() {
+    // Reset form values
+    this.taskData.reasons = [];
+    this.taskData.objectionReason = '';
+
+    // Get vote value from status
+    const vote = this.taskData.status === 'accept';
+    
+    // Get objection number from details
+    const objectionNumberDetail = this.details.find(d => d.key === 'ObjectionNumber');
+    const objectionNumber = objectionNumberDetail?.value || '';
+
+    // Reload vote reasons when status changes
+    this.reasonService
+      .getReasons(vote, objectionNumber)
+      .subscribe({
+        next: (res) => {
+          this.vote_reasons = res.data;
+        },
+        error: (err) => {
+          console.error('Error loading vote reasons:', err);
+          this.vote_reasons = [];
+        }
+      });
+  }
+
+  onReasonSelect(event: any) {
+    // When reasons are selected, update the description with all selected reasons' nameAr
+    if (event.value && event.value.length > 0) {
+      // Get all selected reasons and their Arabic text
+      const selectedReasons = this.vote_reasons
+        .filter(r => event.value.includes(r.id))
+        .map(r => r.nameAr);
+
+      // Join all reasons with new lines
+      this.taskData.objectionReason = selectedReasons.join('\n');
+    } else {
+      // If no reasons selected, clear the description
+      this.taskData.objectionReason = '';
+    }
   }
 }
 export enum RequestTypes {

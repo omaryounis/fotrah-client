@@ -86,3 +86,19 @@
 // .p-messages-new .p-messages-icon {
 //     color: #006064 !important;  
 // }
+
+// Ensure long text in PrimeNG MultiSelect options wraps correctly
+::ng-deep .wrap-multiselect .p-multiselect-items .p-multiselect-item {
+  white-space: normal !important;
+  word-break: break-word !important;
+  line-height: 1.7;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  max-width: 100%;
+}
+
+// Optionally control the dropdown width
+::ng-deep .wrap-multiselect .p-multiselect-panel {
+  min-width: 350px;
+  max-width: 600px;
+}
