@@ -324,6 +324,9 @@
   "permit-fees": "رسوم الرخصة",
   "refrence-record-number": "الرقم المرجعي للسجل",
   "for-objection-violation-visit-next-website": "للإعتراض علي المخالفة نأمل زيارة موقع المركز علي الرابط",
+  "external-objection": "اعتراض خارجي",
+  "internal-objection": "اعتراض داخلي", 
+  "objection-type": "نوع الاعتراض",
   "the-first": "الأول",
   "reports-permits": "تقارير التراخيص",
   "reports-violations": "تقارير المخالفات",
@@ -561,8 +564,7 @@
   "return-reason-required": "يجب كتابة سبب رد الاعتراض",
   "operations-responses": "ردود ادارة العمليات الرقابية",
   "member-notes": "ملاحظات عضو اللجنة",
-  "operation-member-response": "رد عضو إداة العمليات الرقابية",
-
+  "operation-member-response": "رد عضو إداة العمليات الرقابية", 
   "court-pleading-template" : "محضر الترافع القضائي",
   "quality-reason": {
     "1": "خطأ تقني",

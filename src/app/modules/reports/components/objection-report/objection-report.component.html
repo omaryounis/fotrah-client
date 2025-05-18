@@ -39,18 +39,27 @@
           placeholder="{{ 'ObjectionNumber' | translate }}" />
     </div>
     <div class="form-group">
-    <label class="!text-primary" for="calender-clear2">{{'period' | translate}}</label>
-    <p-calendar styleClass="w-full" id="calender-clear2" [(ngModel)]="range_dates2" selectionMode="range" [readonlyInput]="true"
-      [showIcon]="true"  [showClear]="true" dateFormat="yy/mm/dd" dataType="string">
-    </p-calendar> 
-  </div>
-    
-<div class="form-group">
-    <!-- <label class="text-white"> {{'.' | translate}} </label> -->
-    <div class="flex justify-between items-center">
-      <p-button [label]="'export' | translate"  (onClick)="handelReportWithVotesExport()" />
+      <label class="!text-primary" for="objectionType">{{ "objection-type" | translate }}</label>
+      <select id="objectionType" class="custom-input w-full" [(ngModel)]="objectionType" name="objectionType">
+        <option [ngValue]="1">{{ "external-objection" | translate }}</option>
+        <option [ngValue]="2">{{ "internal-objection" | translate }}</option>
+      </select>
     </div>
-  </div>
+    <div class="form-group" *ngIf="objectionType == 2">
+      <label class="!text-primary" for="billNumber">{{ "bill-number" | translate }}</label>
+      <input styleClass="w-full" class="custom-input" pInputText id="billNumber" name="billNumber" aria-label="billNumber" [(ngModel)]="billNumber" placeholder="{{ 'bill-number' | translate }}"/>
+    </div>
+    <div class="form-group">
+      <label class="!text-primary" for="calender-clear2">{{'period' | translate}}</label>
+      <p-calendar styleClass="w-full" id="calender-clear2" [(ngModel)]="range_dates2" selectionMode="range" [readonlyInput]="true"
+        [showIcon]="true"  [showClear]="true" dateFormat="yy/mm/dd" dataType="string">
+      </p-calendar> 
+    </div>
+    <div class="form-group">
+      <div class="flex justify-between items-center">
+        <p-button [label]="'export' | translate"  (onClick)="handelReportWithVotesExport()" />
+      </div>
+    </div>
   </div>
 </div>
 </p-card>

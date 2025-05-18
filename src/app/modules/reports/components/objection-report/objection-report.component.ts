@@ -23,6 +23,8 @@ export class ObjectionReportComponent implements OnInit {
   range_dates!: (string | null)[] ;
   range_dates2!: (string | null)[] ;
   objectionNumber: (string | undefined) = '';
+  objectionType: number | null = null;
+  billNumber: string = '';
 
    constructor(private translateService :TranslateService , private reportService:ReportsService, private message:MessageService, private langService:LanguageService) {
    }
@@ -35,7 +37,22 @@ export class ObjectionReportComponent implements OnInit {
   this.reportService.getOjectionReport(dates ).subscribe();
  }
  handelReportWithVotesExport() {
+  if(this.billNumber){
   var dates = this.range_dates2 ?  { startDate : this.range_dates2[0] , endDate : this.range_dates2[1]} as TReportDurration : {} as TReportDurration
+  this.reportService.getQualityOjectionWithVotesReport(dates, this.objectionNumber, this.objectionType, this.billNumber).subscribe({
+    next: (res) => {
+     },
+    error: (error) => {
+       this.message.add({
+        severity: "error",
+        summary: this.langService.getInstantTranslation("error"),
+        detail: error.message || 'Objection Request is not exist !',
+      });
+    }
+  });
+  }
+  else{
+    var dates = this.range_dates2 ?  { startDate : this.range_dates2[0] , endDate : this.range_dates2[1]} as TReportDurration : {} as TReportDurration
   this.reportService.getOjectionWithVotesReport(dates, this.objectionNumber).subscribe({
     next: (res) => {
      },
@@ -47,5 +64,6 @@ export class ObjectionReportComponent implements OnInit {
       });
     }
   });
+  }
  }
 }
