@@ -21,7 +21,7 @@ export class QualityService extends BaseEntityService<IQualityMission> {
     pageIndex?: string,
     pageSize?: number,
     status?: number,
-    objectionNumber?: string,
+    billNumber?: number,
     voteStatus?: number,
     objectorName?:string,
     finItemId?:number
@@ -30,14 +30,14 @@ export class QualityService extends BaseEntityService<IQualityMission> {
     const effectivePageIndex = pageIndex ?? '1';
     const effectivePageSize = pageSize ?? '10';
     const effectiveStatus = status ?? undefined;
-    const effectiveObjectionNumber = objectionNumber ?? '';
+    const effectiveBillNumber = billNumber ?? '';
     const effectiveVoteStatus = voteStatus ?? undefined;
 
     const effectiveObjectorName = objectorName ?? '';
     const effectivefinItemId = finItemId ?? undefined;
 
     var params = status ? "&status=" + effectiveStatus : "";
-    params += objectionNumber ? "&objectionNumber=" + effectiveObjectionNumber : "";
+    params += billNumber ? "&billNumber=" + effectiveBillNumber : "";
     params += voteStatus ? "&voteStatus=" + effectiveVoteStatus: "";
     params += objectorName ? "&objectorName=" + effectiveObjectorName: "";
     params+= finItemId? "&financialItemId=" + effectivefinItemId:""

@@ -153,31 +153,57 @@ export class ReportsService {
      
   }
 
-  getOjectionWithVotesReport(duration: TReportDurration = null, objectionNumber?:string): Observable<any> {
-    
+  getQualityOjectionWithVotesReport(duration: TReportDurration = null, objectionNumber?:string, objectionType?: number | null, billNumber?: string): Observable<any> {
     let params = new HttpParams();
-    if (duration!.startDate) {
-      params = params.set('StartDate', duration!.startDate);
+    if (duration && duration.startDate) {
+      params = params.set('StartDate', duration.startDate);
     }
-    if (duration!.endDate) {
-      params = params.set('EndDate', duration!.endDate);
+    if (duration && duration.endDate) {
+      params = params.set('EndDate', duration.endDate);
     }
     if(objectionNumber && objectionNumber.trim()){
       params = params.set('ObjectionNumber',objectionNumber)
     }
+    if (objectionType) {
+      params = params.set('ObjectionType', objectionType.toString());
+    }
+    if (billNumber && billNumber.trim()) {
+      params = params.set('BillNumber', billNumber);
+    }
 
-     const exportBillReportUrl = `${environment.proxyBase}/Objection/export-objection-data`;
-     return this.http
-       .get(exportBillReportUrl , {params : params , responseType : 'blob'})
+    const exportQualityObjectionBillReportUrl = `${environment.proxyBase}/Objection/export-quality-objection-data`;
+    return this.http
+       .get(exportQualityObjectionBillReportUrl , {params : params , responseType : 'blob'})
        .pipe(
          tap((success) => { 
-           
            this.handleExportBillSuccess(success , 'Objection Report V-02') 
           })  
        );
-      
-      
-   }
+  }
+
+  getOjectionWithVotesReport(duration: TReportDurration = null, objectionNumber?: string): Observable<any> {
+    let params = new HttpParams();
+    if (duration && duration.startDate) {
+      params = params.set('StartDate', duration.startDate);
+    }
+    if (duration && duration.endDate) {
+      params = params.set('EndDate', duration.endDate);
+    }
+    if (objectionNumber && objectionNumber.trim()) {
+      params = params.set('ObjectionNumber', objectionNumber);
+    }
+
+    const exportBillReportUrl = `${environment.proxyBase}/Objection/export-objection-data`;
+    return this.http
+      .get(exportBillReportUrl, { params: params, responseType: 'blob' })
+      .pipe(
+        tap((success) => {
+          this.handleExportBillSuccess(success , 'Objection Report V-02') 
+        })
+      );
+  }
+
+  
   // getNotificationReport(duration: TReportDurration = null , template : string): Observable<any> {
   //   let search = '';
 
