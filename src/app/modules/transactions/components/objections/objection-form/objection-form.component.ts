@@ -454,16 +454,16 @@ export class ObjectionFormComponent implements OnInit {
   }
 
   onReasonSelect(event: any) {
-    // When reasons are selected, update the description with all selected reasons' nameAr
-    if (event.value && event.value.length > 0) {
-      // Get all selected reasons and their Arabic text
-      const selectedReasons = this.vote_reasons
-        .filter(r => event.value.includes(r.id))
-        .map(r => `\u2022 ${r.nameAr}`); // \u2022 is the Unicode for •
-      // Join all reasons with new lines
-      this.taskData.objectionReason = selectedReasons.join('\n');
+    // When a reason is selected, update the description with the selected reason's text
+    if (event.value) {
+      // Find the selected reason from vote_reasons array
+      const selectedReason = this.vote_reasons.find(r => r.id === event.value);
+      if (selectedReason) {
+        // Set the objectionReason to the selected reason's Arabic text
+        this.taskData.objectionReason = selectedReason.nameAr;
+      }
     } else {
-      // If no reasons selected, clear the description
+      // If no reason selected, clear the description
       this.taskData.objectionReason = '';
     }
   }

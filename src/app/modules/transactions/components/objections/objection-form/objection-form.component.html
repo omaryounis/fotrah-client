@@ -626,27 +626,27 @@
   ){
 
 <!-- vote reason -->
-    <div class="form-row !grid-cols-1 mt-2">
+    <div>
       <div class="form-group">
         <label for="key">{{
           is_voting
             ? ("objection-reason" | translate)
             : ("proceed-reason" | translate)
         }}</label>
-        <p-multiSelect
+        <p-dropdown
           name="objection-reason"
-          class="w-full wrap-multiselect"
-          [showHeader]="false"
+          class="w-full"
           [filter]="false"
           id="close-icon"
           (onChange)="onReasonSelect($event)"
           [(ngModel)]="taskData.reasons"
           [showClear]="false"
-          [defaultLabel]="'choose' | translate"
+          [placeholder]="'choose' | translate"
           [options]="vote_reasons"
           [optionLabel]="'nameAr'"
           [optionValue]="'id'"
-        ></p-multiSelect>
+          styleClass="w-full"
+        ></p-dropdown>
       </div>
     </div>
    
@@ -656,23 +656,18 @@
       <div class="form-group">
         <label for="key">{{ "Note" | translate }}</label>
         <div class="rounded-md" pInputTextarea>
-          <!-- <ul style="list-style-type: circle" class="px-3">
-            @for (item of taskData.reasons; track $index) {
-            <li>{{ item }}</li>
-            }
-          </ul> -->
           <textarea
-          id="description"
-          name="description"
-          aria-label="description"
-          class="b-none w-full"
-          #objectionReason="ngModel"
-          [(ngModel)]="taskData.objectionReason"
-          rows="5"
-          maxlength="255"
-          [required]="true"
-        >
-        </textarea>
+            id="description"
+            name="description"
+            aria-label="description"
+            class="b-none w-full"
+            #objectionReason="ngModel"
+            [(ngModel)]="taskData.objectionReason"
+            rows="5"
+            maxlength="255"
+            [required]="true"
+          >
+          </textarea>
         </div>
       </div>
     </div>
@@ -680,27 +675,27 @@
   }
 
   } @if(taskData.status == ObjectionStatusTypes.Accepted){
-  <div class="form-row !grid-cols-1 mt-2">
+  <div>
     <div class="form-group">
       <label for="key">{{
         is_voting
           ? ("objection-reason" | translate)
           : ("proceed-reason" | translate)
       }}</label>
-      <p-multiSelect
+      <p-dropdown
        name="objection-reason"
-       class="w-full wrap-multiselect"
-       [showHeader]="false"
+       class="w-full"
        [filter]="false"
        id="close-icon"
        (onChange)="onReasonSelect($event)"
        [(ngModel)]="taskData.reasons"
        [showClear]="false"
-       [defaultLabel]="'choose' | translate"
+       [placeholder]="'choose' | translate"
        [options]="vote_reasons"
        [optionLabel]="'nameAr'"
        [optionValue]="'id'"
-     ></p-multiSelect>
+       styleClass="w-full"
+     ></p-dropdown>
     </div>
   </div>
   <div class="form-row !grid-cols-1 mt-2">
@@ -727,27 +722,27 @@
 
   <!-- final approve -->
   @if ( taskData.status == ObjectionStatusTypes.Rejected) {
-  <div class="form-row !grid-cols-1 mt-2">
+  <div>
     <div class="form-group">
       <label for="key">{{
         is_voting
           ? ("objection-reason" | translate)
           : ("proceed-reason" | translate)
       }}</label>
-      <p-multiSelect
+      <p-dropdown
       name="objection-reason"
-      class="w-full wrap-multiselect"
-      [showHeader]="false"
+      class="w-full"
       [filter]="false"
       id="close-icon"
       (onChange)="onReasonSelect($event)"
       [(ngModel)]="taskData.reasons"
       [showClear]="false"
-      [defaultLabel]="'choose' | translate"
+      [placeholder]="'choose' | translate"
       [options]="vote_reasons"
       [optionLabel]="'nameAr'"
       [optionValue]="'id'"
-    ></p-multiSelect>
+      styleClass="w-full"
+    ></p-dropdown>
     </div>
   </div>
   <div class="form-row !grid-cols-1 mt-2">
