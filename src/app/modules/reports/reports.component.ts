@@ -28,7 +28,7 @@ import { NotificationTemplateComponent } from "./components/notification-templat
 import { CommitteMeetingTemplateComponent } from "./components/committe-meeting-template/committe-meeting-template-component";
 import { CanListComponent } from "../../shared/components/can-list/can.component";
 import { CourtPleadingTemplateComponent } from "./components/court-pleading-template/court-pleading-template.component";
-
+import { LoginService } from "@shared/services/login/login.service";
 @Component({
   selector: "app-reports",
   standalone: true,
@@ -60,7 +60,7 @@ import { CourtPleadingTemplateComponent } from "./components/court-pleading-temp
 export class ReportsComponent implements OnInit, OnDestroy {
   enumsOfReports = ReportType;
   reportType = ReportType.VIOLATIONS;
-  reportTypes = [{value : ReportType.VIOLATIONS ,  name : this.langService.getInstantTranslation('violations')}, {value : ReportType.PERMITS ,  name : this.langService.getInstantTranslation('permits')}];
+  reportTypes: { value: ReportType; name: string }[] = [];
   @ViewChild(ViolationCountComponent) violationCount: ViolationCountComponent | undefined;
   @ViewChild(UnpaidBillsCountComponent) UnpaidBillsCount: UnpaidBillsCountComponent | undefined;
   @ViewChild(QuarterBillsComponent) quarterBillsComponent: QuarterBillsComponent | undefined;
@@ -74,7 +74,19 @@ export class ReportsComponent implements OnInit, OnDestroy {
     "rgba(153, 116, 78, 0.82)",
   ];
 
-  constructor(private reportsService: ReportsService, private langService :LanguageService) { }
+  constructor(private reportsService: ReportsService, private langService: LanguageService, private loginService: LoginService) {
+    // Initialize reportTypes based on permissions
+    if (this.canViewViolationReports()) {
+      this.reportTypes.push({ value: ReportType.VIOLATIONS, name: this.langService.getInstantTranslation('violations') });
+    }
+    if (this.canViewPermitReports()) {
+      this.reportTypes.push({ value: ReportType.PERMITS, name: this.langService.getInstantTranslation('permits') });
+    }
+    // Set initial reportType to first available option
+    if (this.reportTypes.length > 0) {
+      this.reportType = this.reportTypes[0].value;
+    }
+  }
 
 
   
@@ -116,15 +128,61 @@ export class ReportsComponent implements OnInit, OnDestroy {
     this.violationCount!.rangeDates = [];
     this.reportsService.reportDates.set([]);
     this.UnpaidBillsCount!.selectedDate = "";
-    var checkReportType= this.reportType === ReportType.PERMITS ? ReportType.PERMIT : this.reportType;
+    
+    // Check permissions and set report type accordingly
+    if (this.canViewPermitReports()) {
+      this.reportType = ReportType.PERMITS;
+    }
+    else if (this.canViewViolationReports()) {
+      this.reportType = ReportType.VIOLATIONS;
+    }
+    else if(this.canViewViolationReports() && this.canViewPermitReports()){
+      
+      this.reportType = ReportType.VIOLATIONS;
+    }
+    var checkReportType = this.reportType === ReportType.PERMITS ? ReportType.PERMIT : this.reportType;
     this.calenderPaymentBillChartComponent!.selectedBillFilter = [];
-    this.violationCount!.getReports(this.reportType );
+    this.violationCount!.getReports(this.reportType);
     this.UnpaidBillsCount!.getBills(this.reportType);
     this.quarterBillsComponent!.fillChart(this.reportType);
-    this.calenderPaymentBillChartComponent?.fillChart(FilterCalender.WEEKLY , checkReportType);
+    this.calenderPaymentBillChartComponent?.fillChart(FilterCalender.WEEKLY, checkReportType);
+  }
+
+
+
+  
+  changeFillData = () => {
+    debugger;
+    console.log(this.reportType);
+    this.violationCount!.rangeDates = [];
+    this.reportsService.reportDates.set([]);
+    this.UnpaidBillsCount!.selectedDate = "";
+    var checkReportType = this.reportType === ReportType.PERMITS ? ReportType.PERMIT : this.reportType;
+    this.calenderPaymentBillChartComponent!.selectedBillFilter = [];
+    this.violationCount!.getReports(this.reportType);
+    this.UnpaidBillsCount!.getBills(this.reportType);
+    this.quarterBillsComponent!.fillChart(this.reportType);
+    this.calenderPaymentBillChartComponent?.fillChart(FilterCalender.WEEKLY, checkReportType);
+  }
+  
+  
+  canViewPermitReports(): boolean {
+    return this.loginService.hasPermission([
+      "View_PermitReports",
+    ]);
+  }
+  canViewViolationReports(): boolean {
+    return this.loginService.hasPermission([
+      "View_ViolationReports",
+    ]);
   }
   ngOnInit(): void {
-    // this.violationCountSubscription = this.reportsService.getBillReport().subscribe();
+    // Remove handleFillData from here
+  }
+
+  ngAfterViewInit(): void {
+    // Call handleFillData after view is initialized
+    this.handleFillData();
   }
 
   ngOnDestroy(): void {

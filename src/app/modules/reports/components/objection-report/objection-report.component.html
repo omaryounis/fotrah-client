@@ -1,4 +1,8 @@
 <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+  <app-can-list
+  [roles]="[
+    'Objection_FullReport'
+  ]">
 <p-card styleClass="p-5 custom-card-height">
     <ng-template pTemplate="header">
       <div class="flex justify-between items-center">
@@ -24,6 +28,11 @@
     </div>
   </div>
 </p-card>
+  </app-can-list>
+  <app-can-list
+  [roles]="[
+    'Objection_FullReport'
+  ]">
 <p-card styleClass="p-5 custom-card-height">
   <ng-template pTemplate="header">
     <div class="flex justify-between items-center">
@@ -63,4 +72,5 @@
   </div>
 </div>
 </p-card>
+</app-can-list>
 </div>
