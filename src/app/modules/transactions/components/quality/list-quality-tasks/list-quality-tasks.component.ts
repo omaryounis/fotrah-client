@@ -55,7 +55,7 @@ export class ListQualityTasksComponent {
 
   selected_status: number | undefined;
   selected_vote_status: number | undefined;
-  searchQuery = signal<string>("");
+  searchQuery = signal<number>(0);
   searchObjectorName = signal<string>("");
 
   constructor(
@@ -234,8 +234,8 @@ export class ListQualityTasksComponent {
           pageIndex: this.index,
           pageSize: this.rows,
           status: this.selected_status ?? undefined,
-          objectionNumber:
-            this.searchQuery().length == 0 ? undefined : this.searchQuery(),
+          billNumber:
+            this.searchQuery() == 0 ? undefined : this.searchQuery(),
           voteStatus: this.selected_vote_status ?? undefined,
           objectorName:
             this.searchObjectorName().length == 0

@@ -528,6 +528,9 @@
     "done-voting-session" : "Voting Successfully Closed",
     "max-three-attachment" : "You can only upload up to 3 files",
     "objections-full-report" : "Objections Full Report",
+    "external-objection": "External Objection",
+    "internal-objection": "Internal Objection",
+    "objection-type": "Objection Type",
     "objection-vote-status":{
       "1" : "No Votes",
       "2" : "Partial Votes, waiting for other members to vote",
