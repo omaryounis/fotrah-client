@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { QualityFormComponent } from './quality-form.component';
+import { UserQualityFormComponent } from './user-quality-form.component';
 
-describe('QualityFormComponent', () => {
-  let component: QualityFormComponent;
-  let fixture: ComponentFixture<QualityFormComponent>;
+describe('UserQualityFormComponent', () => {
+  let component: UserQualityFormComponent;
+  let fixture: ComponentFixture<UserQualityFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [QualityFormComponent]
+      imports: [UserQualityFormComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(QualityFormComponent);
+    fixture = TestBed.createComponent(UserQualityFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -22,7 +22,63 @@
                 <label for="ingredient1" class="ms-2">
                     {{ "proceed" | translate }}
                 </label>
+
             </div>
+
+            <div class="flex align-items-center">
+              
+            <p-radioButton
+            name="currentStatus"
+            [value]="ObjectionStatusTypes.Returned_Back_To_Objector"
+            [(ngModel)]="taskData.currentStatus"
+            (ngModelChange)="updateData()"
+            inputId="ingredient8"
+          />
+          <label for="ingredient8" class="ms-2">
+            {{ "back-to-objector" | translate }}
+          </label>
+            </div>
+            
         </div>
+
+       
+    
     }
+    @if(taskData.currentStatus == ObjectionStatusTypes.Returned_Back_To_Objector.toString()){
+      <!-- <div class="form-row !grid-cols-1 mt-2">
+        
+      </div> -->
+      <div class="form-row !grid-cols-1 mt-2">
+        <div class="form-group">
+          <label for="key">{{ "Note" | translate }}</label>
+          <div class="rounded-md" pInputTextarea>
+            <!-- <ul style="list-style-type: circle" class="px-3">
+              @for (item of taskData.reasons; track $index) {
+              <li>{{ item }}</li>
+              }
+            </ul> -->
+            <textarea
+              id="description"
+              name="description"
+              aria-label="description"
+              class="w-full border border-gray-300 rounded p-2"
+              #objectionReason="ngModel"
+              [(ngModel)]="taskData.objectionReason"
+              rows="5"
+              maxlength="255"
+              [required]="true"
+            >
+            </textarea>
+          </div>
+          @if (objectionReason.invalid && (objectionReason.dirty ||
+          objectionReason.touched)) {
+          <div class="text-red-600">
+            @if (objectionReason.errors?.['required']) {
+            <span> {{ "this-field-required" | translate }}</span> }
+          </div>
+          }
+        </div>
+      </div>
+    }
+  
     </form>

@@ -1,6 +1,7 @@
 <div class="quires">
   <app-page-header [title]="'features' | translate" [showButton]="false" headerStyleClass="mb-4"></app-page-header>
   <div class="flex flex-wrap gap-7 mt-8">
+    <pre>{{ cardItems | json }}</pre>
     @for (item of cardItems; track $index; let last = $last) {
     <app-can action="List" resource="Activities">
       <a [class]="[ 'link-card' ]"

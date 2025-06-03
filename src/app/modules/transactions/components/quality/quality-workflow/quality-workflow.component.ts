@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { IQualityMission, IQualityProgressRequest, IVoteRequest } from "../models/quality.model";
+import { IQualityMission, IQualityProgressRequest, IReturnRequest, IVoteRequest } from "../models/quality.model";
 import { QualityService } from "@shared/services/quality/quality.service";
 import { LanguageService } from "@shared/services/language/language.service";
 import { MessageService } from "primeng/api";
@@ -95,7 +95,39 @@ export class QualityWorkflowComponent {
                   });
                 }
               });
-            } 
+            }else if(this.taskData.status == ObjectionStatusEnum.Under_Review_by_Comittee_Coordinator && this.taskData.currentStatus == ObjectionStatusEnum.Returned_Back_To_Objector.toString()){
+              if ((!this.taskData.objectionReason || this.taskData.objectionReason == '')) {
+                this.message.add({
+                  severity: "error",
+                  summary:
+                    this.langService.getInstantTranslation("error"),
+                  detail: this.langService.getInstantTranslation("return-reason-required"),
+                });
+                return;
+              }
+              const data: IReturnRequest = {
+                objectionNumber: this.taskData.objectionNumber,
+                returnReason: this.taskData.objectionReason
+              };
+
+              this.qualityService.sendBackToObjector(data).subscribe((res) => {
+                if (res.message == MessagesResponse.SUCCESS) {
+                  this.ref?.close();
+                  this.message.add({
+                    severity: "success",
+                    summary: this.langService.getInstantTranslation("done"),
+                    detail: this.langService.getInstantTranslation("done-process"),
+                  });
+                  this.fillTasks();
+                } else {
+                  this.message.add({
+                    severity: "error",
+                    summary: this.langService.getInstantTranslation("error"),
+                    detail: res.message,
+                  });
+                }
+              });
+            }
             else if(this.taskData.status == ObjectionStatusEnum.Under_Evaluation
               &&(this.taskData.currentStatus == ObjectionStatusEnum.Accepted.toString()||this.taskData.currentStatus == ObjectionStatusEnum.Rejected.toString() ) ){
              var vote = this.taskData.currentStatus == ObjectionStatusEnum.Accepted.toString() ? true : false;

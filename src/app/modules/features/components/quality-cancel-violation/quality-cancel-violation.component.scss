@@ -131,4 +131,10 @@
          flex-grow: 0 !important;  /*prevent from expand*/
         width: auto !important;
     }
+}
+
+:host ::ng-deep .hidden-file-list {
+  .p-fileupload-content {
+    display: none !important;
   }
+}

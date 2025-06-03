@@ -6,7 +6,6 @@ import { CancelViolationComponent } from "./components/cancel-violation/cancel-v
 import { PermissionGuard } from "@shared/guards/permission/permission.guard";
 import { QualityCancelViolationComponent } from "./components/quality-cancel-violation/quality-cancel-violation.component";
 
-
 export const featuresRoutes: Routes = [
   {
     path: "features",

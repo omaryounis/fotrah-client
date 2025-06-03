@@ -5,11 +5,12 @@ import { CanComponent } from '@shared/components/can/can.component';
 import { PageHeaderComponent } from '@shared/components/page-header/page-header.component';
 import { LanguageService } from '@shared/services/language/language.service';
 import { MessageService } from 'primeng/api';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-features',
   standalone: true,
-  imports: [PageHeaderComponent, CanComponent, RouterModule, TranslateModule],
+  imports: [PageHeaderComponent, CanComponent, RouterModule, TranslateModule, JsonPipe],
   templateUrl: './features.component.html',
   styleUrl: './features.component.scss'
 })

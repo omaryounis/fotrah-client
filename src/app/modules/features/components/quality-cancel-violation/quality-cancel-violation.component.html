@@ -88,29 +88,84 @@
         <label for="quality-report" class="font-frutiger"> {{ 'quality-document' | translate }} <span
                 class="text-red-500">*</span>
         </label>
-        <div class="form-row !grid-cols-1 mt-2">
-            <div class="form-gruop">
-                <!-- <  div class="form-row"> -->
-                <p-fileUpload [auto]="false" #attachmentUploader id="quality-report" mode="advanced"
-                    [chooseLabel]="'select-file' | translate" chooseIcon="pi pi-upload"
-                    [cancelLabel]="'cancel' | translate" (onSelect)="onFileUpload($event)" (onClear)="onFileRemove()"
-                    (onRemove)="onFileRemove()" type="file" [showUploadButton]="false" [fileLimit]="1"
-                    [files]="attachment">
-                </p-fileUpload>
+
+        @if (attachment) {
+          <div class="flex items-center justify-between p-2 border rounded mb-2">
+            <div class="flex items-center">
+              <i class="pi pi-file mr-2"></i>
+              <span>{{ attachment.name }}</span>
             </div>
+            <div class="flex items-center">
+              <i
+                class="pi pi-download cursor-pointer text-primary mr-2"
+                (click)="downloadFile(attachment)"
+              ></i>
+              <i
+                class="pi pi-trash cursor-pointer text-red-500"
+                (click)="onFileRemove()"
+              ></i>
+            </div>
+          </div>
+        }
+
+        <div class="form-row !grid-cols-1 mt-2">
+          <div class="form-gruop">
+            <p-fileUpload [auto]="true" #attachmentUploader id="quality-report" mode="advanced"
+                [chooseLabel]="'select-file' | translate" chooseIcon="pi pi-upload"
+                [cancelLabel]="'cancel' | translate" (onSelect)="onFileUpload($event)" (onClear)="onFileRemove()"
+                (onRemove)="onFileRemove()" type="file" [showUploadButton]="false" [fileLimit]="1"
+                [files]="attachment ? [attachment] : []">
+            </p-fileUpload>
+          </div>
         </div>
 
         <label for="attachment" class="font-frutiger">{{'supported-documents' | translate}} </label>
         <div class="form-row !grid-cols-1 mt-2">
-            <div class="form-gruop">
-                <!-- <  div class="form-row"> -->
-                <p-fileUpload [auto]="false" id="file-upload-input" mode="advanced"
-                    [chooseLabel]="'select-file' | translate" chooseIcon="pi pi-upload"
-                    [cancelLabel]="'cancel' | translate" (onSelect)="onSupportedFileUpload($event)"
-                    (onClear)="clearAllFiles()" (onRemove)="onSupportedFileRemove($event)" type="file"
-                    [showUploadButton]="false" [fileLimit]="3" [files]="this.supportedAttachments">
-                </p-fileUpload>
-            </div>
+          <div class="form-gruop">
+            <!-- Show existing attachments -->
+            @if (displaySupportedAttachments?.length) {
+              <div class="mb-3">
+                @for (file of displaySupportedAttachments; track $index) {
+                  <div class="flex items-center justify-between p-2 border rounded mb-2">
+                    <div class="flex items-center">
+                      <i class="pi pi-file mr-2"></i>
+                      <span>{{ file.name }}</span>
+                    </div>
+                    <div class="flex items-center">
+                      <i
+                        class="pi pi-download cursor-pointer text-primary mr-2"
+                        (click)="downloadFile(file)"
+                      ></i>
+                      <i
+                        class="pi pi-trash cursor-pointer text-red-500"
+                        (click)="onSupportedFileRemove({ file: file })"
+                      ></i>
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+
+            <!-- File upload component -->
+            <p-fileUpload
+              [auto]="true"
+              id="file-upload-input"
+              mode="advanced"
+              [chooseLabel]="'select-file' | translate"
+              chooseIcon="pi pi-upload"
+              [cancelLabel]="'cancel' | translate"
+              (onSelect)="onSupportedFileUpload($event)"
+              (onClear)="clearAllFiles()"
+              (onRemove)="onSupportedFileRemove($event)"
+              type="file"
+              [showUploadButton]="false"
+              [showCancelButton]="false"
+              [fileLimit]="3"
+              [files]="[]"
+              [customUpload]="true"
+              styleClass="hidden-file-list">
+            </p-fileUpload>
+          </div>
         </div>
         <!-- @for (item of attachments; track $index) { -->
         <!-- <div class="mt-3 border-2 flex border-gray-300 rounded-md p-2">
@@ -125,19 +180,46 @@
         <!-- </label> -->
         <!-- <i (click)="removeAttachment($index)" class="pi pi-trash my-auto ms-2 w-[23px] cursor-pointer text-red-700"
             severity="danger"></i> -->
-        <!-- </div> -->
-
-        <!-- @if(attachments_validations[$index].size){ -->
-        <!-- <div class="text-red-600"> {{'invalid-file-size' | translate}} </div> -->
-        <!-- } -->
-        <!-- @if(attachments_validations[$index].type){ -->
-        <!-- <div class="text-red-600"> {{'invalid-file-type' | translate}}</div> -->
-        <!-- } -->
         <!-- } -->
         <!-- <p-button icon="pi pi-plus" (onClick)="addOrInitializeAttachment()" class="w-[35px] mt-3" [raised]="true" -->
         <!-- severity="success" /> -->
 
+        <!-- Preview for main Attachment -->
+       
+        <!-- Preview for Attachments array -->
+        <!-- Display supported documents if they exist -->
+    <!--
+        @if (qualityObjection?.attachments?.length) {
+          <div class="form-row !grid-cols-1 mt-2">
+            <label class="font-frutiger">{{ 'supported-documents' | translate }}</label>
+            <div class="flex flex-col gap-2">
+              @for (file of qualityObjection.attachments; track $index) {
+                <div class="flex items-center">
+                  <span class="mr-2">{{ file.fileName }}</span>
+                  <i
+                    class="pi pi-download cursor-pointer text-primary"
+                    (click)="downloadFile(file.filePath, file.fileName, false)"
+                  ></i>
+                </div>
+              }
+            </div>
+          </div>
+        }-->
 
+        <!-- Return Reason as readonly textarea -->
+        @if (qualityObjection?.returnReason) {
+          <div class="form-row !grid-cols-1 mt-2">
+            <label class="font-frutiger">{{ 'return-reason' | translate }}</label>
+            <textarea class="w-full" readonly rows="3">{{ qualityObjection.returnReason }}</textarea>
+          </div>
+        }
+        <!-- Objector Response as textarea form control -->
+        @if (qualityObjection?.returnReason) {
+          <div class="form-row !grid-cols-1 mt-2">
+            <label class="font-frutiger">{{ 'objector-response' | translate }}</label>
+            <textarea class="w-full" rows="3" [(ngModel)]="objectorResponse" name="objectorResponse"></textarea>
+          </div>
+        }
 
         <ng-template pTemplate="footer">
             <div class="flex justify-end gap-2 mt-auto py-3">
@@ -150,3 +232,4 @@
 
     <!-- <p-confirmDialog /> -->
 </div>
+ 
