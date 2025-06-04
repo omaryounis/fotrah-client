@@ -216,8 +216,21 @@
         <!-- Objector Response as textarea form control -->
         @if (qualityObjection?.returnReason) {
           <div class="form-row !grid-cols-1 mt-2">
-            <label class="font-frutiger">{{ 'objector-response' | translate }}</label>
-            <textarea class="w-full" rows="3" [(ngModel)]="objectorResponse" name="objectorResponse"></textarea>
+            <label class="font-frutiger required-element">{{ 'objector-response' | translate }}</label>
+            <textarea 
+              class="w-full border rounded p-2" 
+              rows="3" 
+              [(ngModel)]="objectorResponse" 
+              name="objectorResponse"
+              #objectorResponseInput="ngModel"
+              required></textarea>
+            @if (objectorResponseInput.invalid && (objectorResponseInput.dirty || objectorResponseInput.touched)) {
+              <div class="text-red-600">
+                @if (objectorResponseInput.errors?.['required']) { 
+                  <span>{{'this-field-required' | translate}}</span> 
+                }
+              </div>
+            }
           </div>
         }
 

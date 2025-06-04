@@ -127,7 +127,7 @@ export class QualityCancelViolationComponent {
   }
 
   async handleBillRequest() {
-    if (!this.selectedReason.value || !this.selectedDepartment) {
+    if (!this.selectedReason.value || !this.selectedDepartment || !this.objectorResponse) {
       this.messageService.add({
         severity: "error",
         summary: this.langService.getInstantTranslation("sorry"),
