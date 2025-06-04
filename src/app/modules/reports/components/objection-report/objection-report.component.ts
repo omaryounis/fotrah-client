@@ -37,33 +37,34 @@ export class ObjectionReportComponent implements OnInit {
   this.reportService.getOjectionReport(dates ).subscribe();
  }
  handelReportWithVotesExport() {
-  if(this.billNumber){
   var dates = this.range_dates2 ?  { startDate : this.range_dates2[0] , endDate : this.range_dates2[1]} as TReportDurration : {} as TReportDurration
-  this.reportService.getQualityOjectionWithVotesReport(dates, this.objectionNumber, this.objectionType, this.billNumber).subscribe({
-    next: (res) => {
-     },
-    error: (error) => {
-       this.message.add({
-        severity: "error",
-        summary: this.langService.getInstantTranslation("error"),
-        detail: error.message || 'Objection Request is not exist !',
-      });
-    }
-  });
-  }
-  else{
-    var dates = this.range_dates2 ?  { startDate : this.range_dates2[0] , endDate : this.range_dates2[1]} as TReportDurration : {} as TReportDurration
-  this.reportService.getOjectionWithVotesReport(dates, this.objectionNumber).subscribe({
-    next: (res) => {
-     },
-    error: (error) => {
-       this.message.add({
-        severity: "error",
-        summary: this.langService.getInstantTranslation("error"),
-        detail: error.message || 'Objection Request is not exist !',
-      });
-    }
-  });
+  
+  if (this.objectionType === 1) {
+    // Handle complaint objection report
+    this.reportService.getOjectionWithVotesReport(dates, this.objectionNumber).subscribe({
+      next: (res) => {
+      },
+      error: (error) => {
+        this.message.add({
+          severity: "error",
+          summary: this.langService.getInstantTranslation("error"),
+          detail: error.message || 'Objection Request is not exist !',
+        });
+      }
+    });
+  } else if (this.objectionType === 2) {
+    // Handle quality objection report
+    this.reportService.getQualityOjectionWithVotesReport(dates, this.objectionNumber, this.billNumber).subscribe({
+      next: (res) => {
+      },
+      error: (error) => {
+        this.message.add({
+          severity: "error",
+          summary: this.langService.getInstantTranslation("error"),
+          detail: error.message || 'Objection Request is not exist !',
+        });
+      }
+    });
   }
  }
 }

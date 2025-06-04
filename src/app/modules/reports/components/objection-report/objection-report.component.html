@@ -41,8 +41,8 @@
     <div class="form-group">
       <label class="!text-primary" for="objectionType">{{ "objection-type" | translate }}</label>
       <select id="objectionType" class="custom-input w-full" [(ngModel)]="objectionType" name="objectionType">
-        <option [ngValue]="1">{{ "external-objection" | translate }}</option>
-        <option [ngValue]="2">{{ "internal-objection" | translate }}</option>
+        <option [ngValue]="1">{{ "complaint-objection" | translate }}</option>
+        <option [ngValue]="2">{{ "quality-objection" | translate }}</option>
       </select>
     </div>
     <div class="form-group" *ngIf="objectionType == 2">
