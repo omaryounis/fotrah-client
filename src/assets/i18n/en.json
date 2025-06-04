@@ -530,6 +530,8 @@
     "objections-full-report" : "Objections Full Report",
     "external-objection": "External Objection",
     "internal-objection": "Internal Objection",
+    "complaint-objection": "Complaint Objection Requests",
+    "quality-objection": "Quality Objection Requests", 
     "objection-type": "Objection Type",
     "objection-vote-status":{
       "1" : "No Votes",
