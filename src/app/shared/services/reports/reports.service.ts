@@ -153,7 +153,7 @@ export class ReportsService {
      
   }
 
-  getQualityOjectionWithVotesReport(duration: TReportDurration = null, objectionNumber?:string, objectionType?: number | null, billNumber?: string): Observable<any> {
+  getQualityOjectionWithVotesReport(duration: TReportDurration = null, objectionNumber?:string,  billNumber?: string): Observable<any> {
     let params = new HttpParams();
     if (duration && duration.startDate) {
       params = params.set('StartDate', duration.startDate);
@@ -163,9 +163,6 @@ export class ReportsService {
     }
     if(objectionNumber && objectionNumber.trim()){
       params = params.set('ObjectionNumber',objectionNumber)
-    }
-    if (objectionType) {
-      params = params.set('ObjectionType', objectionType.toString());
     }
     if (billNumber && billNumber.trim()) {
       params = params.set('BillNumber', billNumber);
