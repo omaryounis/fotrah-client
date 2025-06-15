@@ -127,7 +127,7 @@ export class QualityCancelViolationComponent {
   }
 
   async handleBillRequest() {
-    if (!this.selectedReason.value || !this.selectedDepartment || !this.objectorResponse) {
+    if (!this.selectedReason.value || !this.selectedDepartment || (!this.objectorResponse && this.returnReason)) {
       this.messageService.add({
         severity: "error",
         summary: this.langService.getInstantTranslation("sorry"),
@@ -187,6 +187,7 @@ export class QualityCancelViolationComponent {
           this.attachment = null;
           this.supportedAttachments = [];
           this.deletedFiles = [];
+          this.objectorResponse = null;
         }
       });
   }

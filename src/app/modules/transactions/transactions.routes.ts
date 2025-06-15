@@ -20,11 +20,11 @@ export const transactionsRoutes: Routes = [
     component: OrdersComponent,
   },
   {
-    path: "transactions/tasks/objections-missions",
+    path:"transactions/tasks/objections-missions",
     component: ListObjectionsMissionsComponent
   },
   {
-    path: "transactions/tasks/quality-missions",
+    path:"transactions/tasks/quality-missions",
     component: ListQualityTasksComponent
   },
   {

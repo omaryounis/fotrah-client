@@ -62,6 +62,17 @@
         <span class="link-card__text">{{cardItems[4].title}}</span>
       </a>
     </app-can-list>
+
+   <!-- 
+    <app-can-list [roles]="['Add_QualityRequest']">
+      <a [class]="['link-card']" [routerLink]="[cardItems[5].routerLink]">
+        <div class="w-12 h-12 img-card" >
+          <img [src]="cardItems[5].image" alt="copy icon" />
+        </div>
+        <span class="link-card__text">{{cardItems[5].title}}</span>
+      </a>
+    </app-can-list>
+    -->
     <!-- @for (item of cardItems; track $index; let last = $last) {
       @if (item.params) {
       }@else {
