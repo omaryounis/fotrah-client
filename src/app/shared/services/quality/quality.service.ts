@@ -23,33 +23,33 @@ export class QualityService extends BaseEntityService<IQualityMission> {
     pageIndex?: string,
     pageSize?: number,
     status?: number,
-    billNumber?: number,
-    voteStatus?: number,
+    billNumber?: number | null,
+    voteStatus?: number | null,
     objectorName?:string,
-    finItemId?:number
+    finItemId?: number | null
   ): Observable<IQualityMissionResponse> {
 
     const effectivePageIndex = pageIndex ?? '1';
     const effectivePageSize = pageSize ?? '10';
     const effectiveStatus = status ?? undefined;
-    const effectiveBillNumber = billNumber ?? '';
-    const effectiveVoteStatus = voteStatus ?? undefined;
+    const effectiveBillNumber = billNumber ?? null;
+    const effectiveVoteStatus = voteStatus ?? null;
+    const effectiveObjectorName = objectorName ?? undefined;
+    const effectivefinItemId = finItemId ?? null;
 
-    const effectiveObjectorName = objectorName ?? '';
-    const effectivefinItemId = finItemId ?? undefined;
-
-    var params = status ? "&status=" + effectiveStatus : "";
-    params += billNumber ? "&billNumber=" + effectiveBillNumber : "";
-    params += voteStatus ? "&voteStatus=" + effectiveVoteStatus: "";
-    params += objectorName ? "&objectorName=" + effectiveObjectorName: "";
-    params+= finItemId? "&financialItemId=" + effectivefinItemId:""
+    const requestBody = {
+      pageIndex: effectivePageIndex,
+      pageSize: effectivePageSize,
+      status: effectiveStatus,
+      billNumber: effectiveBillNumber,
+      voteStatus: effectiveVoteStatus,
+      objectorName: effectiveObjectorName,
+      financialItemId: effectivefinItemId
+    };
     return this.http
-      .get<IQualityMissionResponse>(
-        `${environment.proxyBase}/Quality/missions?PageIndex=` +
-          effectivePageIndex +
-          `&PageSize=` +
-          effectivePageSize +
-          params
+      .post<IQualityMissionResponse>(
+        `${environment.proxyBase}/Quality/missions`,
+        requestBody
       )
       .pipe(
         tap((response: IQualityMissionResponse) => {
@@ -174,8 +174,8 @@ export class QualityService extends BaseEntityService<IQualityMission> {
 
   getQualityObjectionByBillNumber(billNumber: number): Observable<IResponse<any>> {
     return this.http
-      .get<IResponse<any>>(`${environment.proxyBase}/Quality/quality-objection?billNumber=${billNumber}`)
-      .pipe(
+    .post<IResponse<any>>(`${environment.proxyBase}/Quality/quality-objection-details`, { billNumber })
+    .pipe(
         tap((response: IResponse<any>) => {
           this.qualityObjection.set(response.data);
         })

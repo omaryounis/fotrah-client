@@ -51,12 +51,12 @@ export class ListQualityTasksComponent {
   previous_search_query: string = "";
   columns: ITableColumn[] = [];
   financialItems: { id: number; name: string }[] = [];
-  selected_finItem: number | undefined;
+  selected_finItem: number | null = null;
 
-  selected_status: number | undefined;
-  selected_vote_status: number | undefined;
-  searchQuery = signal<number>(0);
-  searchObjectorName = signal<string>("");
+  selected_status: number | null = null;
+  selected_vote_status: number | null = null;
+  searchQuery = signal<number | null>(null);
+  searchObjectorName = signal<string | null>(null);
 
   constructor(
     private screenService: ScreenService,
@@ -163,11 +163,11 @@ export class ListQualityTasksComponent {
       .getQualityMissions(
         pageIndex,
         rows,
-        this.selected_status,
+        this.selected_status ?? undefined,
         this.searchQuery(),
-        this.selected_vote_status,
-        this.searchObjectorName(),
-        this.selected_finItem
+        this.selected_vote_status ?? undefined,
+        this.searchObjectorName() ?? undefined,
+        this.selected_finItem ?? undefined
       )
       .subscribe();
   }
@@ -179,11 +179,10 @@ export class ListQualityTasksComponent {
       this.first = 1;
       this.index = 1;
       this.rows = 10;
-      this.previous_status = this.selected_status;
-      this.previous_vote_status = this.selected_vote_status;
+      this.previous_status = this.selected_status ?? undefined;
+      this.previous_vote_status = this.selected_vote_status ?? undefined;
     }
   }
-  
   get totalCount() {
     return this.qualityService.totalCount ;
   } 
@@ -238,7 +237,7 @@ export class ListQualityTasksComponent {
             this.searchQuery() == 0 ? undefined : this.searchQuery(),
           voteStatus: this.selected_vote_status ?? undefined,
           objectorName:
-            this.searchObjectorName().length == 0
+            this.searchObjectorName()?.length == 0
               ? undefined
               : this.searchObjectorName(),
           finItemId: this.selected_finItem ?? undefined,
