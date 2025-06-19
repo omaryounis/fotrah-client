@@ -192,18 +192,18 @@ export class QualityFormComponent {
       .filter((attachment) => attachment.data.length > 0);
   }
   downloadFile(path: string, fileName: string) {    
-      /*const fileUrl = path.replace(environment.filePath, window.origin + '/objections/'); // Convert backslashes to forward slashes for file protocol
+      const fileUrl = path.replace(environment.filePath, window.origin + '/objections/'); // Convert backslashes to forward slashes for file protocol
       const encodedFileUrl = fileUrl.replace(/#/g, '%23'); // Replace # with %23 to avoid problem of not automatic converting
       window.open(encodedFileUrl, '_blank');
-*/
+
       
       // // for testing :
-     const fileUrl = path.replace(
+   /*  const fileUrl = path.replace(
        /\\\\ripctest\.loc\\ripctestdfs\\Objections\\|C:\\inetpub\\wwwroot\\Fotrah\\objections\\/g,
        window.origin + "/test/"
      );
      const encodedFileUrl = fileUrl.replace(/#/g, '%23'); // Replace # with %23 to avoid problem of not automatic converting
-     window.open(encodedFileUrl, '_blank');
+     window.open(encodedFileUrl, '_blank');*/
 
   }
 
