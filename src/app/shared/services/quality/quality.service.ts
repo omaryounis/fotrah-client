@@ -39,8 +39,8 @@ export class QualityService extends BaseEntityService<IQualityMission> {
 
     const requestBody = {
       pageIndex: effectivePageIndex,
-      pageSize: effectivePageSize,
-      status: effectiveStatus,
+      pageSize: parseInt(effectivePageSize.toString()),
+      status: effectiveStatus || null,
       billNumber: effectiveBillNumber,
       voteStatus: effectiveVoteStatus,
       objectorName: effectiveObjectorName,
@@ -61,36 +61,44 @@ export class QualityService extends BaseEntityService<IQualityMission> {
 
 
   getUserQualityMissions(
-    pageIndex?: string,
-    pageSize?: number,
-    status?: number,
-    billNumber?: number,
-    voteStatus?: number,
-    objectorName?:string,
-    finItemId?:number
+    pageIndex?: string | null,
+    pageSize?: number | null,
+    status?: number | null,
+    billNumber?: number | null,
+    voteStatus?: number | null,
+    objectorName?:string | null,
+    finItemId?: number | null
   ): Observable<IQualityMissionResponse> {
 
     const effectivePageIndex = pageIndex ?? '1';
     const effectivePageSize = pageSize ?? '10';
-    const effectiveStatus = status ?? undefined;
-    const effectiveBillNumber = billNumber ?? '';
-    const effectiveVoteStatus = voteStatus ?? undefined;
+    const effectiveStatus = status ?? null;
+    const effectiveBillNumber = billNumber ?? null;
+    const effectiveVoteStatus = voteStatus ?? null;
+    const effectiveObjectorName = objectorName ?? null;
+    const effectivefinItemId = finItemId ?? null;
 
-    const effectiveObjectorName = objectorName ?? '';
-    const effectivefinItemId = finItemId ?? undefined;
+    const requestBody = {
+      pageIndex: effectivePageIndex,
+      pageSize: parseInt(effectivePageSize.toString()),
+      status: effectiveStatus,
+      billNumber: effectiveBillNumber,
+      voteStatus: effectiveVoteStatus,
+      objectorName: effectiveObjectorName || null,
+      finItemId: effectivefinItemId
+    };
 
-    var params = status ? "&status=" + effectiveStatus : "";
-    params += billNumber ? "&billNumber=" + effectiveBillNumber : "";
-    params += voteStatus ? "&voteStatus=" + effectiveVoteStatus: "";
-    params += objectorName ? "&objectorName=" + effectiveObjectorName: "";
-    params+= finItemId? "&financialItemId=" + effectivefinItemId:""
+    console.log('Sending request body:', requestBody);
+
     return this.http
-      .get<IQualityMissionResponse>(
-        `${environment.proxyBase}/Quality/my-quality-objections?PageIndex=` +
-          effectivePageIndex +
-          `&PageSize=` +
-          effectivePageSize +
-          params
+      .post<IQualityMissionResponse>(
+        `${environment.proxyBase}/Quality/my-quality-objections`,
+        requestBody,
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
       )
       .pipe(
         tap((response: IQualityMissionResponse) => {

@@ -51,11 +51,11 @@ export class ListUserQualityTasksComponent {
   previous_search_query: string = "";
   columns: ITableColumn[] = [];
   financialItems: { id: number; name: string }[] = [];
-  selected_finItem: number | undefined;
+  selected_finItem: number | null | undefined;
 
-  selected_status: number | undefined;
-  selected_vote_status: number | undefined;
-  searchQuery = signal<number>(0);
+  selected_status: number | null | undefined=null;
+  selected_vote_status: number | null | undefined=null;
+  searchQuery = signal<number | null>(null);
   searchObjectorName = signal<string>("");
 
   constructor(
@@ -125,7 +125,7 @@ export class ListUserQualityTasksComponent {
       },
     ];
 
-    this.finItemService.getFinancials(1000, 1).subscribe((res) => {
+   /* this.finItemService.getFinancials(1000, 1).subscribe((res) => {
       this.financialItems = res.data.financialItems.map(
         (finItem: IFinancial) => ({
           id: finItem.id,
@@ -136,7 +136,7 @@ export class ListUserQualityTasksComponent {
           ),
         })
       );
-    });
+    });*/
 
   }
   get requestsList() {
@@ -145,7 +145,7 @@ export class ListUserQualityTasksComponent {
   }
 
   onSearchTextChange(searchValue: any) {
-    this.searchQuery.set(searchValue);
+    this.searchQuery.set(searchValue==""?null:searchValue);
     // this.getObjectionList(this.rows , 1);
   }
   onSearchObjectorNameChange(searchValue: any) {
@@ -179,11 +179,10 @@ export class ListUserQualityTasksComponent {
       this.first = 1;
       this.index = 1;
       this.rows = 10;
-      this.previous_status = this.selected_status;
-      this.previous_vote_status = this.selected_vote_status;
+      this.previous_status = this.selected_status ?? undefined;
+      this.previous_vote_status = this.selected_vote_status ?? undefined;
     }
   }
-  
   get totalCount() {
     return this.qualityService.totalCount ;
   } 

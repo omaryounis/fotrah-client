@@ -129,11 +129,11 @@ export class UserQualityWorkflowComponent {
 
     const currentPageIndex = pageIndex ?? 1;
     const currentPageSize = pageSize ?? 10;
-    const currentVoteStatus = voteStatus ?? undefined;
-    const currentObjectionNumber = objectionNumber ?? undefined;
-    const currentStatus = status ?? undefined;
-    const currentObjectorName = objectorName ?? undefined;
-    const currentFinItemId = finItemId ?? undefined;
+    const currentVoteStatus = voteStatus ?? null;
+    const currentObjectionNumber = objectionNumber ?? null;
+    const currentStatus = status ?? null;
+    const currentObjectorName = objectorName ?? null;
+    const currentFinItemId = finItemId ?? null;
 
     this.qualityService
       .getUserQualityMissions(
