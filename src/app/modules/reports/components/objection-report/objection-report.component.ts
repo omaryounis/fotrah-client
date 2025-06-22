@@ -10,11 +10,12 @@ import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { MessageService } from "primeng/api";
 import { LanguageService } from "@shared/services/language/language.service";
+import { CanListComponent } from "../../../../shared/components/can-list/can.component";
 
 @Component({
   selector: 'app-objection-report',
   standalone :true,
-  imports : [CommonModule , ButtonModule , CalendarModule , FormsModule ,TranslateModule ,CardModule],
+  imports: [CommonModule, ButtonModule, CalendarModule, FormsModule, TranslateModule, CardModule, CanListComponent],
   templateUrl: './objection-report.component.html',
   styleUrls: ['./objection-report.component.scss']
 })
