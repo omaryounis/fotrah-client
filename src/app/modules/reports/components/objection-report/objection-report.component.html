@@ -31,7 +31,7 @@
   </app-can-list>
   <app-can-list
   [roles]="[
-    'Objection_FullReport'
+    'Objection_ReportDetails'
   ]">
 <p-card styleClass="p-5 custom-card-height">
   <ng-template pTemplate="header">
@@ -47,13 +47,19 @@
       <input  styleClass="w-full" class="custom-input" pInputText  id="objectionNumber" name="objectionNumber" aria-label="objectionNumber" [(ngModel)]="objectionNumber" 
           placeholder="{{ 'ObjectionNumber' | translate }}" />
     </div>
+     
     <div class="form-group">
       <label class="!text-primary" for="objectionType">{{ "objection-type" | translate }}</label>
       <select id="objectionType" class="custom-input w-full" [(ngModel)]="objectionType" name="objectionType">
+       @if(hasComplaintObjectionRequests()){
         <option [ngValue]="1">{{ "complaint-objection" | translate }}</option>
+       }
+       @if(hasQualityObjectionRequests()){
         <option [ngValue]="2">{{ "quality-objection" | translate }}</option>
+       }
       </select>
     </div>
+    
     <div class="form-group" *ngIf="objectionType == 2">
       <label class="!text-primary" for="billNumber">{{ "bill-number" | translate }}</label>
       <input styleClass="w-full" class="custom-input" pInputText id="billNumber" name="billNumber" aria-label="billNumber" [(ngModel)]="billNumber" placeholder="{{ 'bill-number' | translate }}"/>

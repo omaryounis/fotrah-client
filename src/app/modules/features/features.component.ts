@@ -21,8 +21,8 @@ export class FeaturesComponent {
   cardItems: any[] = []
   constructor() {
     this.cardItems = [
-      { image: 'assets/images/icons/mokhalfat.svg', routerLink: '/dashboard/features/violations', title: 'violations' },
-      { image: 'assets/images/icons/tsareeh.svg', routerLink: '/dashboard/features/permits', title: 'permits' },
+      { image: 'assets/images/icons/mokhalfat.svg', routerLink: '/dashboard/features/violations', title: 'violations' ,action : 'View' , resource : 'Violations' },
+      { image: 'assets/images/icons/tsareeh.svg', routerLink: '/dashboard/features/permits', title: 'permits' , action : 'View' , resource : 'Permits'},
     ]
   }
 

@@ -7,6 +7,7 @@ import { TReportDurration } from '@shared/models/reports.model';
 import { ReportsService } from '@shared/services/reports/reports.service';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
+import { LoginService } from "@shared/services/login/login.service";
 import { CardModule } from 'primeng/card';
 import { MessageService } from "primeng/api";
 import { LanguageService } from "@shared/services/language/language.service";
@@ -27,7 +28,7 @@ export class ObjectionReportComponent implements OnInit {
   objectionType: number | null = null;
   billNumber: string = '';
 
-   constructor(private translateService :TranslateService , private reportService:ReportsService, private message:MessageService, private langService:LanguageService) {
+   constructor(private translateService :TranslateService ,  private loginService:LoginService , private reportService:ReportsService, private message:MessageService, private langService:LanguageService) {
    }
 
   ngOnInit() {
@@ -67,5 +68,11 @@ export class ObjectionReportComponent implements OnInit {
       }
     });
   }
+ }
+ hasComplaintObjectionRequests(){
+  return this.loginService.hasPermission(['Complaint_ObjectionRequests']);
+ }
+ hasQualityObjectionRequests(){
+  return this.loginService.hasPermission(['Quality_ObjectionRequests']);
  }
 }

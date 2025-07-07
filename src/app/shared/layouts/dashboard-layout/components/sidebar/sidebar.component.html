@@ -1,14 +1,14 @@
 <p-sidebar class="sidebar" [(visible)]="sidebarState" [showCloseIcon]="showCloseIcon" [modal]="false"
   (onHide)="onSideBarHide()" [position]="position">
   <ul class="sidebar__menu">
-   
+    <app-can action="View" resource="MainPage">
     <li class="sidebar__menu-item">
       <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"(click)="onSideBarItemClick()">
         <img src="assets/images/icons/graph.svg" alt="" />
         <span>{{'home' | translate}}</span>
       </a>
     </li>
-    
+    </app-can>
     <app-can action="View" resource="Transactions">
       <li class="sidebar__menu-item">
         <a routerLink="/dashboard/transactions" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onSideBarItemClick()">

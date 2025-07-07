@@ -31,7 +31,20 @@
       <label class="required-element" for="nationalId">{{"permissions" | translate}} </label>
       <p-multiSelect name="permissions" [options]="permissions" [ngClass]="{'isDisableOption' :  mode === 'show' }"  class="d-grid w-100" [(ngModel)]="roleData.permissions"
         optionLabel="name"  [selectedItemsLabel]=" roleData.permissions?.length + ('items-selected' | translate)"
-        optionValue="value"></p-multiSelect>
+        optionValue="value">
+        <ng-template pTemplate="item" let-permission>
+          <div class="flex align-items-center justify-content-between w-full">
+            <span>{{permission.name}}</span>
+            @if(permission.description) {
+              <i class="pi pi-info-circle text-blue-500 cursor-pointer ml-2" 
+                 [pTooltip]="permission.description" 
+                 tooltipPosition="top"
+                 style="font-size: 0.875rem;"></i>
+            }
+          </div>
+        </ng-template>
+      
+      </p-multiSelect>
     </div>
   </div>
 

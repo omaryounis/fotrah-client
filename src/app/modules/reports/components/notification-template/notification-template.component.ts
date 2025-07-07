@@ -8,11 +8,12 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
+import { CanComponent } from "../../../../shared/components/can/can.component";
 
 @Component({
   selector: 'app-notification-template',
   standalone :true,
-  imports : [CalendarModule ,DropdownModule ,TranslateModule ,FormsModule ,CardModule ,ButtonModule],
+  imports: [CalendarModule, DropdownModule, TranslateModule, FormsModule, CardModule, ButtonModule, CanComponent],
   templateUrl: './notification-template.component.html',
   styleUrls: ['./notification-template.component.scss']
 })

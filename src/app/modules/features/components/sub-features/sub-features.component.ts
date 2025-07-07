@@ -21,7 +21,7 @@ export class SubFeaturesComponent {
      this.cardItems = [
       // { image: 'assets/images/icons/mokhalfat.svg', routerLink: `/dashboard/features/${this.billType}/cancel-bill`, title: "cancel-bill"  ,action : 'Request' , resource : 'CancelBill'  },
       { image: 'assets/images/icons/mokhalfat.svg', routerLink: `/dashboard/features/${this.billType}/cancel-refund-request`, title: "cancel-refund-request" , action : 'Cancel' , resource : 'Refund' },
-      { image: 'assets/images/icons/mokhalfat.svg', routerLink: `/dashboard/features/${this.billType}/refund-request`, title: "refund-request" , action : 'Cancel' , resource : 'Refund' },
+      { image: 'assets/images/icons/mokhalfat.svg', routerLink: `/dashboard/features/${this.billType}/refund-request`, title: "refund-request" , action : 'Request' , resource : 'Refund' },
       { image: 'assets/images/icons/mokhalfat.svg', routerLink: `/dashboard/features/${this.billType}/quality-request`, title: "quality-request" , action : 'Add' , resource : 'QualityRequest' },
       { image: 'assets/images/icons/mokhalfat.svg', routerLink: `/dashboard/transactions/tasks/user-quality-missions`, title: "user-quality-missions" , action : 'View' , resource : 'UserQualityRequests' },
      ]

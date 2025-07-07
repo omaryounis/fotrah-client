@@ -8,11 +8,12 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
+import { CanComponent } from "../../../../shared/components/can/can.component";
 
 @Component({
   selector: 'app-court-pleading-template',
   standalone: true,
-  imports : [CalendarModule ,DropdownModule ,TranslateModule ,FormsModule ,CardModule ,ButtonModule],
+  imports: [CalendarModule, DropdownModule, TranslateModule, FormsModule, CardModule, ButtonModule, CanComponent],
   templateUrl: './court-pleading-template.component.html',
   styleUrl: './court-pleading-template.component.scss'
 })
@@ -26,7 +27,6 @@ export class CourtPleadingTemplateComponent implements OnInit {
   }
 
   handleExportReport(){
-    debugger
     this.reportService.downloadCourtPleading(this.objectionNumber).subscribe();
 
   }

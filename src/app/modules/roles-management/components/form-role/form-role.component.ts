@@ -10,11 +10,11 @@ import { IPermission } from '@shared/models/permission.model';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '@shared/services/language/language.service';
 import { CommonModule } from '@angular/common';
-
+import { TooltipModule } from "primeng/tooltip";
 @Component({
   selector: 'app-form-role',
   standalone: true,
-  imports: [FormsModule, InputTextModule, DynamicDialogModule, MultiSelectModule, TranslateModule,CommonModule],
+  imports: [FormsModule, InputTextModule, DynamicDialogModule, MultiSelectModule, TranslateModule,CommonModule,TooltipModule],
   providers: [DynamicDialogRef],
   templateUrl: './form-role.component.html',
   styleUrl: './form-role.component.scss'
@@ -31,7 +31,7 @@ export class FormRoleComponent implements OnInit {
   ngOnInit(): void {
     this.permissionService.getPermissions().pipe(take(1)).subscribe(
       (respone) => {
-        this.permissions = respone.data.map((a: IPermission) => ({ value: a.id, name: this.langService.getInstantTranslation(a.nameAr!)}));
+        this.permissions = respone.data.map((a: IPermission) => ({ value: a.id, name: this.langService.getInstantTranslation(a.nameAr!),description : a.description }));
       }
     );
     

@@ -2,7 +2,7 @@
   <app-page-header [title]="'features' | translate" [showButton]="false" headerStyleClass="mb-4"></app-page-header>
   <div class="flex flex-wrap gap-7 mt-8">
     @for (item of cardItems; track $index; let last = $last) {
-    <app-can action="List" resource="Activities">
+      <app-can [action]="item.action" [resource]="item.resource">
       <a [class]="[ 'link-card' ]"
         (click)="navigateToSub(item.routerLink)">
         <img [src]="item.image" alt="copy icon" />

@@ -17,11 +17,12 @@ import { LanguageService } from "@shared/services/language/language.service";
 import { UsersService } from "@shared/users/users.service";
 import { DropdownModule } from "primeng/dropdown";
 import { CommonModule } from "@angular/common";
+import { TooltipModule } from "primeng/tooltip";
 
 @Component({
   selector: "app-user-form",
   standalone: true,
-  imports: [FormsModule, CommonModule, InputTextModule, DynamicDialogModule, MultiSelectModule, ButtonModule, TranslateModule , DropdownModule],
+  imports: [FormsModule, CommonModule, InputTextModule, DynamicDialogModule, MultiSelectModule, ButtonModule, TranslateModule , DropdownModule, TooltipModule],
   providers: [DynamicDialogRef],
   templateUrl: "./user-form.component.html",
   styleUrl: "./user-form.component.scss",
@@ -41,7 +42,7 @@ export class UserFormComponent implements OnInit {
   ngOnInit(): void {
     this.permissionService.getPermissions().pipe(take(1)).subscribe(
       (respone) => {
-        this.permissions = respone.data.map((a: any) => ({ value: a.id, name: this.langService.getInstantTranslation(a[this.langService.getNameFormat()!]) }));
+        this.permissions = respone.data.map((a: any) => ({ value: a.id, name: this.langService.getInstantTranslation(a[this.langService.getNameFormat()!]) ,description :a.description  }));
       }
     );
     this.roleService.getRoles().pipe(take(1)).subscribe(

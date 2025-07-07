@@ -8,11 +8,12 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
+import { CanComponent } from "../../../../shared/components/can/can.component";
 
 @Component({
   selector: 'app-committe-meeting-template',
   standalone :true,
-  imports : [CalendarModule ,DropdownModule ,TranslateModule ,FormsModule ,CardModule ,ButtonModule],
+  imports: [CalendarModule, DropdownModule, TranslateModule, FormsModule, CardModule, ButtonModule, CanComponent],
   templateUrl: './committe-meeting-template-component.html',
   styleUrls: ['./committe-meeting-template-component.scss']
 })

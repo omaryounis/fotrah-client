@@ -98,7 +98,19 @@
     <div class="form-group w-full">
       <label for="permissions">{{'permissions' | translate }} </label>
       <p-multiSelect name="permissions" [options]="permissions" class="grid w-full " (onChange)="updatingData()"
-        [(ngModel)]="userData.permissions" optionLabel="name" [selectedItemsLabel]="userData.permissions?.length + ('items-selected' | translate)" optionValue="value"></p-multiSelect>
+        [(ngModel)]="userData.permissions" optionLabel="name" [selectedItemsLabel]="userData.permissions?.length + ('items-selected' | translate)" optionValue="value">
+        <ng-template pTemplate="item" let-permission>
+          <div class="flex align-items-center justify-content-between w-full">
+            <span>{{permission.name}}</span>
+            @if(permission.description) {
+              <i class="pi pi-info-circle text-blue-500 cursor-pointer ml-2" 
+                 [pTooltip]="permission.description" 
+                 tooltipPosition="top"
+                 style="font-size: 0.875rem;"></i>
+            }
+          </div>
+        </ng-template>
+      </p-multiSelect>
     </div>
   }
 </div>
