@@ -20,6 +20,7 @@ import { FilterCalender } from "@shared/enums/filter-calender.enum";
 import { TasksService } from "@shared/services/tasks/tasks.service";
 import { CanComponent } from "@shared/components/can/can.component";
 import { LoginService } from "@shared/services/login/login.service";
+import { CanListComponent } from "../../shared/components/can-list/can.component";
 
 @Component({
   selector: "app-home",
@@ -37,8 +38,9 @@ import { LoginService } from "@shared/services/login/login.service";
     FormsModule,
     TranslateModule,
     DropdownModule,
-    CanComponent
-  ],
+    CanComponent,
+    CanListComponent
+],
   templateUrl: "./home.component.html",
   styleUrl: "./home.component.scss",
 })
@@ -53,8 +55,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   billList: any = {};
   billTypes: any[] = [{ name: this.langService.getInstantTranslation('canceled'), value: 'canceledBillsCount' }, { name: this.langService.getInstantTranslation('paid'), value: 'paidBillsCount' }, { name: this.langService.getInstantTranslation('unpaid'), value: 'unpaidBillsCount' }];
   selectedBillTypes: any[] = [{value : ReportType.VIOLATIONS ,  name : this.langService.getInstantTranslation('violations')}];
-  reportType = ReportType.VIOLATIONS;
-  reportTypes = [{value : ReportType.VIOLATIONS ,  name : this.langService.getInstantTranslation('violations')}, {value : ReportType.PERMITS ,  name : this.langService.getInstantTranslation('permits')}];
+  reportType :string | null = this.canViewPermitOverViewMainPage() ? ReportType.PERMITS : this.canViewViolationOverViewMainPage() ? ReportType.VIOLATIONS :  null;
+
+  reportTypes: { value: ReportType; name: string }[] = [];
   @ViewChild('chart') chartViewChild: ElementRef | undefined;
 
   chart: Chart | undefined;
@@ -70,7 +73,29 @@ export class HomeComponent implements OnInit, AfterViewInit {
   } 
   constructor(private tasksService: TasksService ,private billService: BillService , public authService:LoginService) {
   tasksService.getTasksAndRequests().subscribe();
- 
+     // Initialize reportTypes based on permissions
+    if (this.canViewPermitOverViewMainPage()) {
+      this.reportTypes.push({ value: ReportType.PERMITS, name: this.langService.getInstantTranslation('permits') });
+    }
+     debugger;
+     if (this.canViewViolationOverViewMainPage()) {
+      this.reportTypes.push({ value: ReportType.VIOLATIONS, name: this.langService.getInstantTranslation('violations') });
+    }
+   
+    console.log(this.reportTypes);
+  }
+
+  
+  
+  canViewPermitOverViewMainPage(): boolean {
+    return this.authService.hasPermission([
+      "View_PermitOverViewMainPage",
+    ]);
+  }
+  canViewViolationOverViewMainPage(): boolean {
+    return this.authService.hasPermission([
+      "View_ViolationOverViewMainPage",
+    ]);
   }
   ngAfterViewInit(): void {
 
@@ -108,11 +133,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
   }
   handleFillData = () => {
+    // Check permissions and set report type accordingly
+    if (this.canViewPermitOverViewMainPage() && this.canViewViolationOverViewMainPage()) {
+      // User has both permissions, use the selected report type
+      // this.reportType is already set from the dropdown selection
+    } else if (this.canViewPermitOverViewMainPage()) {
+      this.reportType = ReportType.PERMITS;
+    } else if (this.canViewViolationOverViewMainPage()) {
+      this.reportType = ReportType.VIOLATIONS;
+    }
+    
     this.billChart!.selectedBillTypes! = [];
-    this.billChart?.fillChart([] , this.reportType);
+    this.billChart?.fillChart([] , this.reportType!);
     var checkReportRype= this.reportType === ReportType.PERMITS ? ReportType.PERMIT : this.reportType;
     this.calenderBillChart!.selectedBillFilter = [];
-    this.calenderBillChart?.fillChart(FilterCalender.WEEKLY , checkReportRype);
+    this.calenderBillChart?.fillChart(FilterCalender.WEEKLY , checkReportRype!);
   }
   ngOnInit(): void {
     // this.getCurrentLocation();

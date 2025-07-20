@@ -12,6 +12,7 @@ import { FilterCalender } from '@shared/enums/filter-calender.enum';
 import { ReportType } from '@shared/enums/report-type.enum';
 import { FormsModule } from '@angular/forms';
 import { BillsType } from '@shared/enums/bills-type.enum';
+import { LoginService } from '@shared/services/login/login.service';
 
 
 @Component({
@@ -36,12 +37,12 @@ export class CalenderBillChartComponent implements OnInit {
   BillsFilter: any[] = this.prepareFilterList();
   selectedBillFilter: any[] = [];
   @ViewChild('chart') chartViewChild: ElementRef | undefined;
-  reportType :string = ReportType.VIOLATIONS;
+  reportType :string | null = this.canViewPermitOverViewMainPage() ? ReportType.PERMITS : this.canViewViolationOverViewMainPage() ? ReportType.VIOLATIONS :  null;
 
   chart: Chart | undefined;
   chartData: any = {};
   chartOptions: any = {};
-  constructor(private billService: BillService, private langService: LanguageService) {
+  constructor(private billService: BillService, private langService: LanguageService, private loginService: LoginService) {
 
   }
   ngOnInit() {
@@ -201,6 +202,16 @@ export class CalenderBillChartComponent implements OnInit {
     }
    )
     
+  }
+  canViewPermitOverViewMainPage(): boolean {
+    return this.loginService.hasPermission([
+      "View_PermitOverViewMainPage",
+    ]);
+  }
+  canViewViolationOverViewMainPage(): boolean {
+    return this.loginService.hasPermission([
+      "View_ViolationOverViewMainPage",
+    ]);
   }
 
   calculateVarianceArray(arr: number[]): number[] {

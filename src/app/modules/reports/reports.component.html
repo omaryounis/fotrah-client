@@ -4,7 +4,6 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="table-container container max-w-full block mx-auto mt-5">
 
-  <app-can action="List" resource="Bill">
   
     <div class="grid grid-cols-1 xl:grid-cols-3 mb-5">
      <!-- @if(canViewPermitReports() && canViewViolationReports()) {
@@ -33,8 +32,6 @@
       <app-calender-bill-chart [reportType]="reportType"></app-calender-bill-chart>
     </div>
     
-  </app-can>
-  @if (reportType == enumsOfReports.VIOLATIONS) {
   <div class="container max-w-full mx-auto mt-5 mb-20">
     <div class="grid gap-4">
       <!-- <app-can action="Procceed" resource="Objection"> -->
@@ -46,19 +43,15 @@
         <app-notification-report></app-notification-report>
       </div>
   </div>
-    }
-    <app-can-list
-    [roles]="[
-      'Procceed_Objection_CommitteeCoordinator',
-      'Procceed_NotSerious_Objection_CommitteeCoordinator'
-    ]">
+   
+  
   <div class="container max-w-full mx-auto mt-5 mb-20">
     <div class="grid grid-cols-1 mt-3 xl:grid-cols-2 gap-4">
       <app-committe-meeting-template></app-committe-meeting-template>
       <app-court-pleading-template></app-court-pleading-template>
         </div>
       </div>
-    </app-can-list>
+   
 <!-- <div class="container max-w-full mx-auto mt-5 mb-20"> -->
 
   <!-- <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">

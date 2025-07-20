@@ -2,7 +2,7 @@
   <label class="font-neo me-3" for="ststusInput">{{
     rowData.status ? ("active" | translate) : ("not-active" | translate)
   }}</label>
-  <app-can action="Edit" [resource]="resource">
+  <app-can action="Edit" resource="ExcavationType">
     <div
       class="flex items-center justify-end gap-2 cursor-pointer"
       (click)="openModal($event)"

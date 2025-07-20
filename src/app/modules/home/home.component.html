@@ -31,7 +31,7 @@
       </app-statistics-card>
    </app-can>
   }
-   <app-can action="List" resource="Bill">
+   <app-can-list [roles]="['View_ViolationOverViewMainPage','View_PermitOverViewMainPage']">
     <app-statistics-card
         [title]="'paid-bills-count' | translate"
         [bodyText]="billInfo.totalPaidBillsAmount"
@@ -40,8 +40,8 @@
         iconPath="assets/images/icons/empty-wallet.svg"
       >
       </app-statistics-card>
-    </app-can>
-    <app-can action="List" resource="Bill">
+    </app-can-list>
+    <app-can-list [roles]="['View_ViolationOverViewMainPage','View_PermitOverViewMainPage']">
       <app-statistics-card
       [title]="'unpaid-bills-count' | translate"
       [bodyText]="billInfo.totalUnpaidBillsAmount"
@@ -50,7 +50,7 @@
       iconPath="assets/images/icons/empty-wallet.svg"
     >
     </app-statistics-card>
-  </app-can>
+  </app-can-list>
     <!-- Third column -->
     <!-- <app-statistics-card title="التقارير" bodyText="32" detailsUrl="#" iconAlt="wallet icon"
       iconPath="assets/images/icons/empty-wallet.svg">
@@ -62,7 +62,11 @@
     </app-statistics-card> -->
   </div>
 </div>
-<app-can action="List" resource="Bill">
+<app-can-list
+[roles]="[
+  'View_ViolationOverViewMainPage',
+  'View_PermitOverViewMainPage'
+]">
 <div class="grid md:grid-cols-3 sm:grid-cols-1">
   <div></div>
   <p-dropdown
@@ -92,7 +96,7 @@
       </p-card> -->
   </div>
 </div>
-</app-can>
+</app-can-list>
 <!-- @if (reportType == 'permits') {
   <div class="container max-w-full mx-auto mt-5 mb-20">
     <div class="grid grid-cols-2 md:grid-cols-2 gap-4 h-[340px]">

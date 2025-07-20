@@ -152,7 +152,6 @@ export class ReportsComponent implements OnInit, OnDestroy {
 
   
   changeFillData = () => {
-    debugger;
     console.log(this.reportType);
     this.violationCount!.rangeDates = [];
     this.reportsService.reportDates.set([]);

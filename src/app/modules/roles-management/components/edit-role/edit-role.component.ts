@@ -8,11 +8,12 @@ import { RoleService } from '@shared/services/roles/roles.service';
 import { LanguageService } from '@shared/services/language/language.service';
 import { MessageService } from 'primeng/api';
 import { MessagesResponse } from '@shared/enums/messages-response.enum';
+import { CanComponent } from "@shared/components/can/can.component";
 
 @Component({
   selector: 'app-edit-role',
   standalone: true,
-  imports: [CrudModalComponent, FormRoleComponent],
+  imports: [CrudModalComponent, FormRoleComponent, CanComponent],
   templateUrl: './edit-role.component.html',
   styleUrl: './edit-role.component.scss'
 })

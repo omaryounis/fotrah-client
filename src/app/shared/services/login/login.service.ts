@@ -74,13 +74,20 @@ export class LoginService {
     return userInfo;
   }
   hasPermission(permission: string[]): boolean {
-    // Replace with your actual permission check logic
-    // For example, you might check user roles or permissions stored in local storage
     const accessToken = localStorage.getItem('accessToken');
-    const decodedAccessToken = jwtDecode(accessToken!) as JwtPayload & { permissions: string[] };
-    // permissionList = decodedAccessToken?.permissions || [];
-    const userPermissions = decodedAccessToken?.permissions || []; // Replace with actual user permissions
-    return userPermissions.some(data => permission.includes(data));
+    if (!accessToken) {
+      return false;
+    }
+    
+    const decodedAccessToken = jwtDecode(accessToken) as JwtPayload & { permissions: string[] };
+    const userPermissions = decodedAccessToken?.permissions || [];
+    
+    // Check if any of the required permissions exist in user's permissions
+    return permission.some(requiredPermission => 
+      userPermissions.some(userPermission => 
+        userPermission.toLowerCase() === requiredPermission.toLowerCase()
+      )
+    );
   }
   checkPermissions(currComponent: string , checkByComponent : boolean ): boolean {
     const accessToken = localStorage.getItem('accessToken');

@@ -14,11 +14,12 @@ import { LanguageService } from '@shared/services/language/language.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
 import { MessagesResponse } from '@shared/enums/messages-response.enum';
+import { CanComponent } from "@shared/components/can/can.component";
 
 @Component({
   selector: 'app-create-role',
   standalone: true,
-  imports: [CommonModule, ButtonModule, FormRoleComponent, TranslateModule],
+  imports: [CommonModule, ButtonModule, FormRoleComponent, TranslateModule, CanComponent],
   templateUrl: './create-role.component.html',
   styleUrl: './create-role.component.scss'
 })

@@ -11,6 +11,7 @@ import { FilterBillTypes } from '@shared/enums/filter-bill-types.enum';
 import { ReportType } from '@shared/enums/report-type.enum';
 import { BillsType } from '@shared/enums/bills-type.enum';
 import { FormsModule } from '@angular/forms';
+import { LoginService } from '@shared/services/login/login.service';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class GeneralBillChartComponent implements OnInit {
   public barChartPlugins = [pluginDataLabels];
   mapBill: any = { paidBillsCount: this.langService.getInstantTranslation('paid'), canceledBillsCount: this.langService.getInstantTranslation('canceled'), unpaidBillsCount: this.langService.getInstantTranslation('unpaid') }
   billReportData: any = {};
-  reportType :string = ReportType.VIOLATIONS;
+  reportType :string | null = this.canViewPermitOverViewMainPage() ? ReportType.PERMITS : this.canViewViolationOverViewMainPage() ? ReportType.VIOLATIONS :  null;
 
   billTypes: any[] = []
   public selectedBillTypes: any[] = [];
@@ -35,7 +36,7 @@ export class GeneralBillChartComponent implements OnInit {
   chart: Chart | undefined;
   chartData: any = {};
   chartOptions: any = {};
-  constructor(private billService: BillService) {
+  constructor(private billService: BillService , private loginService: LoginService) {
     this.billTypes = this.prepareBillTypes()
   }
   ngOnInit() {
@@ -50,7 +51,7 @@ export class GeneralBillChartComponent implements OnInit {
        canceledBillsCount: this.langService.getInstantTranslation(this.reportType == 'PermitsBills' ? 'PermitCanceled' : 'canceled'),
        unpaidBillsCount: this.langService.getInstantTranslation(this.reportType == 'PermitsBills' ? 'PermitUnpaid' : 'unpaid') }
 
-    this.billService.getBillsReport(this.reportType).subscribe(res => {
+    this.billService.getBillsReport(this.reportType!).subscribe(res => {
       this.billReportData = res.data;
       var billData = Object.entries(this.billReportData).map(([key, value]) => {
         // Exclude entries with key 'totalPaid'
@@ -199,6 +200,16 @@ export class GeneralBillChartComponent implements OnInit {
       };
 
     })
+  }
+  canViewPermitOverViewMainPage(): boolean {
+    return this.loginService.hasPermission([
+      "View_PermitOverViewMainPage",
+    ]);
+  }
+  canViewViolationOverViewMainPage(): boolean {
+    return this.loginService.hasPermission([
+      "View_ViolationOverViewMainPage",
+    ]);
   }
   prepareColors(countsData: any[] , selectedBillTypes : any[]) : any[] {
     var colors = [];

@@ -1,3 +1,5 @@
-<p-button styleClass="page-header__button font-neo sm:text-sm text-xs" [label]="'add-role' | translate"
-  icon="pi pi-plus" iconPos="right" (onClick)="onClickAddRoleButton($event)">
-</p-button>
+<app-can action="Add" resource="Roles">
+    <p-button styleClass="page-header__button font-neo sm:text-sm text-xs" [label]="'add-role' | translate"
+    icon="pi pi-plus" iconPos="right" (onClick)="onClickAddRoleButton($event)">
+    </p-button>
+</app-can>
