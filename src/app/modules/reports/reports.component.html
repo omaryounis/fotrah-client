@@ -25,12 +25,14 @@
   </p>
   }
   
-  <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+  <app-can-list [roles]="['View_PermitReports','View_ViolationReports']">
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-4" >
       <app-violation-count [reportType]="reportType" [title]="'total-bills'" class="mb-[150px]"></app-violation-count>
       <app-unpaid-bills-count [reportType]="reportType" class="mb-[150px]"></app-unpaid-bills-count>
       <app-quarter-bills [reportType]="reportType"></app-quarter-bills>
       <app-calender-bill-chart [reportType]="reportType"></app-calender-bill-chart>
     </div>
+  </app-can-list>
     
   <div class="container max-w-full mx-auto mt-5 mb-20">
     <div class="grid gap-4">
